@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iota Media — Watch This Before You Check Your Email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../shared/styles.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">
+        <img src="../../shared/logo-white.svg" alt="Iota Media" />
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── ALERT BANNER ──────────────────────────────────────────────────────── -->
+  <div class="vsl-banner">
+    IMPORTANT &mdash; Before You Check Your Email, Watch This Short Video
+  </div>
+
+  <!-- ── VSL PAGE ───────────────────────────────────────────────────────────── -->
+  <div class="vsl-wrapper">
+
+    <p class="vsl-label" id="congrats-label">Congratulations &mdash; You Qualify for a Free Strategy Call</p>
+
+    <h1 class="vsl-headline">
+      Here's Exactly How We Build Your Personal Brand and&nbsp;Fill Your Pipeline with&nbsp;Organic Recruits
+    </h1>
+
+    <!-- Video
+         Set assets.vslVideoEmbedUrl in config.js to replace the placeholder.
+         Format: https://drive.google.com/file/d/YOUR_FILE_ID/preview -->
+    <div class="video-outer" id="video-outer">
+      <!-- Placeholder (shown until vslVideoEmbedUrl is set in config.js) -->
+      <div class="video-placeholder" id="video-placeholder">
+        <span class="play-icon">▶</span>
+        <strong>VSL Video</strong>
+        <span>Set <code>assets.vslVideoEmbedUrl</code> in config.js</span>
+      </div>
+      <!-- Iframe is injected by the init script below -->
+    </div>
+
+    <!-- Social proof checklist -->
+    <div class="proof-list">
+      <div class="proof-item">Built client accounts from 0 to 15k+ followers</div>
+      <div class="proof-item">100% done-for-you &mdash; clients just show up to film once</div>
+      <div class="proof-item">Organic recruits who are already presold before the first conversation</div>
+      <div class="proof-item">No job board fees &mdash; scales as your brand grows</div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="vsl-ctas">
+      <button class="cta-primary" onclick="showCalendar()">
+        Yes, Book a Strategy Call &rarr;
+      </button>
+      <button class="cta-secondary" onclick="sendGuide()">
+        No thanks, just send me the free guide
+      </button>
+    </div>
+
+    <!-- Calendar section — hidden until "Book a Call" is clicked -->
+    <div class="calendar-section" id="calendar-section">
+      <h3>Book Your Free Strategy Call</h3>
+      <p>
+        Note: This call is <strong>not</strong> required to receive your guide.
+        Only book if you'd like to explore working together.
+      </p>
+
+      <!-- Calendar embed placeholder (shown until calendarEmbedUrl is set in config.js) -->
+      <div class="calendar-embed-wrap" id="calendar-embed-wrap">
+        <div class="calendar-placeholder" id="calendar-placeholder">
+          <strong>📅 Calendar Embed</strong>
+          <span>Set <code>integrations.calendarEmbedUrl</code> in config.js</span>
+        </div>
+        <!-- Iframe injected by init script -->
+      </div>
+    </div>
+
+  </div><!-- /vsl-wrapper -->
+
+  <script src="../../shared/funnel.js"></script>
+  <script>
+    // ── PAGE INIT ────────────────────────────────────────────────────────────
+    (function () {
+      // Personalise greeting from URL param set by funnel.js
+      const params = new URLSearchParams(window.location.search);
+      const firstName = params.get("fn");
+      if (firstName) {
+        const label = document.getElementById("congrats-label");
+        if (label) label.textContent = "Congratulations, " + firstName + " \u2014 You Qualify for a Free Strategy Call";
+      }
+
+      // Inject VSL video if URL is set
+      const videoUrl = CONFIG.assets.vslVideoEmbedUrl;
+      if (videoUrl) {
+        const placeholder = document.getElementById("video-placeholder");
+        if (placeholder) placeholder.remove();
+
+        const outer = document.getElementById("video-outer");
+        const container = document.createElement("div");
+        container.className = "video-container";
+
+        const iframe = document.createElement("iframe");
+        iframe.src = videoUrl;
+        iframe.allow = "autoplay; fullscreen";
+        iframe.allowFullscreen = true;
+
+        container.appendChild(iframe);
+        outer.appendChild(container);
+      }
+
+      // Inject calendar if URL is set
+      const calUrl = CONFIG.integrations.calendarEmbedUrl;
+      if (calUrl) {
+        const calPlaceholder = document.getElementById("calendar-placeholder");
+        if (calPlaceholder) calPlaceholder.remove();
+
+        const wrap = document.getElementById("calendar-embed-wrap");
+        const iframe = document.createElement("iframe");
+        iframe.src = calUrl;
+        iframe.height = "700";
+        iframe.style.width = "100%";
+        iframe.style.border = "none";
+        iframe.style.display = "block";
+        wrap.appendChild(iframe);
+      }
+    })();
+
+    // ── ACTIONS ──────────────────────────────────────────────────────────────
+    function showCalendar() {
+      const section = document.getElementById("calendar-section");
+      section.classList.add("visible");
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function sendGuide() {
+      const url = CONFIG.assets.guidePdfUrl;
+      if (url) {
+        window.open(url, "_blank");
+      } else {
+        // Guide URL not set yet — just confirm
+        alert("Your guide is on its way to your inbox!");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iota Media — Free Instagram Recruitment Guide</title>
+  <meta name="description" content="Get your free guide: 5 strategies to recruit 10 salespeople from Instagram with less than 1,000 followers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../shared/styles.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">
+        <img src="../../shared/logo-white.svg" alt="Iota Media" />
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── FUNNEL ────────────────────────────────────────────────────────────── -->
+  <div class="funnel-wrapper">
+
+    <!-- Headline (visible throughout all steps) -->
+    <div class="funnel-headline">
+      <h1>Get Your Free Guide: <span class="highlight">5&nbsp;Strategies to Recruit 10&nbsp;Salespeople from Instagram with Less Than 1,000&nbsp;Followers</span></h1>
+    </div>
+
+    <!-- Guide preview image
+         Set assets.guidePreviewImageUrl in config.js to show the real image.
+         The placeholder disappears automatically once a URL is set. -->
+    <div class="guide-preview-wrap">
+      <img id="guide-preview-img" src="" alt="Free Recruitment Guide Preview" style="display:none;" />
+    </div>
+    <div id="guide-preview-placeholder" class="guide-preview-placeholder">
+      <span class="placeholder-icon">📄</span>
+      <strong>Guide Preview Image</strong>
+      <span>Set <code>assets.guidePreviewImageUrl</code> in config.js</span>
+    </div>
+
+    <!-- Form -->
+    <div class="funnel-form">
+
+      <!-- ── STEP 1: Name ──────────────────────────────────────────────── -->
+      <div class="step" id="step-1">
+        <p class="step-question">What's your <strong>name?</strong></p>
+        <div class="input-row">
+          <input type="text" id="first-name" placeholder="FIRST NAME" autocomplete="given-name" />
+          <input type="text" id="last-name"  placeholder="LAST NAME"  autocomplete="family-name" />
+        </div>
+        <button class="cta-btn" onclick="nextStep(1)">LET'S START</button>
+        <div class="trust-signals">
+          <span class="trust-signal">Get your guide in under 30 seconds</span>
+          <span class="trust-signal">Used by top D2D and life insurance earners</span>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Email ─────────────────────────────────────────────── -->
+      <div class="step hidden" id="step-2">
+        <p class="step-question">Where should I <strong>email</strong> it to?</p>
+        <input type="email" id="email" placeholder="BUSINESS EMAIL ADDRESS" autocomplete="email" />
+        <button class="cta-btn" onclick="nextStep(2)">CONTINUE</button>
+        <button class="back-link" onclick="prevStep(2)">← Previous</button>
+      </div>
+
+      <!-- ── STEP 3: Phone ─────────────────────────────────────────────── -->
+      <div class="step hidden" id="step-3">
+        <p class="step-question">What is your <strong>phone number?</strong></p>
+        <div class="phone-row">
+          <div class="phone-country">US +1</div>
+          <input type="tel" id="phone" placeholder="(555) 000-0000" autocomplete="tel" />
+        </div>
+        <button class="cta-btn" onclick="nextStep(3)">CONTINUE</button>
+        <button class="back-link" onclick="prevStep(3)">← Previous</button>
+      </div>
+
+      <!-- ── STEP 4: Income (qualification gate — auto-advances on click) ── -->
+      <div class="step hidden" id="step-4">
+        <p class="step-question">What is your <strong>annual income?</strong></p>
+        <!-- Options are injected from config.js by funnel.js -->
+        <div class="option-list" id="income-options"></div>
+        <button class="back-link" onclick="prevStep(4)">← Previous</button>
+      </div>
+
+      <!-- ── STEP 5: Business details + submit ────────────────────────── -->
+      <div class="step hidden" id="step-5">
+        <p class="step-question">Tell us about your <strong>business.</strong></p>
+
+        <div class="select-wrap" style="width:100%;">
+          <select id="service-select" class="styled-select">
+            <option value="" disabled selected>What service do you sell?</option>
+            <!-- Options injected from config.js by funnel.js -->
+          </select>
+        </div>
+
+        <div class="select-wrap" style="width:100%;">
+          <select id="recruiting-select" class="styled-select">
+            <option value="" disabled selected>Do you recruit year-round or seasonally?</option>
+            <!-- Options injected from config.js by funnel.js -->
+          </select>
+        </div>
+
+        <button class="cta-btn" onclick="submitForm()">GET MY FREE GUIDE</button>
+        <button class="back-link" onclick="prevStep(5)">← Previous</button>
+      </div>
+
+      <!-- Error message (shared across all steps) -->
+      <p class="error-msg" id="error-msg"></p>
+
+    </div><!-- /funnel-form -->
+
+    <p class="disclaimer">
+      By providing your information you consent to Iota Media contacting you by phone, text, or email. We do not sell your personal information. By submitting this form you agree to our Privacy Policy and Terms of Service.
+    </p>
+
+  </div><!-- /funnel-wrapper -->
+
+  <script src="../../shared/funnel.js"></script>
+</body>
+</html>

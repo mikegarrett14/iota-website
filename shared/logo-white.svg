@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 130" fill="none">
+  <!-- Circles adapted for dark navbar -->
+  <circle cx="52"  cy="90"  r="46" fill="#ffffff"/>
+  <circle cx="120" cy="52"  r="30" fill="#7DCBE8"/>
+  <circle cx="172" cy="28"  r="19" fill="#A8DCF0"/>
+  <circle cx="208" cy="14"  r="11" fill="#C5EBF8"/>
+  <!-- Wordmark in white -->
+  <text
+    x="128"
+    y="102"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="62"
+    font-weight="700"
+    letter-spacing="6"
+    fill="#ffffff"
+  >IOTA</text>
+</svg>
