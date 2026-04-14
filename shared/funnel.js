@@ -161,8 +161,8 @@
         document.getElementById("recruiting-select").classList.add("error");
         return false;
       }
-      formData.service    = service;
-      formData.recruiting = recruiting;
+      formData.service            = service;
+      formData.recruiting_season  = recruiting;
     }
 
     return true;
