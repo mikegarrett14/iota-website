@@ -83,11 +83,67 @@ The `shared/` folder is used by all campaigns — changes there affect every cam
 
 ---
 
+## Form flow
+
+The main form at `campaigns/main/index.html` has 5 steps:
+
+1. Name (first + last)
+2. Email
+3. Phone
+4. Annual income (dropdown — determines routing)
+5. Service type + recruiting model (two dropdowns)
+
+---
+
 ## Qualification logic
 
-| Annual Income | Path |
-|---|---|
-| Under $500k/year | Low-intent → School Community course page |
-| $500k+/year | High-intent → VSL + booking page |
+| Annual Income | Intent | Path |
+|---|---|---|
+| Under $100k/year | low | Low-intent → course page |
+| $100k – $250k/year | low | Low-intent → course page |
+| $250k – $500k/year | low | Low-intent → course page |
+| $500k – $750k/year | high | High-intent → VSL + booking page |
+| $750k – $1M/year | high | High-intent → VSL + booking page |
+| $1M+/year | high | High-intent → VSL + booking page |
 
 To change the threshold, update the `intent` field on each option in `config.js` → `routing.incomeOptions`.
+
+---
+
+## GoHighLevel webhook
+
+On form submission, the following JSON is POSTed to the webhook at `config.js` → `integrations.formWebhookUrl`:
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "john@example.com",
+  "phone": "5551234567",
+  "incomeLabel": "$500k – $750k/year",
+  "intent": "high",
+  "service": "Door-to-door sales",
+  "recruiting_season": "Year-round"
+}
+```
+
+### GHL field mapping
+
+| JSON field | GHL contact property |
+|---|---|
+| `firstName` | First Name (standard) |
+| `lastName` | Last Name (standard) |
+| `email` | Email (standard) |
+| `phone` | Phone (standard) |
+| `incomeLabel` | `{{ contact.income_label }}` — dropdown field |
+| `intent` | `{{ contact.intent }}` — text field (`"high"` or `"low"`) |
+| `service` | `{{ contact.service }}` — text field |
+| `recruiting_season` | `{{ contact.recruiting_season }}` — text field |
+
+---
+
+## Rules
+
+- All settings (URLs, endpoints, form options) live in `config.js` — never edit `funnel.js` for routine changes
+- To add a new campaign, duplicate the `campaigns/main/` folder and update the new `config.js`
+- Changes to `shared/styles.css` affect all campaigns

@@ -3,12 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iota Media — Start Here</title>
+  <title>Iota Media — You're In!</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../shared/styles.css" />
-  <script src="config.js"></script>
+  <style>
+    .confirm-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 5rem 1.5rem 4rem;
+    }
+
+    .confirm-card {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .confirm-check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #22C55E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .confirm-check svg {
+      width: 28px;
+      height: 28px;
+      stroke: #fff;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    .confirm-headline {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .confirm-sub {
+      font-size: 1rem;
+      color: #475569;
+      line-height: 1.65;
+      margin: 0;
+      max-width: 520px;
+    }
+
+    .divider {
+      width: 100%;
+      border: none;
+      border-top: 1.5px solid #E2E8F0;
+    }
+
+    .community-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin: 0;
+    }
+
+    .community-headline {
+      font-size: clamp(1.15rem, 3vw, 1.5rem);
+      font-weight: 700;
+      color: #0F172A;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0F172A;
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .skool-btn {
+      display: inline-block;
+      background: #0F172A;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 1rem 2.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .skool-btn:hover {
+      background: #1E293B;
+    }
+
+    .skool-subtext {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -21,325 +137,59 @@
     </div>
   </nav>
 
-  <!-- ── COURSE LAYOUT ─────────────────────────────────────────────────────── -->
-  <div class="course-layout">
+  <!-- ── CONFIRMATION PAGE ─────────────────────────────────────────────────── -->
+  <div class="confirm-wrap">
+    <div class="confirm-card">
 
-    <!-- ── SIDEBAR ─────────────────────────────────────────────────────────── -->
-    <aside class="course-sidebar">
-      <p class="sidebar-heading">The School Community</p>
-      <a class="sidebar-link active" href="#" data-module="start" onclick="loadModule('start', this); return false;">Start Here</a>
-      <a class="sidebar-link" href="#" data-module="0" onclick="loadModule(0, this); return false;">Module 01 — Why Personal Brand = Better Recruits</a>
-      <a class="sidebar-link" href="#" data-module="1" onclick="loadModule(1, this); return false;">Module 02 — What Content Actually Works</a>
-      <a class="sidebar-link" href="#" data-module="2" onclick="loadModule(2, this); return false;">Module 03 — How to Film Without a Production Team</a>
-      <a class="sidebar-link" href="#" data-module="3" onclick="loadModule(3, this); return false;">Module 04 — Editing for Maximum Reach</a>
-      <a class="sidebar-link" href="#" data-module="4" onclick="loadModule(4, this); return false;">Module 05 — How to Post Correctly on Instagram</a>
-      <a class="sidebar-link" href="#" data-module="5" onclick="loadModule(5, this); return false;">Module 06 — TikTok Strategy for Salespeople</a>
-      <a class="sidebar-link" href="#" data-module="6" onclick="loadModule(6, this); return false;">Module 07 — Instagram Recruitment Funnel Setup</a>
-      <a class="sidebar-link" href="#" data-module="7" onclick="loadModule(7, this); return false;">Module 08 — DM Conversion</a>
-      <a class="sidebar-link" href="#" data-module="8" onclick="loadModule(8, this); return false;">Module 09 — Consistency Without Burnout</a>
-      <a class="sidebar-link" href="#" data-module="9" onclick="loadModule(9, this); return false;">Module 10 — Building Social Proof Fast</a>
-      <a class="sidebar-link" href="#" data-module="10" onclick="loadModule(10, this); return false;">Module 11 — Scaling to Year-Round Recruitment</a>
-      <a class="sidebar-link" href="#" data-module="11" onclick="loadModule(11, this); return false;">Module 12 — When to Go Done-For-You</a>
-    </aside>
-
-    <!-- ── MAIN CONTENT ────────────────────────────────────────────────────── -->
-    <main class="course-main">
-
-      <!-- Video area — swapped by loadModule() -->
-      <div id="course-video-area">
-        <!-- Welcome video placeholder -->
-        <div class="course-video-placeholder" id="course-video-placeholder">
-          <span class="play-icon" style="font-size:2rem;opacity:0.4;">▶</span>
-          <strong>Welcome Video</strong>
-          <span>Set <code>assets.courseWelcomeVideoUrl</code> in config.js</span>
-        </div>
+      <!-- Check mark -->
+      <div class="confirm-check">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
       </div>
 
-      <!-- Module info — swapped by loadModule() -->
-      <div id="module-info">
-        <p class="course-module-tag">Welcome</p>
-        <h1 class="course-module-title" id="module-title">Start Here</h1>
-        <p class="course-module-desc" id="module-desc">
-          Welcome to The School Community. This free training covers exactly what it takes to build a personal brand that recruits for you &mdash; attracting motivated salespeople to your team organically, without relying on job boards or dried-up personal networks.
-          <br /><br />
-          Work through each module in order. Join the live coaching calls twice a week to get feedback on your content and your recruiting conversations.
-          <br /><br />
-          When you're ready to hand off the entire system and have us run it for you, the option to book a strategy call is always available on the right.
-        </p>
+      <!-- Confirmation copy -->
+      <h1 class="confirm-headline" id="confirm-headline">You're all set!</h1>
+      <p class="confirm-sub">
+        Your free guide is on its way &mdash; check your inbox in the next few minutes.
+        While you wait, come join our free Skool community where D2D leaders are building
+        their personal brand and recruiting on autopilot.
+      </p>
+
+      <hr class="divider" />
+
+      <!-- Skool community section -->
+      <p class="community-label">Free Community</p>
+      <p class="community-headline">See What the D2D Brand Builder Community Is All About</p>
+
+      <!-- YouTube embed -->
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/NUoQD32dmPI?start=3"
+          title="D2D Brand Builder Community"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
       </div>
 
-    </main>
+      <!-- CTA -->
+      <a class="skool-btn" href="https://www.skool.com/d2d-brand-builder-9792/about" target="_blank" rel="noopener">
+        Join the Free Community &rarr;
+      </a>
+      <p class="skool-subtext">Free to join. No credit card required.</p>
 
-    <!-- ── CTA PANEL ───────────────────────────────────────────────────────── -->
-    <aside class="course-cta-panel">
+    </div>
+  </div>
 
-      <div>
-        <span class="cta-badge">For Business Owners</span>
-        <p class="cta-panel-headline" style="margin-top:0.75rem;">
-          Ready to Have Us Handle Everything?
-        </p>
-        <p style="font-size:0.85rem;color:#64748B;margin-top:0.5rem;line-height:1.5;">
-          Meet the Iota Media team and explore whether our done-for-you content &amp; recruitment system is right for you.
-        </p>
-      </div>
-
-      <!-- Quick re-qualification form on this page (mirrors the funnel form fields) -->
-      <div style="display:flex;flex-direction:column;gap:0.75rem;">
-        <input type="text"  id="cta-first"  class="styled-input" placeholder="First name" style="width:100%;padding:0.75rem 1rem;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.875rem;font-family:inherit;" />
-        <input type="text"  id="cta-last"   class="styled-input" placeholder="Last name"  style="width:100%;padding:0.75rem 1rem;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.875rem;font-family:inherit;" />
-        <input type="email" id="cta-email"  class="styled-input" placeholder="Email address" style="width:100%;padding:0.75rem 1rem;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.875rem;font-family:inherit;" />
-        <input type="tel"   id="cta-phone"  class="styled-input" placeholder="Phone number" style="width:100%;padding:0.75rem 1rem;background:#F1F5F9;border:1.5px solid #E2E8F0;border-radius:8px;font-size:0.875rem;font-family:inherit;" />
-
-        <div class="select-wrap">
-          <select id="cta-revenue" class="styled-select" style="width:100%;">
-            <option value="" disabled selected>Annual Business Revenue</option>
-            <!-- Injected from config.js -->
-          </select>
-        </div>
-      </div>
-
-      <button class="cta-panel-btn" onclick="submitCtaForm()">Book a Free Strategy Call</button>
-      <p class="cta-panel-subtext">No obligation. We'll see if it's the right fit.</p>
-
-      <!-- Live Coaching Calls -->
-      <div class="coaching-section">
-        <p class="coaching-section-label">Live Coaching Calls</p>
-
-        <div class="coaching-call">
-          <h5>Content &amp; Personal Brand</h5>
-          <p class="coaching-call-freq">Twice weekly</p>
-          <p>What to post, how to film, and how to build your brand with real momentum.</p>
-        </div>
-
-        <div class="coaching-call">
-          <h5>DM Conversion &amp; Recruiting</h5>
-          <p class="coaching-call-freq">Twice weekly</p>
-          <p>How to turn Instagram interest into booked calls and new team members.</p>
-        </div>
-      </div>
-
-    </aside>
-
-  </div><!-- /course-layout -->
-
-  <script src="../../shared/funnel.js"></script>
+  <script src="config.js"></script>
   <script>
-    // ── MODULE DATA ──────────────────────────────────────────────────────────
-    // Copy lives here so Michael can edit titles/descriptions without touching
-    // the HTML structure. Video URLs come from config.js.
-    const MODULES = [
-      {
-        tag: "Module 01",
-        title: "Why Personal Brand = Better Recruits",
-        desc: "Understand why organic content produces higher-quality, longer-retaining team members than job boards — and why now is the best time to start building.",
-      },
-      {
-        tag: "Module 02",
-        title: "What Content Actually Works",
-        desc: "The exact types of posts that attract motivated salespeople to your profile (not just casual followers). We break down the content categories that convert.",
-      },
-      {
-        tag: "Module 03",
-        title: "How to Film Without a Production Team",
-        desc: "Phone filming basics — angles, lighting, framing, and audio — everything you need to create scroll-stopping content without a crew.",
-      },
-      {
-        tag: "Module 04",
-        title: "Editing for Maximum Reach",
-        desc: "Quick editing workflows that make your content look polished without spending hours in post. The tools, the templates, and the shortcuts that matter.",
-      },
-      {
-        tag: "Module 05",
-        title: "How to Post Correctly on Instagram",
-        desc: "Timing, captions, hashtags, and the algorithm — what actually moves the needle vs. what wastes your time. The posting system that compounds over time.",
-      },
-      {
-        tag: "Module 06",
-        title: "TikTok Strategy for Salespeople",
-        desc: "How to repurpose your Instagram content for TikTok and build a second pipeline of organic recruits without creating everything from scratch.",
-      },
-      {
-        tag: "Module 07",
-        title: "Instagram Recruitment Funnel Setup",
-        desc: "How to structure your profile, bio, highlights, and link-in-bio so that anyone who lands on your page knows exactly who you are and how to take the next step.",
-      },
-      {
-        tag: "Module 08",
-        title: "DM Conversion — Talking to Interested Prospects",
-        desc: "The exact scripts and conversational frameworks for turning DMs into booked discovery calls — without coming across as pushy or desperate.",
-      },
-      {
-        tag: "Module 09",
-        title: "Content Consistency Without Burnout",
-        desc: "Batching, scheduling, and systems for posting consistently even during your busiest season. How to stay active without it consuming your week.",
-      },
-      {
-        tag: "Module 10",
-        title: "Building Social Proof Fast",
-        desc: "How to position yourself as the go-to leader in your niche before you have a large following — and the content types that build credibility fastest.",
-      },
-      {
-        tag: "Module 11",
-        title: "Scaling to Year-Round Recruitment",
-        desc: "How to shift from seasonal hiring spikes to a consistent organic recruiting pipeline that works all year, even when you're not actively posting.",
-      },
-      {
-        tag: "Module 12",
-        title: "When to Go Done-For-You",
-        desc: "The signs you're ready to hand off your content engine, what to expect from a full-service partnership, and how to evaluate whether it's the right move.",
-      },
-    ];
-
-    // ── PAGE INIT ────────────────────────────────────────────────────────────
+    // Personalise headline from URL param if available
     (function () {
-      // Personalise from URL param
       const params = new URLSearchParams(window.location.search);
       const firstName = params.get("fn");
       if (firstName) {
-        const title = document.getElementById("module-title");
-        if (title) title.textContent = "Welcome, " + firstName;
-      }
-
-      // Inject revenue options into sidebar CTA form
-      const revenueSelect = document.getElementById("cta-revenue");
-      if (revenueSelect && CONFIG.routing.incomeOptions) {
-        CONFIG.routing.incomeOptions.forEach(function (opt) {
-          const el = document.createElement("option");
-          el.value = opt.value;
-          el.textContent = opt.label;
-          revenueSelect.appendChild(el);
-        });
-      }
-
-      // Load welcome video if set
-      const welcomeUrl = CONFIG.assets.courseWelcomeVideoUrl;
-      if (welcomeUrl) {
-        renderVideo("course-video-area", welcomeUrl, "course-video-placeholder");
+        const el = document.getElementById("confirm-headline");
+        if (el) el.textContent = "You\u2019re all set, " + firstName + "!";
       }
     })();
-
-    // ── MODULE LOADER ────────────────────────────────────────────────────────
-    function loadModule(index, linkEl) {
-      // Update active sidebar link
-      document.querySelectorAll(".sidebar-link").forEach(function (l) {
-        l.classList.remove("active");
-      });
-      if (linkEl) linkEl.classList.add("active");
-
-      if (index === "start") {
-        // Reset to welcome state
-        document.getElementById("module-title").textContent = "Start Here";
-        document.getElementById("module-desc").innerHTML =
-          "Welcome to The School Community. This free training covers exactly what it takes to build a personal brand that recruits for you &mdash; attracting motivated salespeople to your team organically, without relying on job boards or dried-up personal networks.<br/><br/>Work through each module in order. Join the live coaching calls twice a week to get feedback on your content and your recruiting conversations.<br/><br/>When you're ready to hand off the entire system, the option to book a strategy call is always available on the right.";
-        document.querySelector(".course-module-tag").textContent = "Welcome";
-
-        const welcomeUrl = CONFIG.assets.courseWelcomeVideoUrl;
-        if (welcomeUrl) {
-          renderVideo("course-video-area", welcomeUrl, "course-video-placeholder");
-        } else {
-          resetVideoPlaceholder("Welcome Video", "assets.courseWelcomeVideoUrl");
-        }
-        return;
-      }
-
-      const mod = MODULES[index];
-      if (!mod) return;
-
-      document.querySelector(".course-module-tag").textContent = mod.tag;
-      document.getElementById("module-title").textContent = mod.title;
-      document.getElementById("module-desc").textContent = mod.desc;
-
-      const videoUrl = CONFIG.assets.moduleVideoUrls[index];
-      if (videoUrl) {
-        renderVideo("course-video-area", videoUrl, null);
-      } else {
-        resetVideoPlaceholder(mod.tag + " Video", "assets.moduleVideoUrls[" + index + "]");
-      }
-
-      // Scroll to top of main on mobile
-      if (window.innerWidth < 800) {
-        document.querySelector(".course-main").scrollIntoView({ behavior: "smooth" });
-      }
-    }
-
-    function renderVideo(wrapperId, url, placeholderId) {
-      const wrap = document.getElementById(wrapperId);
-      if (!wrap) return;
-
-      if (placeholderId) {
-        const ph = document.getElementById(placeholderId);
-        if (ph) ph.remove();
-      }
-
-      // Remove any existing video container
-      const existing = wrap.querySelector(".course-video-wrap");
-      if (existing) existing.remove();
-
-      const container = document.createElement("div");
-      container.className = "course-video-wrap";
-
-      const iframe = document.createElement("iframe");
-      iframe.src = url;
-      iframe.allow = "autoplay; fullscreen";
-      iframe.allowFullscreen = true;
-
-      container.appendChild(iframe);
-      wrap.insertBefore(container, wrap.firstChild);
-    }
-
-    function resetVideoPlaceholder(label, configKey) {
-      const wrap = document.getElementById("course-video-area");
-      if (!wrap) return;
-
-      const existing = wrap.querySelector(".course-video-wrap");
-      if (existing) existing.remove();
-
-      let ph = document.getElementById("course-video-placeholder");
-      if (!ph) {
-        ph = document.createElement("div");
-        ph.id = "course-video-placeholder";
-        ph.className = "course-video-placeholder";
-        wrap.insertBefore(ph, wrap.firstChild);
-      }
-      ph.innerHTML =
-        '<span style="font-size:2rem;opacity:0.4;">▶</span>' +
-        "<strong>" + label + "</strong>" +
-        "<span>Set <code>" + configKey + "</code> in config.js</span>";
-    }
-
-    // ── SIDEBAR CTA FORM SUBMIT ──────────────────────────────────────────────
-    function submitCtaForm() {
-      const first   = document.getElementById("cta-first").value.trim();
-      const last    = document.getElementById("cta-last").value.trim();
-      const email   = document.getElementById("cta-email").value.trim();
-      const phone   = document.getElementById("cta-phone").value.trim();
-      const revenue = document.getElementById("cta-revenue").value;
-
-      if (!first || !last || !email || !phone || !revenue) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      const data = { firstName: first, lastName: last, email: email, phone: phone, revenue: revenue, source: "low-intent-cta" };
-
-      const endpoint = CONFIG.integrations.formWebhookUrl;
-      if (endpoint) {
-        fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-          keepalive: true,
-        }).catch(function () {});
-      }
-
-      // Open calendar if set, otherwise confirm
-      const calUrl = CONFIG.integrations.calendarEmbedUrl;
-      if (calUrl) {
-        window.open(calUrl, "_blank");
-      } else {
-        alert("Thanks, " + first + "! Our team will reach out shortly to schedule your call.");
-      }
-    }
   </script>
 </body>
 </html>
