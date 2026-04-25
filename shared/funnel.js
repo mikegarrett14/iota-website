@@ -188,12 +188,10 @@
       });
     }
 
-    // Route based on qualification
-    const dest = formData.intent === "high"
-      ? CONFIG.routing.highIntentPage
-      : CONFIG.routing.lowIntentPage;
-
-    window.location.href = dest + "?fn=" + encodeURIComponent(formData.firstName);
+    var page = formData.intent === "high"
+      ? CONFIG.routing.offerPage
+      : CONFIG.routing.offerPageLowIntent;
+    window.location.href = page + "?fn=" + encodeURIComponent(formData.firstName);
   };
 
   // ── EXPOSE NAVIGATION TO HTML ─────────────────────────────────────────────

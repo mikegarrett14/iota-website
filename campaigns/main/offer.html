@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iota Media — Watch This Before You Check Your Email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../shared/styles.css?v=3" />
+  <script src="config.js"></script>
+</head>
+<body>
+
+  <!-- ── STICKY BANNER ────────────────────────────────────────────────────── -->
+  <div class="vsl-banner vsl-banner--sticky">
+    <img class="vsl-banner-logo" src="../../shared/logo-white.svg" alt="Iota Media" />
+    <div class="vsl-banner-text">
+      <div class="vsl-banner-important" style="color:#FFD700;font-size:1.1rem;font-weight:900;letter-spacing:0.1em;">&#9888; IMPORTANT</div>
+      <div class="vsl-banner-sub">Before You Grab Your Free Guide &mdash; Watch This Short Video</div>
+    </div>
+  </div>
+
+  <!-- ── OFFER PAGE ────────────────────────────────────────────────────────── -->
+  <div class="vsl-wrapper">
+
+    <p class="vsl-label" id="greeting-label">Watch the Video Below</p>
+
+    <h1 class="vsl-headline">
+      How to Scale Your Instagram to 100+ Recruiting Calls in 6 Months
+    </h1>
+
+    <!-- Video
+         Set assets.vslVideoEmbedUrl in config.js to replace the placeholder.
+         Format: https://drive.google.com/file/d/YOUR_FILE_ID/preview -->
+    <div class="video-outer" id="video-outer">
+      <!-- Placeholder (shown until vslVideoEmbedUrl is set in config.js) -->
+      <div class="video-placeholder" id="video-placeholder">
+        <span class="play-icon">▶</span>
+        <strong>VSL Video</strong>
+        <span>Set <code>assets.vslVideoEmbedUrl</code> in config.js</span>
+      </div>
+      <!-- Iframe is injected by the init script below -->
+    </div>
+
+    <!-- Social proof checklist -->
+    <div class="proof-list">
+      <div class="proof-item">Built client accounts from 0 to 15k+ followers</div>
+      <div class="proof-item">100% done-for-you &mdash; clients just show up to film once</div>
+      <div class="proof-item">Organic recruits who are already presold before the first conversation</div>
+      <div class="proof-item">No job board fees &mdash; scales as your brand grows</div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="vsl-ctas">
+      <button class="cta-primary" onclick="scrollToCalendar()">
+        Book Discovery Call &rarr;
+      </button>
+      <button class="cta-secondary cta-secondary--locked" id="guide-link" onclick="handleGuideClick()">
+        No thanks, take me to my free guide&nbsp;<span id="guide-counter-wrap">(<span id="guide-countdown">15</span>)</span>
+      </button>
+    </div>
+
+    <!-- Calendar — always visible -->
+    <div class="calendar-section calendar-section--always-visible" id="calendar-section">
+      <h3>Book Your Discovery Call</h3>
+      <p>Speak directly with our team and find out if we're a fit.</p>
+
+      <div class="calendar-embed-wrap" id="calendar-embed-wrap">
+        <div class="calendar-placeholder" id="calendar-placeholder">
+          <strong>&#128197; Calendar Embed</strong>
+          <span>Set <code>integrations.calendarEmbedUrl</code> in config.js</span>
+        </div>
+        <!-- Iframe injected by init script -->
+      </div>
+    </div>
+
+  </div><!-- /vsl-wrapper -->
+
+  <script src="../../shared/funnel.js"></script>
+  <script>
+    (function () {
+      // Personalise greeting from URL param
+      var params = new URLSearchParams(window.location.search);
+      var firstName = params.get("fn");
+      if (firstName) {
+        var label = document.getElementById("greeting-label");
+        if (label) label.textContent = firstName + ", watch the video below";
+      }
+
+      // Inject VSL video if URL is set
+      var videoUrl = CONFIG.assets.vslVideoEmbedUrl;
+      if (videoUrl) {
+        var placeholder = document.getElementById("video-placeholder");
+        if (placeholder) placeholder.remove();
+
+        var outer = document.getElementById("video-outer");
+        var container = document.createElement("div");
+        container.className = "video-container";
+
+        var iframe = document.createElement("iframe");
+        iframe.src = videoUrl;
+        iframe.allow = "autoplay; fullscreen";
+        iframe.allowFullscreen = true;
+
+        container.appendChild(iframe);
+        outer.appendChild(container);
+      }
+
+      // Inject calendar if URL is set
+      var calUrl = CONFIG.integrations.calendarEmbedUrl;
+      if (calUrl) {
+        var calPlaceholder = document.getElementById("calendar-placeholder");
+        if (calPlaceholder) calPlaceholder.remove();
+
+        var wrap = document.getElementById("calendar-embed-wrap");
+        var calIframe = document.createElement("iframe");
+        calIframe.src = calUrl;
+        calIframe.height = "700";
+        calIframe.style.width = "100%";
+        calIframe.style.border = "none";
+        calIframe.style.display = "block";
+        wrap.appendChild(calIframe);
+      }
+
+      // 15-second countdown to unlock the guide link
+      var remaining = 15;
+      var countdownEl = document.getElementById("guide-countdown");
+      var guideLink = document.getElementById("guide-link");
+
+      var timer = setInterval(function () {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          guideLink.classList.remove("cta-secondary--locked");
+          document.getElementById("guide-counter-wrap").remove();
+        } else {
+          countdownEl.textContent = remaining;
+        }
+      }, 1000);
+    })();
+
+    function scrollToCalendar() {
+      document.getElementById("calendar-section").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function handleGuideClick() {
+      if (document.getElementById("guide-link").classList.contains("cta-secondary--locked")) return;
+      var url = CONFIG.assets.guidePdfUrl;
+      if (url) {
+        window.open(url, "_blank");
+      } else {
+        alert("Your guide is on its way to your inbox!");
+      }
+    }
+  </script>
+</body>
+</html>
