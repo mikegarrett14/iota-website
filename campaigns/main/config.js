@@ -65,8 +65,8 @@ const CONFIG = {
       { label: "$1M+/year",           value: "1m_plus",    intent: "high" },
     ],
 
-    offerPage: "offer.html",
-    offerPageLowIntent: "offer-low-intent.html",
+    offerPage: "/campaigns/main/offer.html",
+    offerPageLowIntent: "/campaigns/main/offer-low-intent.html",
   },
 
   // ── FORM OPTION LISTS ────────────────────────────────────────────────────────
