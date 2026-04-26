@@ -360,11 +360,56 @@ select.styled-select.error { border-color: #EF4444; }
   background: #0A2472;
   color: #fff;
   text-align: center;
-  padding: 1rem 2rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom: 3px solid #FFD700;
+}
+
+.vsl-banner-logo {
+  height: 28px;
+  width: auto;
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.vsl-banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.vsl-banner-important {
+  color: #FFD700;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+
+.vsl-banner-sub {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.01em;
   line-height: 1.4;
+}
+
+.vsl-banner--sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.vsl-banner--sticky + .vsl-wrapper {
+  padding-top: 5.5rem;
 }
 
 .vsl-wrapper {
@@ -383,6 +428,8 @@ select.styled-select.error { border-color: #EF4444; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #2176AE;
+  margin-top: -1.25rem;
+  margin-bottom: -1.25rem;
 }
 
 .vsl-headline {
@@ -505,6 +552,13 @@ select.styled-select.error { border-color: #EF4444; }
   margin-top: 0.05em;
 }
 
+.cta-secondary--locked {
+  color: #CBD5E1 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-decoration: none;
+}
+
 /* ── CALENDAR SECTION ────────────────────────────────────────────────────── */
 .calendar-section {
   display: none;
@@ -517,6 +571,10 @@ select.styled-select.error { border-color: #EF4444; }
 }
 
 .calendar-section.visible { display: flex; }
+
+.calendar-section--always-visible {
+  display: flex;
+}
 
 .calendar-section h3 {
   font-size: 1.4rem;
