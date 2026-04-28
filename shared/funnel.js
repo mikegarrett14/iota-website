@@ -32,6 +32,10 @@
       img.src = url;
       img.style.display = "block";
       placeholder.style.display = "none";
+      img.onerror = function () {
+        img.style.display = "none";
+        placeholder.style.display = "flex";
+      };
     } else {
       img.style.display = "none";
       placeholder.style.display = "flex";

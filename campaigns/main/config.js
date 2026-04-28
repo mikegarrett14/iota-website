@@ -29,7 +29,7 @@ const CONFIG = {
   assets: {
     // Guide preview image shown on the landing page above the form
     // Replace YOUR_FILE_ID with the Google Drive file ID
-    guidePreviewImageUrl: "https://drive.google.com/uc?id=1lex8IJLIdH2PXfYwuwnxR8h9XhVnmKUp"
+    guidePreviewImageUrl: "https://drive.google.com/thumbnail?id=1lex8IJLIdH2PXfYwuwnxR8h9XhVnmKUp&sz=w1000"
 
     // VSL video embed on the high-intent offer page
     vslVideoEmbedUrl: "", // e.g. "https://drive.google.com/file/d/YOUR_FILE_ID/preview"
