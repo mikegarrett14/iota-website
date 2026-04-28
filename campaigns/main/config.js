@@ -38,7 +38,7 @@ const CONFIG = {
     lowIntentVslVideoEmbedUrl: "", // e.g. "https://drive.google.com/file/d/YOUR_FILE_ID/preview"
 
     // Downloadable guide PDF
-    guidePdfUrl: "https://docs.google.com/document/d/1jJltHq4unUgWKi59kiPsygkZtyllOERWJQzg2t8AYjA/export?format=pdf",
+    guidePdfUrl: "https://docs.google.com/document/d/1MXRKkJmVvLZ2Da4atpfWf4tjdiMbJ0z-l_IBdFFWupk/export?format=pdf",
   },
 
   // ── FORMS & INTEGRATIONS ────────────────────────────────────────────────────
