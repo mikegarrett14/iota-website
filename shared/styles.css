@@ -75,6 +75,14 @@ body {
 
 .funnel-headline h1 .highlight { color: #2176AE; }
 
+.funnel-subline {
+  margin-top: 0.85rem;
+  font-size: 0.975rem;
+  font-weight: 500;
+  color: #475569;
+  line-height: 1.6;
+}
+
 /* ── GUIDE PREVIEW IMAGE ─────────────────────────────────────────────────── */
 .guide-preview-wrap {
   width: 100%;
