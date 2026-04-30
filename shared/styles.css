@@ -368,7 +368,8 @@ select.styled-select.error { border-color: #EF4444; }
   background: #0A2472;
   color: #fff;
   text-align: center;
-  padding: 0.75rem 2rem;
+  padding: 1.5rem 2rem;
+  min-height: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -417,7 +418,7 @@ select.styled-select.error { border-color: #EF4444; }
 }
 
 .vsl-banner--sticky + .vsl-wrapper {
-  padding-top: 5.5rem;
+  padding-top: 7rem;
 }
 
 .vsl-wrapper {
