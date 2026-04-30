@@ -9,15 +9,13 @@
 
   // ── STATE ──────────────────────────────────────────────────────────────────
   let currentStep = 1;
-  const totalSteps = 5;
+  const totalSteps = 4;
   const formData = {};
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
     initGuidePreview();
     initIncomeOptions();
-    initServiceOptions();
-    initRecruitingOptions();
     showStep(1);
   });
 
@@ -65,35 +63,10 @@
         });
         btn.classList.add("selected");
 
-        setTimeout(function () { goToStep(5); }, 220);
+        setTimeout(function () { submitForm(); }, 220);
       });
 
       container.appendChild(btn);
-    });
-  }
-
-  // ── BUILD SERVICE OPTIONS (Step 5) ────────────────────────────────────────
-  function initServiceOptions() {
-    const select = document.getElementById("service-select");
-    if (!select) return;
-
-    CONFIG.formOptions.serviceOptions.forEach(function (opt) {
-      const el = document.createElement("option");
-      el.value = opt;
-      el.textContent = opt;
-      select.appendChild(el);
-    });
-  }
-
-  function initRecruitingOptions() {
-    const select = document.getElementById("recruiting-select");
-    if (!select) return;
-
-    CONFIG.formOptions.recruitingOptions.forEach(function (opt) {
-      const el = document.createElement("option");
-      el.value = opt;
-      el.textContent = opt;
-      select.appendChild(el);
     });
   }
 
@@ -152,29 +125,11 @@
       formData.phone = phone;
     }
 
-    if (n === 5) {
-      const service    = val("service-select");
-      const recruiting = val("recruiting-select");
-      if (!service) {
-        showError("Please select the service you sell.");
-        document.getElementById("service-select").classList.add("error");
-        return false;
-      }
-      if (!recruiting) {
-        showError("Please select your recruiting model.");
-        document.getElementById("recruiting-select").classList.add("error");
-        return false;
-      }
-      formData.service            = service;
-      formData.recruiting_season  = recruiting;
-    }
-
     return true;
   }
 
   // ── FORM SUBMIT ───────────────────────────────────────────────────────────
   window.submitForm = function () {
-    if (!validateStep(5)) return;
 
     // Persist to localStorage so the destination page can personalise
     try { localStorage.setItem("iotaLead", JSON.stringify(formData)); } catch (e) {}

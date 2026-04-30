@@ -87,28 +87,6 @@
         <button class="back-link" onclick="prevStep(4)">← Previous</button>
       </div>
 
-      <!-- ── STEP 5: Business details + submit ────────────────────────── -->
-      <div class="step hidden" id="step-5">
-        <p class="step-question">Tell us about your <strong>business.</strong></p>
-
-        <div class="select-wrap" style="width:100%;">
-          <select id="service-select" class="styled-select">
-            <option value="" disabled selected>What service do you sell?</option>
-            <!-- Options injected from config.js by funnel.js -->
-          </select>
-        </div>
-
-        <div class="select-wrap" style="width:100%;">
-          <select id="recruiting-select" class="styled-select">
-            <option value="" disabled selected>Do you recruit year-round or seasonally?</option>
-            <!-- Options injected from config.js by funnel.js -->
-          </select>
-        </div>
-
-        <button class="cta-btn" onclick="submitForm()">GET MY FREE GUIDE</button>
-        <button class="back-link" onclick="prevStep(5)">← Previous</button>
-      </div>
-
       <!-- Error message (shared across all steps) -->
       <p class="error-msg" id="error-msg"></p>
 
