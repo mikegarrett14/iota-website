@@ -44,9 +44,9 @@
     </div>
 
     <!-- Audio reminder banner -->
-    <div style="background:#FFD700;color:#1a1a2e;text-align:center;font-weight:900;font-size:1.2rem;padding:12px;letter-spacing:0.05em;white-space:nowrap;">
+    <button id="audio-btn" onclick="unmuteVideo()" style="background:#FFD700;color:#1a1a2e;text-align:center;font-weight:900;font-size:1.2rem;padding:12px;letter-spacing:0.05em;white-space:nowrap;width:100%;border:none;cursor:pointer;display:block;">
       🔊 TURN ON AUDIO 🔊
-    </div>
+    </button>
 
     <!-- Social proof checklist -->
     <div class="proof-list">
@@ -104,12 +104,17 @@
         container.className = "video-container";
 
         var iframe = document.createElement("iframe");
-        iframe.src = videoUrl;
+        iframe.id = "vsl-player";
+        iframe.src = videoUrl + "&enablejsapi=1";
         iframe.allow = "autoplay; fullscreen";
         iframe.allowFullscreen = true;
 
         container.appendChild(iframe);
         outer.appendChild(container);
+
+        var apiScript = document.createElement("script");
+        apiScript.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(apiScript);
       }
 
       // Inject calendar if URL is set
@@ -153,6 +158,23 @@
 
     function scrollToCalendar() {
       document.getElementById("calendar-section").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    var ytPlayer;
+    window.onYouTubeIframeAPIReady = function () {
+      ytPlayer = new YT.Player("vsl-player");
+    };
+
+    function unmuteVideo() {
+      if (ytPlayer && ytPlayer.unMute) {
+        ytPlayer.unMute();
+        var btn = document.getElementById("audio-btn");
+        btn.textContent = "🔊 Audio is ON";
+        btn.style.background = "#2ecc71";
+        btn.style.color = "#fff";
+        btn.style.cursor = "default";
+        btn.onclick = null;
+      }
     }
 
     function handleGuideClick() {
