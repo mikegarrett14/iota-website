@@ -32,10 +32,10 @@ const CONFIG = {
     guidePreviewImageUrl: "/shared/blueprint-preview.jpg",
 
     // VSL video embed on the high-intent offer page
-    vslVideoEmbedUrl: "", // e.g. "https://drive.google.com/file/d/YOUR_FILE_ID/preview"
+    vslVideoEmbedUrl: "https://www.youtube.com/embed/lsV2p_lCG_8",
 
     // VSL video embed on the low-intent offer page
-    lowIntentVslVideoEmbedUrl: "", // e.g. "https://drive.google.com/file/d/YOUR_FILE_ID/preview"
+    lowIntentVslVideoEmbedUrl: "https://www.youtube.com/embed/lsV2p_lCG_8",
 
     // Downloadable guide PDF
     guidePdfUrl: "https://docs.google.com/document/d/1MXRKkJmVvLZ2Da4atpfWf4tjdiMbJ0z-l_IBdFFWupk/export?format=pdf",
