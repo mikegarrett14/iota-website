@@ -49,7 +49,7 @@ const CONFIG = {
 
     // Calendar embed URL (Calendly, GoHighLevel, etc.)
     // Pasted directly into an <iframe> on the high-intent page
-    calendarEmbedUrl: "",
+    calendarEmbedUrl: "https://system.iotacompany.com/widget/booking/CCB7nqri3v3VJY0tjzrB",
   },
 
   // ── ROUTING ─────────────────────────────────────────────────────────────────

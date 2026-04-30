@@ -116,11 +116,17 @@
         var wrap = document.getElementById("calendar-embed-wrap");
         var calIframe = document.createElement("iframe");
         calIframe.src = calUrl;
-        calIframe.height = "700";
         calIframe.style.width = "100%";
         calIframe.style.border = "none";
+        calIframe.style.overflow = "hidden";
         calIframe.style.display = "block";
+        calIframe.scrolling = "no";
         wrap.appendChild(calIframe);
+
+        var calScript = document.createElement("script");
+        calScript.src = "https://system.iotacompany.com/js/form_embed.js";
+        calScript.type = "text/javascript";
+        document.body.appendChild(calScript);
       }
 
       // 15-second countdown to unlock the guide link
