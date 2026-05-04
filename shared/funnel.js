@@ -81,6 +81,11 @@
     }
     currentStep = n;
     clearError();
+
+    // Fire GA4 event when a new step is reached
+    if (typeof gtag === "function") {
+      gtag("event", "funnel_step_view", { step_number: n });
+    }
   }
 
   function goToStep(n) {
@@ -130,6 +135,11 @@
 
   // ── FORM SUBMIT ───────────────────────────────────────────────────────────
   window.submitForm = function () {
+
+    // Fire GA4 conversion event
+    if (typeof gtag === "function") {
+      gtag("event", "form_submit", { intent: formData.intent });
+    }
 
     // Persist to localStorage so the destination page can personalise
     try { localStorage.setItem("iotaLead", JSON.stringify(formData)); } catch (e) {}
