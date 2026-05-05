@@ -38,7 +38,7 @@ const CONFIG = {
     lowIntentVslVideoEmbedUrl: "https://www.youtube.com/embed/2xSZJrCm15k?autoplay=1&mute=1",
 
     // Downloadable guide PDF
-    guidePdfUrl: "https://docs.google.com/document/d/1MXRKkJmVvLZ2Da4atpfWf4tjdiMbJ0z-l_IBdFFWupk/export?format=pdf",
+    guidePdfUrl: "/shared/instagram-recruiting-blueprint.pdf",
   },
 
   // ── FORMS & INTEGRATIONS ────────────────────────────────────────────────────
