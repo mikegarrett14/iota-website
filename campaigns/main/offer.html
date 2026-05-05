@@ -57,11 +57,6 @@
       <!-- Iframe is injected by the init script below -->
     </div>
 
-    <!-- Audio reminder banner -->
-    <button id="audio-btn" onclick="unmuteVideo()" style="background:#FFD700;color:#1a1a2e;text-align:center;font-weight:900;font-size:1.2rem;padding:12px;letter-spacing:0.05em;white-space:nowrap;width:100%;border:none;cursor:pointer;display:block;">
-      🔊 TURN ON AUDIO 🔊
-    </button>
-
     <!-- Social proof checklist -->
     <div class="proof-list">
       <div class="proof-item">Built client accounts from 0 to 15k+ followers</div>
@@ -72,18 +67,18 @@
 
     <!-- CTAs -->
     <div class="vsl-ctas">
-      <button class="cta-primary" onclick="scrollToCalendar()">
+      <button class="cta-primary" id="main-cta" onclick="scrollToCalendar()">
         Book Discovery Call &rarr;
       </button>
-      <button class="cta-secondary cta-secondary--locked" id="guide-link" onclick="handleGuideClick()">
-        No thanks, take me to my free guide&nbsp;<span id="guide-counter-wrap">(<span id="guide-countdown">15</span>)</span>
+      <button class="cta-secondary" id="guide-link" onclick="handleGuideClick()" style="display:none;">
+        No thanks, just take me to my free guide
       </button>
     </div>
 
     <!-- Calendar — always visible -->
     <div class="calendar-section calendar-section--always-visible" id="calendar-section">
       <h3>Book Your Discovery Call</h3>
-      <p>Speak directly with our team and find out if we're a fit.</p>
+      <p>Speak directly with our team to learn how we can install the 100+ recruiting call funnel for you.</p>
 
       <div class="calendar-embed-wrap" id="calendar-embed-wrap">
         <div class="calendar-placeholder" id="calendar-placeholder">
@@ -91,6 +86,48 @@
           <span>Set <code>integrations.calendarEmbedUrl</code> in config.js</span>
         </div>
         <!-- Iframe injected by init script -->
+      </div>
+    </div>
+
+    <!-- Results carousel -->
+    <div class="results-section">
+      <h3 class="results-section__heading">Real Results From Our Clients</h3>
+      <div class="results-carousel">
+
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/kenna-profile.png" alt="@kenna_halls — 18K followers, $18M in sales" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/kenna-reels.jpeg" alt="@kenna_halls Reels — up to 316K views" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/jake-profile.jpeg" alt="@jake.robles — 17.9K followers, $60M+ in sales" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/zack-profile.jpeg" alt="@zackstewartsales — 17.2K followers, $2.23M in revenue" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/zack-profile-dark.png" alt="@zackstewartsales profile" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/text-scheduled-calls.jpg" alt="Client: scheduled 3 calls and hired someone" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/text-hockey-signing.jpg" alt="Client: got first signing from the ad" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/slack-jaron.jpeg" alt="Jaron: set 6 leads and signed 3 over the weekend" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/text-14-hired.jpeg" alt="14 hired last month" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/text-interview-schedule.jpeg" alt="15 interviews booked through IG in one day" />
+        </div>
+        <div class="result-card result-card--screenshot">
+          <img src="../../shared/images/results/spreadsheet-recruits.jpg" alt="IOTA Recruits tracker — 60+ recruits in pipeline" />
+        </div>
+
       </div>
     </div>
 
@@ -123,7 +160,14 @@
         iframe.allow = "autoplay; fullscreen";
         iframe.allowFullscreen = true;
 
+        var overlay = document.createElement("div");
+        overlay.id = "unmute-overlay";
+        overlay.className = "unmute-overlay";
+        overlay.onclick = unmuteVideo;
+        overlay.innerHTML = '<div class="unmute-overlay__icon">🔊</div><div class="unmute-overlay__text">Your Video Is Playing<br>Click To Unmute</div>';
+
         container.appendChild(iframe);
+        container.appendChild(overlay);
         outer.appendChild(container);
 
         var apiScript = document.createElement("script");
@@ -153,21 +197,14 @@
         document.body.appendChild(calScript);
       }
 
-      // 15-second countdown to unlock the guide link
-      var remaining = 15;
-      var countdownEl = document.getElementById("guide-countdown");
+      // After 15 seconds: upgrade primary CTA and reveal secondary
       var guideLink = document.getElementById("guide-link");
+      var mainCta = document.getElementById("main-cta");
 
-      var timer = setInterval(function () {
-        remaining -= 1;
-        if (remaining <= 0) {
-          clearInterval(timer);
-          guideLink.classList.remove("cta-secondary--locked");
-          document.getElementById("guide-counter-wrap").remove();
-        } else {
-          countdownEl.textContent = remaining;
-        }
-      }, 1000);
+      setTimeout(function () {
+        mainCta.textContent = "See if I’m a fit for 100+ recruiting calls →";
+        guideLink.style.display = "";
+      }, 15000);
     })();
 
     function scrollToCalendar() {
@@ -182,13 +219,9 @@
     function unmuteVideo() {
       if (ytPlayer && ytPlayer.unMute) {
         ytPlayer.unMute();
-        var btn = document.getElementById("audio-btn");
-        btn.textContent = "🔊 Audio is ON";
-        btn.style.background = "#2ecc71";
-        btn.style.color = "#fff";
-        btn.style.cursor = "default";
-        btn.onclick = null;
       }
+      var overlay = document.getElementById("unmute-overlay");
+      if (overlay) overlay.classList.add("hidden");
     }
 
     function handleGuideClick() {
