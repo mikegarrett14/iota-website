@@ -569,6 +569,13 @@ select.styled-select.error { border-color: #EF4444; }
 .cta-primary:hover  { background: #0A2472; transform: translateY(-1px); }
 .cta-primary:active { transform: translateY(0); }
 
+.cta-primary--locked {
+  background: #94A3B8 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+}
+
 .cta-secondary {
   font-size: 0.875rem;
   color: #64748B;

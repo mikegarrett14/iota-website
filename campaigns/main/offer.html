@@ -67,8 +67,8 @@
 
     <!-- CTAs -->
     <div class="vsl-ctas">
-      <button class="cta-primary" id="main-cta" onclick="scrollToCalendar()">
-        Book Discovery Call &rarr;
+      <button class="cta-primary cta-primary--locked" id="main-cta" onclick="scrollToCalendar()">
+        See if I&rsquo;m a fit for 100+ recruiting calls &rarr;&nbsp;<span id="main-cta-counter">(<span id="main-cta-countdown">15</span>)</span>
       </button>
       <button class="cta-secondary" id="guide-link" onclick="handleGuideClick()" style="display:none;">
         No thanks, just take me to my free guide
@@ -197,14 +197,23 @@
         document.body.appendChild(calScript);
       }
 
-      // After 15 seconds: upgrade primary CTA and reveal secondary
+      // Countdown to unlock primary CTA and reveal secondary
       var guideLink = document.getElementById("guide-link");
       var mainCta = document.getElementById("main-cta");
+      var countdownEl = document.getElementById("main-cta-countdown");
+      var remaining = 15;
 
-      setTimeout(function () {
-        mainCta.textContent = "See if I’m a fit for 100+ recruiting calls →";
-        guideLink.style.display = "";
-      }, 15000);
+      var timer = setInterval(function () {
+        remaining -= 1;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          mainCta.classList.remove("cta-primary--locked");
+          document.getElementById("main-cta-counter").remove();
+          guideLink.style.display = "";
+        } else {
+          countdownEl.textContent = remaining;
+        }
+      }, 1000);
     })();
 
     function scrollToCalendar() {
