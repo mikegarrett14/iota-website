@@ -35,7 +35,7 @@ const CONFIG = {
     vslVideoEmbedUrl: "https://www.youtube.com/embed/2xSZJrCm15k?autoplay=1&mute=1",
 
     // VSL video embed on the low-intent offer page
-    lowIntentVslVideoEmbedUrl: "https://www.youtube.com/embed/2xSZJrCm15k?autoplay=1&mute=1",
+    lowIntentVslVideoEmbedUrl: "https://www.youtube.com/embed/UTYkTG2WVsM?autoplay=1&mute=1",
 
     // Downloadable guide PDF
     guidePdfUrl: "/shared/instagram-recruiting-blueprint.pdf",
