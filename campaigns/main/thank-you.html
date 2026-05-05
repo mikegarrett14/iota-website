@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iota Media — You're Booked!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../shared/styles.css" />
+  <script src="config.js"></script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wm33vflvsh");
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+    gtag('event', 'conversion', { event_category: 'funnel', event_label: 'call_booked' });
+  </script>
+
+  <style>
+    .thankyou-wrapper {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    .thankyou-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #2176AE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .thankyou-headline {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #0A2472;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .thankyou-sub {
+      font-size: 1.05rem;
+      color: #475569;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .thankyou-steps {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .thankyou-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      text-align: left;
+    }
+
+    .thankyou-step__num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #0A2472;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thankyou-step__text {
+      font-size: 0.9rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+
+    .thankyou-step__text strong {
+      display: block;
+      color: #0A2472;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+
+    .thankyou-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #E2E8F0;
+      margin: 0.5rem 0;
+    }
+
+    .thankyou-guide {
+      font-size: 0.875rem;
+      color: #64748B;
+    }
+
+    .thankyou-guide a {
+      color: #2176AE;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">
+        <img src="../../shared/logo-white.svg" alt="Iota Media" />
+      </a>
+    </div>
+  </nav>
+
+  <div class="thankyou-wrapper">
+
+    <div class="thankyou-icon">✓</div>
+
+    <h1 class="thankyou-headline" id="thankyou-headline">You're booked!</h1>
+
+    <p class="thankyou-sub">
+      Check your email for a calendar confirmation.<br />
+      Here's how to make the most of your call:
+    </p>
+
+    <div class="thankyou-steps">
+      <div class="thankyou-step">
+        <div class="thankyou-step__num">1</div>
+        <div class="thankyou-step__text">
+          <strong>Check your inbox</strong>
+          You'll receive a confirmation email with the call link and time. Add it to your calendar.
+        </div>
+      </div>
+      <div class="thankyou-step">
+        <div class="thankyou-step__num">2</div>
+        <div class="thankyou-step__text">
+          <strong>Follow us on Instagram</strong>
+          Get a feel for the content style we build for clients before the call.
+        </div>
+      </div>
+      <div class="thankyou-step">
+        <div class="thankyou-step__num">3</div>
+        <div class="thankyou-step__text">
+          <strong>Come ready to share your goal</strong>
+          How many recruits do you want per month? What's your team size target? The more specific, the more we can help.
+        </div>
+      </div>
+    </div>
+
+    <hr class="thankyou-divider" />
+
+    <p class="thankyou-guide" id="guide-line">
+      Your free guide is also on its way to your inbox.
+    </p>
+
+  </div>
+
+  <script src="../../shared/funnel.js"></script>
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var firstName = params.get("fn");
+    if (firstName) {
+      var h = document.getElementById("thankyou-headline");
+      if (h) h.textContent = firstName + ", you’re booked!";
+    }
+  </script>
+</body>
+</html>
