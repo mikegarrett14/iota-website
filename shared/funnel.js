@@ -141,6 +141,11 @@
       gtag("event", "form_submit", { intent: formData.intent });
     }
 
+    // Fire Meta Pixel Lead event
+    if (typeof fbq === "function") {
+      fbq("track", "Lead");
+    }
+
     // Persist to localStorage so the destination page can personalise
     try { localStorage.setItem("iotaLead", JSON.stringify(formData)); } catch (e) {}
 
