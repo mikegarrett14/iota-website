@@ -213,13 +213,27 @@
     }
 
     var ytPlayer;
+    var pendingUnmute = false;
     window.onYouTubeIframeAPIReady = function () {
-      ytPlayer = new YT.Player("vsl-player");
+      ytPlayer = new YT.Player("vsl-player", {
+        events: {
+          onReady: function () {
+            if (pendingUnmute) {
+              ytPlayer.unMute();
+              ytPlayer.setVolume(100);
+              pendingUnmute = false;
+            }
+          }
+        }
+      });
     };
 
     function unmuteVideo() {
-      if (ytPlayer && ytPlayer.unMute) {
+      if (ytPlayer && typeof ytPlayer.unMute === "function") {
         ytPlayer.unMute();
+        ytPlayer.setVolume(100);
+      } else {
+        pendingUnmute = true;
       }
       var overlay = document.getElementById("unmute-overlay");
       if (overlay) overlay.classList.add("hidden");
