@@ -9,12 +9,13 @@
 
   // ── STATE ──────────────────────────────────────────────────────────────────
   let currentStep = 1;
-  const totalSteps = 4;
+  const totalSteps = 5;
   const formData = {};
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
     initGuidePreview();
+    initIndustryOptions();
     initIncomeOptions();
     showStep(1);
   });
@@ -40,7 +41,29 @@
     }
   }
 
-  // ── BUILD INCOME OPTIONS (Step 4) ─────────────────────────────────────────
+  // ── INDUSTRY OPTIONS (Step 4) ─────────────────────────────────────────────
+  function initIndustryOptions() {
+    const btns = document.querySelectorAll("#industry-options .option-btn");
+    const otherWrap = document.getElementById("industry-other-wrap");
+    if (!btns.length) return;
+
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        btns.forEach(function (b) { b.classList.remove("selected"); });
+        btn.classList.add("selected");
+        formData.industry = btn.dataset.value;
+        if (btn.dataset.value === "other") {
+          otherWrap.style.display = "block";
+          document.getElementById("industry-other").focus();
+        } else {
+          otherWrap.style.display = "none";
+          formData.industryOther = "";
+        }
+      });
+    });
+  }
+
+  // ── BUILD INCOME OPTIONS (Step 5) ─────────────────────────────────────────
   function initIncomeOptions() {
     const container = document.getElementById("income-options");
     if (!container) return;
@@ -128,6 +151,22 @@
         return false;
       }
       formData.phone = phone;
+    }
+
+    if (n === 4) {
+      if (!formData.industry) {
+        showError("Please select your industry.");
+        return false;
+      }
+      if (formData.industry === "other") {
+        const other = val("industry-other");
+        if (!other) {
+          showError("Please specify your industry.");
+          document.getElementById("industry-other").classList.add("error");
+          return false;
+        }
+        formData.industryOther = other;
+      }
     }
 
     return true;
