@@ -118,12 +118,31 @@
         <button class="back-link" onclick="prevStep(3)">← Previous</button>
       </div>
 
-      <!-- ── STEP 4: Income (qualification gate — auto-advances on click) ── -->
+      <!-- ── STEP 4: Industry ─────────────────────────────────────────────── -->
       <div class="step hidden" id="step-4">
+        <p class="step-question">What <strong>industry</strong> are you in?</p>
+        <div class="option-list" id="industry-options">
+          <button type="button" class="option-btn" data-value="life-health-insurance">Life/Health Insurance</button>
+          <button type="button" class="option-btn" data-value="roofing">Roofing</button>
+          <button type="button" class="option-btn" data-value="windows">Windows</button>
+          <button type="button" class="option-btn" data-value="alarms">Alarms</button>
+          <button type="button" class="option-btn" data-value="pest-control">Pest Control</button>
+          <button type="button" class="option-btn" data-value="solar">Solar</button>
+          <button type="button" class="option-btn" data-value="other">Other</button>
+        </div>
+        <div id="industry-other-wrap" style="display:none; margin-top:12px;">
+          <input type="text" id="industry-other" placeholder="Please specify your industry" />
+        </div>
+        <button class="cta-btn" onclick="nextStep(4)" style="margin-top:16px;">CONTINUE</button>
+        <button class="back-link" onclick="prevStep(4)">← Previous</button>
+      </div>
+
+      <!-- ── STEP 5: Income (qualification gate — auto-advances on click) ── -->
+      <div class="step hidden" id="step-5">
         <p class="step-question">What is your <strong>annual income?</strong></p>
         <!-- Options are injected from config.js by funnel.js -->
         <div class="option-list" id="income-options"></div>
-        <button class="back-link" onclick="prevStep(4)">← Previous</button>
+        <button class="back-link" onclick="prevStep(5)">← Previous</button>
       </div>
 
       <!-- Error message (shared across all steps) -->
