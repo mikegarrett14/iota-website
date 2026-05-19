@@ -54,10 +54,13 @@
         formData.industry = btn.dataset.value;
         if (btn.dataset.value === "other") {
           otherWrap.style.display = "block";
+          document.getElementById("industry-continue").style.display = "block";
           document.getElementById("industry-other").focus();
         } else {
           otherWrap.style.display = "none";
           formData.industryOther = "";
+          btn.classList.add("selected");
+          setTimeout(function () { goToStep(5); }, 220);
         }
       });
     });
