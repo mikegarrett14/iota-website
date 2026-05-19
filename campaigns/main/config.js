@@ -47,9 +47,11 @@ const CONFIG = {
     // Leave empty to skip form POST (data still saved to localStorage)
     formWebhookUrl: "https://services.leadconnectorhq.com/hooks/m815cyhHHAW2XchGWmPu/webhook-trigger/90212619-297c-46e1-93ed-81afc56c19a1",
 
-    // Calendar embed URL (Calendly, GoHighLevel, etc.)
-    // Pasted directly into an <iframe> on the high-intent page
+    // Calendar embed URL for low-intent offer page
     calendarEmbedUrl: "https://system.iotacompany.com/widget/booking/CCB7nqri3v3VJY0tjzrB",
+
+    // Calendar embed URL for high-intent offer page (high earners: $750k+)
+    calendarEmbedUrlHighIntent: "https://system.iotacompany.com/widget/booking/X65TwZYyDMYPegeTVsX4",
   },
 
   // ── ROUTING ─────────────────────────────────────────────────────────────────
