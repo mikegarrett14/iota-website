@@ -69,6 +69,15 @@ const CONFIG = {
     offerPageLowIntent: "/campaigns/main/offer-low-intent.html",
   },
 
+  // ── DRIVE RESULTS CAROUSEL ──────────────────────────────────────────────────
+  // Images dropped into this Google Drive folder are automatically appended
+  // to the results carousel on all booking pages (after the hardcoded ones).
+  // The folder must be shared as "Anyone with the link can view".
+  driveResults: {
+    folderId: "1IH9VOZ8Xc4SkLFqdDEwqAh1BzVNuP1-7",
+    apiKey:   "AIzaSyDBuqlW5SyY75xVuK2h90y_gifqfroKe4E",
+  },
+
   // ── FORM OPTION LISTS ────────────────────────────────────────────────────────
   formOptions: {
     serviceOptions: [
