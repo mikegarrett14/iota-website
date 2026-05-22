@@ -94,6 +94,33 @@ body {
   line-height: 1.6;
 }
 
+.funnel-best-for {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.6;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.funnel-best-for p {
+  margin: 0 0 0.2rem;
+  font-weight: 600;
+  color: #0A2472;
+}
+
+.funnel-best-for ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style-position: inside;
+}
+
+.funnel-best-for li {
+  margin: 0;
+}
+
 /* ── GUIDE PREVIEW IMAGE ─────────────────────────────────────────────────── */
 .guide-preview-wrap {
   width: 100%;
