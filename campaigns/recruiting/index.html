@@ -347,6 +347,172 @@
       display: block;
     }
 
+    /* ── OFFER CLARIFIER ── */
+    .offer-clarifier {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 640px;
+      margin: 40px auto 0;
+      width: 100%;
+      align-items: flex-start;
+      padding-left: max(0px, calc(50% - 240px));
+    }
+    .offer-clarifier__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: #c0c0c0;
+      line-height: 1.5;
+    }
+    .offer-clarifier__item strong { color: var(--white); }
+    .offer-clarifier__icon {
+      flex-shrink: 0;
+      color: var(--gold);
+      font-weight: 900;
+      margin-top: 1px;
+    }
+
+    /* ── QUALIFIER QUIZ ── */
+    .qualifier-widget {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .qualifier-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 36px;
+    }
+    .qualifier-progress-track {
+      background: var(--border);
+      border-radius: 100px;
+      height: 4px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .qualifier-progress-fill {
+      background: var(--gold);
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.4s ease;
+    }
+    .qualifier-step-num {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .qualifier-question {
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -0.4px;
+      margin-bottom: 32px;
+    }
+    .qualifier-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .qualifier-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .qualifier-btn--yes {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+    .qualifier-btn--yes:hover { background: #ffc04a; border-color: #ffc04a; }
+    .qualifier-btn--no {
+      background: transparent;
+      color: var(--gray);
+      border-color: var(--border);
+    }
+    .qualifier-btn--no:hover { border-color: #555; color: var(--white); }
+
+    /* Qualified state */
+    .qualifier-approved-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(245,166,35,0.1);
+      border: 1px solid rgba(245,166,35,0.35);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+    .qualifier-approved-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #000;
+    }
+    .qualifier-approved-text strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .qualifier-approved-text span {
+      font-size: 14px;
+      color: #c0c0c0;
+    }
+
+    /* Rejected state */
+    .qualifier-rejected-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 36px;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .qualifier-rejected-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+    .qualifier-rejected-title {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .qualifier-rejected-body {
+      font-size: 16px;
+      color: #c0c0c0;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .qualifier-rejected-body:last-of-type { margin-bottom: 28px; }
+
+    @media (max-width: 600px) {
+      .qualifier-card { padding: 28px 20px; }
+      .qualifier-rejected-card { padding: 28px 20px; }
+    }
+
     /* ── FAQ ── */
     .faq-list { max-width: 720px; margin: 0 auto; }
     .faq-item {
@@ -426,115 +592,33 @@
 
   <!-- TOP BAR -->
   <div class="topbar">
-    LIMITED AVAILABILITY &nbsp;·&nbsp; We Only Accept 10 Clients Per Month
+    LIMITED AVAILABILITY &nbsp;·&nbsp; Only <span id="spots-count">10</span> spots left
   </div>
+  <script>
+    (function() {
+      // Days from start date → how many spots remain
+      // Drops by 1 every 2–3 days, floors at 3
+      var start = new Date('2026-05-26');
+      var now = new Date();
+      var days = Math.floor((now - start) / 86400000);
+      // Schedule: cumulative days at which count drops
+      var drops = [2, 5, 7, 10, 13, 15, 18]; // day thresholds for drops 10→9→8→...→3
+      var count = 10;
+      for (var i = 0; i < drops.length; i++) {
+        if (days >= drops[i]) count--;
+      }
+      document.getElementById('spots-count').textContent = count;
+    })();
+  </script>
 
   <!-- ── HERO ──────────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="container">
-      <div class="hero__eyebrow">$200 Ad Spend · Results Guaranteed or We Refund Every Penny</div>
       <h1 class="hero__headline">
-        Get <span>5 Qualified Recruiting Appointments</span> In 7 Days — Or We Pay You $200
+        Get <span>5 Free Qualified Recruiting Appointments</span> In 7 Days — Or We Pay You $200
       </h1>
-      <p class="hero__sub">
-        You put in $200 in ad spend. We run everything. If you don't sit down with 5 people
-        you can develop into sales leaders within 7 days — we gift you the full $200 back.
-      </p>
       <div class="hero__cta-group">
-        <a href="#book" class="btn btn--lg">Get Your 5 Recruiting Appointments →</a>
-        <span class="hero__note">For D2D &amp; life insurance leaders doing $500K+/yr with a team of 20+</span>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- ── GUARANTEE ─────────────────────────────────────────────────── -->
-  <section>
-    <div class="container">
-      <div class="guarantee">
-        <div class="guarantee__icon">🛡️</div>
-        <div class="guarantee__title">The $200 Guarantee</div>
-        <p class="guarantee__body">
-          Here's exactly how it works: you put in <strong>$200 in ad spend</strong> and we handle everything —
-          the ads, the outreach, the qualifying, the booking. If you don't sit down with
-          <strong>5 people you can develop into sales leaders within 7 days</strong>, we
-          <strong>gift you the full $200 back</strong>. No hoops, no fine print.
-        </p>
-        <p class="guarantee__body" style="margin-top: 16px; font-size: 15px; color: #888;">
-          Why do we do this? Transparently — we want to blow you away with results before
-          you've even seen what we can do with a full content page. Our real business is
-          building your entire recruiting system: content creation + a full ad system for your profile.
-          But we'd rather prove what we're capable of first and earn that conversation.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- ── WHO QUALIFIES ──────────────────────────────────────────────── -->
-  <section class="qualify">
-    <div class="container">
-      <div class="section-label">Requirements</div>
-      <h2 class="section-title">This Is For You If…</h2>
-      <div class="qualify-grid">
-        <div class="qualify-card">
-          <div class="qualify-card__check">✓</div>
-          <div>
-            <div class="qualify-card__text">You're in door-to-door or life insurance sales</div>
-            <div class="qualify-card__sub">D2D, life insurance, or both</div>
-          </div>
-        </div>
-        <div class="qualify-card">
-          <div class="qualify-card__check">✓</div>
-          <div>
-            <div class="qualify-card__text">You're doing $500K+ per year in revenue</div>
-            <div class="qualify-card__sub">You've already proven you can sell</div>
-          </div>
-        </div>
-        <div class="qualify-card">
-          <div class="qualify-card__check">✓</div>
-          <div>
-            <div class="qualify-card__text">You already have a team of 20+ reps</div>
-            <div class="qualify-card__sub">You're building and scaling a real organization</div>
-          </div>
-        </div>
-        <div class="qualify-card">
-          <div class="qualify-card__check">✓</div>
-          <div>
-            <div class="qualify-card__text">You want more high-quality recruits — fast</div>
-            <div class="qualify-card__sub">Without cold calling or burning your warm market</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- ── STATS ─────────────────────────────────────────────────────── -->
-  <section>
-    <div class="container">
-      <div class="section-label">By The Numbers</div>
-      <h2 class="section-title">Real Results From Real Leaders</h2>
-      <div class="stats-bar">
-        <div class="stat">
-          <div class="stat__num">3</div>
-          <div class="stat__label">Clients grown to 17K+ followers</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">5</div>
-          <div class="stat__label">Guaranteed appointments in 7 days</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">150+</div>
-          <div class="stat__label">Clients served</div>
-        </div>
-        <div class="stat">
-          <div class="stat__num">$200</div>
-          <div class="stat__label">We pay YOU if we miss the mark</div>
-        </div>
+        <a href="#book" class="btn btn--lg">Get Your Free Appointments →</a>
       </div>
     </div>
   </section>
@@ -544,17 +628,95 @@
   <!-- ── FIRST CALENDAR CTA ─────────────────────────────────────────── -->
   <section id="book" class="calendar-section">
     <div class="container">
-      <div class="section-label">Book Now</div>
-      <h2 class="section-title">Get Your 5 Recruiting Appointments</h2>
-      <p style="text-align:center; color: var(--gray); font-size:17px; margin-bottom: 40px; max-width: 560px; margin-left: auto; margin-right: auto;">
-        Pick a time below. Takes 2 minutes. If you qualify, we'll get to work immediately.
-      </p>
-      <div class="calendar-wrapper">
-        <iframe
-          src="https://system.iotacompany.com/widget/booking/mIgxjln4otSYyU0HUbPl"
-          title="Book a free recruiting call"
-          scrolling="no"
-        ></iframe>
+      <div class="qualifier-widget" id="quiz-1">
+
+        <!-- Step 1 -->
+        <div class="qualifier-step" data-step="1">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:33%"></div></div>
+            <div class="qualifier-step-num">See if you qualify — Question 1 of 3</div>
+            <p class="qualifier-question">Are you currently earning $500K or more per year?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-next="2">Yes — I'm at $500K+/yr</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>No, not yet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="qualifier-step" data-step="2" style="display:none">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:66%"></div></div>
+            <div class="qualifier-step-num">Question 2 of 3</div>
+            <p class="qualifier-question">Do you already have a team of at least 20 reps?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-next="3">Yes — 20+ reps on my team</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>Not yet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="qualifier-step" data-step="3" style="display:none">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:100%"></div></div>
+            <div class="qualifier-step-num">Question 3 of 3</div>
+            <p class="qualifier-question">If we hit the numbers on the free sprint, are you open to investing ~$5K/mo to build a full recruiting machine through your socials?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-qualify>Yes — if you deliver, I'm in</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>Not at this time</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Qualified: show calendar -->
+        <div class="qualifier-qualified" style="display:none">
+          <div class="qualifier-approved-header">
+            <div class="qualifier-approved-icon">✓</div>
+            <div class="qualifier-approved-text">
+              <strong>You Qualify — Pick Your Time Below</strong>
+              <span>We'll confirm your spot and get to work immediately.</span>
+            </div>
+          </div>
+          <div class="calendar-wrapper">
+            <iframe
+              src="https://system.iotacompany.com/widget/booking/mIgxjln4otSYyU0HUbPl"
+              title="Book a free recruiting call"
+              scrolling="no"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Disqualified -->
+        <div class="qualifier-rejected-state" style="display:none">
+          <div class="qualifier-rejected-card">
+            <div class="qualifier-rejected-icon">👋</div>
+            <div class="qualifier-rejected-title">You Don't Quite Fit the Free Sprint — Yet</div>
+            <p class="qualifier-rejected-body">
+              The free sprint is built for D2D and life insurance leaders who are already at $500K+/yr with a team of 20+ reps. Those baselines are what let us guarantee 5 qualified appointments in 7 days.
+            </p>
+            <p class="qualifier-rejected-body">
+              That said, we may still be able to help you get there.
+            </p>
+            <a href="https://iotacompany.com" class="btn">See What We Offer →</a>
+          </div>
+        </div>
+
+      </div><!-- /quiz-1 -->
+
+      <div class="offer-clarifier">
+        <div class="offer-clarifier__item">
+          <span class="offer-clarifier__icon">✓</span>
+          5 people who <strong>actually showed up</strong> — no-shows don't count
+        </div>
+        <div class="offer-clarifier__item">
+          <span class="offer-clarifier__icon">✓</span>
+          Pre-screened to <strong>fit your team's profile</strong>
+        </div>
+        <div class="offer-clarifier__item">
+          <span class="offer-clarifier__icon">✓</span>
+          Guys you could <strong>build into future leaders</strong>
+        </div>
       </div>
     </div>
   </section>
@@ -564,8 +726,6 @@
   <!-- ── VIDEO TESTIMONIALS ─────────────────────────────────────────── -->
   <section>
     <div class="container--wide">
-      <div class="section-label">Video Proof</div>
-      <h2 class="section-title">Hear It Directly From Our Clients</h2>
       <div class="videos-grid">
         <div class="video-card">
           <div class="video-card__embed">
@@ -576,8 +736,7 @@
               allowfullscreen
             ></iframe>
           </div>
-          <div class="video-card__caption">Client testimonial — recruiting results</div>
-        </div>
+          </div>
         <div class="video-card">
           <div class="video-card__embed">
             <iframe
@@ -587,7 +746,6 @@
               allowfullscreen
             ></iframe>
           </div>
-          <div class="video-card__caption">Client testimonial — recruiting results</div>
         </div>
       </div>
     </div>
@@ -598,22 +756,6 @@
   <!-- ── SCREENSHOT TESTIMONIALS ───────────────────────────────────── -->
   <section style="background: var(--bg2);">
     <div class="container--wide">
-      <div class="section-label">What Clients Are Saying</div>
-      <h2 class="section-title">Don't Just Take Our Word For It</h2>
-
-      <!--
-        ════════════════════════════════════════════════════════════
-        TODO: Replace these 12 placeholder cards with the actual
-        screenshot images from the PDF testimonials.
-
-        To add an image:
-          1. Drop the image file into /shared/images/testimonials/
-          2. Replace the placeholder card with:
-             <div class="screenshot-card">
-               <img src="/shared/images/testimonials/YOUR-FILE.jpg" alt="Client testimonial" />
-             </div>
-        ════════════════════════════════════════════════════════════
-      -->
       <div class="screenshots-grid">
         <div class="screenshot-card"><img src="/shared/images/testimonials/IMG_1719.jpg" alt="Client testimonial" /></div>
         <div class="screenshot-card"><img src="/shared/images/testimonials/IMG_1720.jpeg" alt="Client testimonial" /></div>
@@ -639,24 +781,9 @@
   <!-- ── RESULTS: 17K FOLLOWERS ─────────────────────────────────────── -->
   <section>
     <div class="container--wide">
-      <div class="section-label">Client Results</div>
-      <h2 class="section-title">Real Accounts. Real Growth.</h2>
-      <p style="text-align:center; color: var(--gray); font-size:17px; margin-bottom: 48px; max-width: 540px; margin-left: auto; margin-right: auto;">
-        Three sales leaders we worked with — all grew to 17K+ followers and built a consistent inbound recruiting pipeline.
-      </p>
-
-      <!--
-        ════════════════════════════════════════════════════════════
-        TODO: Add images from the Google Drive folder:
-        https://drive.google.com/drive/folders/1wMgAj0QypvqeURco1NMxWx_epevQnxTz
-
-        For each account, download the before/after screenshot and
-        upload to /shared/images/results/, then update the <img> src below.
-        ════════════════════════════════════════════════════════════
-      -->
       <div class="results-grid">
         <div class="result-card">
-          <img class="result-card__img" src="/shared/images/results/account-1.jpeg" alt="@kenna_halls Instagram — D2D sales leader" style="aspect-ratio: auto; max-height: 340px; object-fit: cover;" />
+          <img src="/shared/images/results/account-1.jpeg" alt="@kenna_halls Instagram — D2D sales leader" style="width:100%; height:auto; display:block;" />
           <div class="result-card__body">
             <div class="result-card__badge">D2D Sales Leader</div>
             <div class="result-card__title">@kenna_halls</div>
@@ -685,94 +812,84 @@
 
   <hr class="divider" />
 
-  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
-  <section style="background: var(--bg2);">
-    <div class="container">
-      <div class="section-label">Questions</div>
-      <h2 class="section-title">Frequently Asked Questions</h2>
-      <div class="faq-list">
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            What does the $200 actually go toward?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>The $200 is ad spend — it goes directly into running targeted ads to find and book the right people for your calendar. We handle all of it: the creative, the targeting, the qualifying, the scheduling. If we don't sit you down with 5 people you could develop into sales leaders within 7 days, we refund the full $200. Transparently, we do this because our real business is building your full recruiting system — content creation and a complete ad system for your profile. We'd rather prove what we're capable of first and earn that conversation.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            What counts as a "qualified" appointment?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>A qualified appointment means a sit-down call with a rep who is actively looking to join a sales organization and meets your baseline criteria — not a ghost, not a no-show. We pre-screen everyone before booking them on your calendar.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Do I have to pay anything to get started?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>The only investment is $200 in ad spend — that's it. There's no service fee, no retainer, and no obligation to continue after your 5 appointments. And if we don't deliver within 7 days, you get the full $200 back. The only requirements are that you qualify (D2D or life insurance, $500K+/year, 20+ person team).</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            How does the $200 guarantee work?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Simple. If we don't book you 5 qualified recruiting appointments within 7 days of getting started, we send you $200. No hoops, no fine print. We put our money where our mouth is.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            What industry do you work with?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>We specialize in door-to-door sales and life insurance. If you're in one or both of those industries and you're building a team, this is built specifically for you.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            How do I get started?
-            <span class="icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Just pick a time on the calendar below. We'll hop on a quick call to confirm you qualify, then we get to work. The whole booking process takes about 2 minutes.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
   <!-- ── FINAL CTA + CALENDAR ───────────────────────────────────────── -->
   <section class="final-cta">
     <div class="container">
-      <div class="section-label">Ready?</div>
-      <h2 class="section-title">Book Your 5 Appointments Now</h2>
-      <p class="final-cta__sub">
-        Spots are limited to 10 clients per month. Pick a time below and lock yours in.
-      </p>
-      <div class="calendar-wrapper">
-        <iframe
-          src="https://system.iotacompany.com/widget/booking/mIgxjln4otSYyU0HUbPl"
-          title="Book a free recruiting call"
-          scrolling="no"
-        ></iframe>
-      </div>
+      <div class="qualifier-widget" id="quiz-2">
+
+        <!-- Step 1 -->
+        <div class="qualifier-step" data-step="1">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:33%"></div></div>
+            <div class="qualifier-step-num">See if you qualify — Question 1 of 3</div>
+            <p class="qualifier-question">Are you currently earning $500K or more per year?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-next="2">Yes — I'm at $500K+/yr</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>No, not yet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="qualifier-step" data-step="2" style="display:none">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:66%"></div></div>
+            <div class="qualifier-step-num">Question 2 of 3</div>
+            <p class="qualifier-question">Do you already have a team of at least 20 reps?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-next="3">Yes — 20+ reps on my team</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>Not yet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="qualifier-step" data-step="3" style="display:none">
+          <div class="qualifier-card">
+            <div class="qualifier-progress-track"><div class="qualifier-progress-fill" style="width:100%"></div></div>
+            <div class="qualifier-step-num">Question 3 of 3</div>
+            <p class="qualifier-question">If we hit the numbers on the free sprint, are you open to investing ~$5K/mo to build a full recruiting machine through your socials?</p>
+            <div class="qualifier-choices">
+              <button class="qualifier-btn qualifier-btn--yes" data-qualify>Yes — if you deliver, I'm in</button>
+              <button class="qualifier-btn qualifier-btn--no" data-reject>Not at this time</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Qualified: show calendar -->
+        <div class="qualifier-qualified" style="display:none">
+          <div class="qualifier-approved-header">
+            <div class="qualifier-approved-icon">✓</div>
+            <div class="qualifier-approved-text">
+              <strong>You Qualify — Pick Your Time Below</strong>
+              <span>We'll confirm your spot and get to work immediately.</span>
+            </div>
+          </div>
+          <div class="calendar-wrapper">
+            <iframe
+              src="https://system.iotacompany.com/widget/booking/mIgxjln4otSYyU0HUbPl"
+              title="Book a free recruiting call"
+              scrolling="no"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Disqualified -->
+        <div class="qualifier-rejected-state" style="display:none">
+          <div class="qualifier-rejected-card">
+            <div class="qualifier-rejected-icon">👋</div>
+            <div class="qualifier-rejected-title">You Don't Quite Fit the Free Sprint — Yet</div>
+            <p class="qualifier-rejected-body">
+              The free sprint is built for D2D and life insurance leaders who are already at $500K+/yr with a team of 20+ reps. Those baselines are what let us guarantee 5 qualified appointments in 7 days.
+            </p>
+            <p class="qualifier-rejected-body">
+              That said, we may still be able to help you get there.
+            </p>
+            <a href="https://iotacompany.com" class="btn">See What We Offer →</a>
+          </div>
+        </div>
+
+      </div><!-- /quiz-2 -->
     </div>
   </section>
 
@@ -789,6 +906,37 @@
       The $200 guarantee applies when all qualification requirements are met and the onboarding process is completed in full.
     </p>
   </footer>
+
+  <!-- ── QUALIFIER SCRIPT ─────────────────────────────────────────── -->
+  <script>
+    document.querySelectorAll('.qualifier-widget').forEach(function(widget) {
+      function showOnly(el) {
+        widget.querySelectorAll('.qualifier-step, .qualifier-qualified, .qualifier-rejected-state')
+          .forEach(function(n) { n.style.display = 'none'; });
+        el.style.display = 'block';
+      }
+
+      widget.querySelectorAll('[data-next]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var nextStep = btn.getAttribute('data-next');
+          var target = widget.querySelector('[data-step="' + nextStep + '"]');
+          if (target) showOnly(target);
+        });
+      });
+
+      widget.querySelectorAll('[data-qualify]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          showOnly(widget.querySelector('.qualifier-qualified'));
+        });
+      });
+
+      widget.querySelectorAll('[data-reject]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          showOnly(widget.querySelector('.qualifier-rejected-state'));
+        });
+      });
+    });
+  </script>
 
   <!-- ── FAQ SCRIPT ────────────────────────────────────────────────── -->
   <script>
