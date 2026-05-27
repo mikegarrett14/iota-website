@@ -342,21 +342,18 @@
     }
     .calendar-wrapper iframe {
       width: 100%;
-      height: 700px;
+      height: 900px;
       border: 0;
       display: block;
     }
 
     /* ── OFFER CLARIFIER ── */
     .offer-clarifier {
-      display: inline-flex;
+      display: flex;
       flex-direction: column;
       gap: 10px;
-      max-width: 640px;
+      max-width: 520px;
       margin: 40px auto 0;
-      width: 100%;
-      align-items: flex-start;
-      padding-left: max(0px, calc(50% - 240px));
     }
     .offer-clarifier__item {
       display: flex;
@@ -584,7 +581,7 @@
       .guarantee { padding: 28px 20px; }
       .btn--lg { font-size: 18px; padding: 18px 32px; }
       .videos-grid { grid-template-columns: 1fr; }
-      .calendar-wrapper iframe { height: 800px; }
+      .calendar-wrapper iframe { height: 950px; }
     }
   </style>
 </head>
@@ -707,15 +704,15 @@
       <div class="offer-clarifier">
         <div class="offer-clarifier__item">
           <span class="offer-clarifier__icon">✓</span>
-          5 people who <strong>actually showed up</strong> — no-shows don't count
+          <span>5 people who <strong>actually showed up</strong> — no-shows don't count</span>
         </div>
         <div class="offer-clarifier__item">
           <span class="offer-clarifier__icon">✓</span>
-          Pre-screened to <strong>fit your team's profile</strong>
+          <span>Pre-screened to <strong>fit your team's profile</strong></span>
         </div>
         <div class="offer-clarifier__item">
           <span class="offer-clarifier__icon">✓</span>
-          Guys you could <strong>build into future leaders</strong>
+          <span>Guys you could <strong>build into future leaders</strong></span>
         </div>
       </div>
     </div>
@@ -927,6 +924,7 @@
       widget.querySelectorAll('[data-qualify]').forEach(function(btn) {
         btn.addEventListener('click', function() {
           showOnly(widget.querySelector('.qualifier-qualified'));
+          if (typeof fbq === 'function') fbq('track', 'Lead');
         });
       });
 
