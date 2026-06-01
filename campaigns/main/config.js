@@ -49,7 +49,7 @@ const CONFIG = {
 
     // Calendar embed URL (Calendly, GoHighLevel, etc.)
     // Pasted directly into an <iframe> on the high-intent page
-    calendarEmbedUrl: "https://system.iotacompany.com/widget/booking/CCB7nqri3v3VJY0tjzrB",
+    calendarEmbedUrl: "https://system.iotacompany.com/widget/booking/OSza0S5nt1dZQyLGbmmM",
   },
 
   // ── ROUTING ─────────────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ const CONFIG = {
       { label: "Under $100k/year",    value: "under_100k", intent: "low"  },
       { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low"  },
       { label: "$250k – $500k/year",  value: "250k_500k",  intent: "low"  },
-      { label: "$500k – $750k/year",  value: "500k_750k",  intent: "low"  },
+      { label: "$500k – $750k/year",  value: "500k_750k",  intent: "high" },
       { label: "$750k – $1M/year",    value: "750k_1m",    intent: "high" },
       { label: "$1M+/year",           value: "1m_plus",    intent: "high" },
     ],

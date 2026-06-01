@@ -194,10 +194,17 @@
     // Fire-and-forget POST to webhook if configured
     const endpoint = CONFIG.integrations.formWebhookUrl;
     if (endpoint) {
+      // When industry is "other", send the typed value so GHL shows the real industry
+      const payload = Object.assign({}, formData);
+      if (payload.industry === "other" && payload.industryOther) {
+        payload.industry = payload.industryOther;
+      }
+      delete payload.industryOther;
+
       fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
         keepalive: true,
       }).catch(function () {
         // Silently continue — don't block the user on a network error
