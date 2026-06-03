@@ -82,6 +82,7 @@
       btn.addEventListener("click", function () {
         formData.incomeLabel = opt.label;
         formData.intent = opt.intent;
+        formData.leadScore = opt.score;
 
         // Visual feedback then auto-advance
         document.querySelectorAll("#income-options .option-btn").forEach(function (b) {
@@ -194,8 +195,12 @@
     // Fire-and-forget POST to webhook if configured
     const endpoint = CONFIG.integrations.formWebhookUrl;
     if (endpoint) {
-      // When industry is "other", send the typed value so GHL shows the real industry
       const payload = Object.assign({}, formData);
+      // Other industry always scores red regardless of income
+      if (payload.industry === "other") {
+        payload.leadScore = "red";
+      }
+      // Send the typed value so GHL shows the real industry name
       if (payload.industry === "other" && payload.industryOther) {
         payload.industry = payload.industryOther;
       }

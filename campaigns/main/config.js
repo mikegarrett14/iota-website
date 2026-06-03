@@ -57,12 +57,12 @@ const CONFIG = {
     // Income options shown in Step 4 of the form.
     // All options route to the same offer page.
     incomeOptions: [
-      { label: "Under $100k/year",    value: "under_100k", intent: "low"  },
-      { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low"  },
-      { label: "$250k – $500k/year",  value: "250k_500k",  intent: "low"  },
-      { label: "$500k – $750k/year",  value: "500k_750k",  intent: "high" },
-      { label: "$750k – $1M/year",    value: "750k_1m",    intent: "high" },
-      { label: "$1M+/year",           value: "1m_plus",    intent: "high" },
+      { label: "Under $100k/year",    value: "under_100k", intent: "low",  score: "red"    },
+      { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low",  score: "yellow" },
+      { label: "$250k – $500k/year",  value: "250k_500k",  intent: "low",  score: "yellow" },
+      { label: "$500k – $750k/year",  value: "500k_750k",  intent: "high", score: "green"  },
+      { label: "$750k – $1M/year",    value: "750k_1m",    intent: "high", score: "green"  },
+      { label: "$1M+/year",           value: "1m_plus",    intent: "high", score: "green"  },
     ],
 
     offerPage: "/campaigns/main/offer.html",
