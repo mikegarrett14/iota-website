@@ -82,7 +82,7 @@
       btn.addEventListener("click", function () {
         formData.incomeLabel = opt.label;
         formData.intent = opt.intent;
-        formData.leadScore = opt.score;
+        formData.recruiting_season = opt.score;
 
         // Visual feedback then auto-advance
         document.querySelectorAll("#income-options .option-btn").forEach(function (b) {
@@ -198,7 +198,7 @@
       const payload = Object.assign({}, formData);
       // Other industry always scores red regardless of income
       if (payload.industry === "other") {
-        payload.leadScore = "red";
+        payload.recruiting_season = "red";
       }
       // Send the typed value so GHL shows the real industry name
       if (payload.industry === "other" && payload.industryOther) {
