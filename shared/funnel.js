@@ -215,6 +215,19 @@
       }
       delete payload.industryOther;
 
+      // Move UTM values into GHL's customField object
+      const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content"];
+      const customField = {};
+      utmKeys.forEach(function (key) {
+        if (payload[key] !== undefined) {
+          customField[key] = payload[key];
+          delete payload[key];
+        }
+      });
+      if (Object.keys(customField).length) {
+        payload.customField = customField;
+      }
+
       fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
