@@ -12,6 +12,15 @@
   const totalSteps = 5;
   const formData = {};
 
+  // ── UTM CAPTURE ───────────────────────────────────────────────────────────
+  (function captureUtmParams() {
+    const params = new URLSearchParams(window.location.search);
+    ["utm_source", "utm_medium", "utm_campaign", "utm_content"].forEach(function (key) {
+      const value = params.get(key);
+      if (value) formData[key] = value;
+    });
+  })();
+
   // ── INIT ───────────────────────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
     initGuidePreview();
