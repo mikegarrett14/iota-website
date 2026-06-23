@@ -58,7 +58,7 @@ const CONFIG = {
     // All options route to the same offer page.
     incomeOptions: [
       { label: "Under $100k/year",    value: "under_100k", intent: "low",  score: "red"    },
-      { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low",  score: "yellow" },
+      { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low",  score: "orange" },
       { label: "$250k – $500k/year",  value: "250k_500k",  intent: "low",  score: "yellow" },
       { label: "$500k – $750k/year",  value: "500k_750k",  intent: "high", score: "green"  },
       { label: "$750k – $1M/year",    value: "750k_1m",    intent: "high", score: "green"  },
