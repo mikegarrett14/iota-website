@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../shared/styles.css?v=7" />
-  <script src="/campaigns/main/config.js?v=4"></script>
+  <link rel="stylesheet" href="../../shared/styles.css?v=8" />
+  <script src="/campaigns/main/config.js?v=5"></script>
 
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
@@ -70,16 +70,21 @@
       <p class="funnel-subline">If you're a sales leader with 30+ reps, learn how to get your next 10 recruits from Instagram for free.</p>
     </div>
 
-    <!-- Guide preview image
-         Set assets.guidePreviewImageUrl in config.js to show the real image.
-         The placeholder disappears automatically once a URL is set. -->
-    <div class="guide-preview-wrap">
-      <img id="guide-preview-img" src="" alt="Free Recruitment Guide Preview" style="display:none;" />
-    </div>
-    <div id="guide-preview-placeholder" class="guide-preview-placeholder">
-      <span class="placeholder-icon">📄</span>
-      <strong>Guide Preview Image</strong>
-      <span>Set <code>assets.guidePreviewImageUrl</code> in config.js</span>
+    <!-- Intro video
+         Plays before the form. Once the visitor starts filling out their
+         details it docks to a small corner of the screen and keeps playing,
+         so they get the whole message before submitting.
+         Set assets.funnelVideoEmbedUrl in config.js to show the real video;
+         the placeholder disappears automatically once a URL is set. -->
+    <div class="funnel-video-outer" id="funnel-video-outer">
+      <div class="funnel-video" id="funnel-video">
+        <div class="video-placeholder" id="funnel-video-placeholder">
+          <span class="play-icon">▶</span>
+          <strong>Intro Video</strong>
+          <span>Set <code>assets.funnelVideoEmbedUrl</code> in config.js</span>
+        </div>
+        <!-- iframe, unmute overlay, and "keep watching" badge injected by funnel.js -->
+      </div>
     </div>
 
     <!-- Form -->
@@ -146,6 +151,14 @@
         <p class="step-question">What is your <strong>annual income?</strong></p>
         <!-- Options are injected from config.js by funnel.js -->
         <div class="option-list" id="income-options"></div>
+        <!-- Final CTA. Hidden until an income is picked, and stays locked
+             until the intro video has played all the way through. -->
+        <button class="cta-btn cta-btn--locked" id="blueprint-submit" onclick="submitForm()" style="display:none;">
+          SEND ME THE FREE BLUEPRINT
+        </button>
+        <p class="video-lock-hint" id="video-lock-hint" style="display:none;">
+          🔒 Finish watching the 1-min video to unlock your free blueprint.
+        </p>
         <button class="back-link" onclick="prevStep(5)">← Previous</button>
       </div>
 
@@ -160,6 +173,6 @@
 
   </div><!-- /funnel-wrapper -->
 
-  <script src="../../shared/funnel.js?v=4"></script>
+  <script src="../../shared/funnel.js?v=5"></script>
 </body>
 </html>

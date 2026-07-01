@@ -31,6 +31,12 @@ const CONFIG = {
     // Replace YOUR_FILE_ID with the Google Drive file ID
     guidePreviewImageUrl: "/shared/blueprint-preview.jpg",
 
+    // Intro video shown on the landing page (above the form) instead of the
+    // preview image. It autoplays muted, docks to a corner once the visitor
+    // starts filling out the form, and the "Send me the free blueprint" button
+    // stays locked until this video has played all the way through.
+    funnelVideoEmbedUrl: "https://www.youtube.com/embed/p74u9cayZ5U?autoplay=1&mute=1",
+
     // VSL video embed on the high-intent offer page
     vslVideoEmbedUrl: "https://www.youtube.com/embed/2xSZJrCm15k?autoplay=1&mute=1",
 

@@ -12,6 +12,13 @@
   const totalSteps = 5;
   const formData = {};
 
+  // Intro-video gating state
+  let videoEnded = false;      // true once the intro video has played through
+  let incomeSelected = false;  // true once the visitor picks an income band
+  let funnelPlayer = null;     // YouTube IFrame API player instance
+  let pendingUnmute = false;   // unmute requested before the player was ready
+  let completionPoll = null;   // interval that watches for near-end completion
+
   // ── UTM CAPTURE ───────────────────────────────────────────────────────────
   (function captureUtmParams() {
     const params = new URLSearchParams(window.location.search);
@@ -23,30 +30,155 @@
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   document.addEventListener("DOMContentLoaded", function () {
-    initGuidePreview();
+    initFunnelVideo();
     initIndustryOptions();
     initIncomeOptions();
+    initVideoDocking();
     showStep(1);
   });
 
-  // ── GUIDE PREVIEW IMAGE ───────────────────────────────────────────────────
-  function initGuidePreview() {
-    const url = CONFIG.assets.guidePreviewImageUrl;
-    const img = document.getElementById("guide-preview-img");
-    const placeholder = document.getElementById("guide-preview-placeholder");
-    if (!img || !placeholder) return;
+  // ── INTRO VIDEO ───────────────────────────────────────────────────────────
+  // Builds the YouTube player, autoplays it muted, and wires up the events that
+  // unlock the final "Send me the free blueprint" button once it plays through.
+  function initFunnelVideo() {
+    const container = document.getElementById("funnel-video");
+    if (!container) return; // not on the landing page
 
-    if (url) {
-      img.src = url;
-      img.style.display = "block";
-      placeholder.style.display = "none";
-      img.onerror = function () {
-        img.style.display = "none";
-        placeholder.style.display = "flex";
-      };
+    const url = CONFIG.assets.funnelVideoEmbedUrl;
+    if (!url) return; // leave the placeholder visible
+
+    const placeholder = document.getElementById("funnel-video-placeholder");
+    if (placeholder) placeholder.remove();
+
+    const iframe = document.createElement("iframe");
+    iframe.id = "funnel-player";
+    iframe.src = url + "&enablejsapi=1&playsinline=1&rel=0";
+    iframe.allow = "autoplay; fullscreen";
+    iframe.allowFullscreen = true;
+
+    const overlay = document.createElement("div");
+    overlay.id = "funnel-unmute-overlay";
+    overlay.className = "unmute-overlay";
+    overlay.onclick = window.unmuteFunnelVideo;
+    overlay.innerHTML =
+      '<div class="unmute-overlay__icon">🔊</div>' +
+      '<div class="unmute-overlay__text">Your Video Is Playing<br>Click To Unmute</div>';
+
+    const badge = document.createElement("div");
+    badge.className = "funnel-video-badge";
+    badge.textContent = "Keep watching 👀";
+
+    container.appendChild(iframe);
+    container.appendChild(overlay);
+    container.appendChild(badge);
+
+    // The IFrame API calls this global once it finishes loading.
+    window.onYouTubeIframeAPIReady = function () {
+      funnelPlayer = new YT.Player("funnel-player", {
+        events: {
+          onReady: function () {
+            if (pendingUnmute) {
+              funnelPlayer.unMute();
+              funnelPlayer.setVolume(100);
+              pendingUnmute = false;
+            }
+          },
+          onStateChange: function (e) {
+            if (e.data === YT.PlayerState.ENDED) {
+              markVideoEnded();
+            } else if (e.data === YT.PlayerState.PLAYING) {
+              startCompletionPoll();
+            }
+          },
+        },
+      });
+    };
+
+    const apiScript = document.createElement("script");
+    apiScript.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(apiScript);
+  }
+
+  // Backstop for the ENDED event: some browsers don't fire it reliably, so we
+  // also treat "watched to ~98%" as complete.
+  function startCompletionPoll() {
+    if (completionPoll || videoEnded) return;
+    completionPoll = setInterval(function () {
+      if (!funnelPlayer || typeof funnelPlayer.getDuration !== "function") return;
+      const dur = funnelPlayer.getDuration();
+      const cur = funnelPlayer.getCurrentTime();
+      if (dur > 0 && cur / dur >= 0.98) {
+        markVideoEnded();
+      }
+    }, 1000);
+  }
+
+  function markVideoEnded() {
+    if (videoEnded) return;
+    videoEnded = true;
+    if (completionPoll) {
+      clearInterval(completionPoll);
+      completionPoll = null;
+    }
+    updateBlueprintButton();
+
+    // Once watched, fade out the docked mini-player to declutter the form.
+    const outer = document.getElementById("funnel-video-outer");
+    if (outer && outer.classList.contains("docked")) {
+      outer.classList.add("done");
+      setTimeout(function () { outer.style.display = "none"; }, 500);
+    }
+  }
+
+  window.unmuteFunnelVideo = function () {
+    if (funnelPlayer && typeof funnelPlayer.unMute === "function") {
+      funnelPlayer.unMute();
+      funnelPlayer.setVolume(100);
     } else {
-      img.style.display = "none";
-      placeholder.style.display = "flex";
+      pendingUnmute = true;
+    }
+    const overlay = document.getElementById("funnel-unmute-overlay");
+    if (overlay) overlay.classList.add("hidden");
+  };
+
+  // ── VIDEO DOCKING ─────────────────────────────────────────────────────────
+  // As soon as the visitor engages with the form, shrink the video into a
+  // corner so it keeps playing while they fill things out.
+  function dockVideo() {
+    if (videoEnded) return;
+    const outer = document.getElementById("funnel-video-outer");
+    if (outer && !outer.classList.contains("docked")) {
+      outer.classList.add("docked");
+    }
+  }
+
+  function initVideoDocking() {
+    ["first-name", "last-name"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("focus", dockVideo);
+    });
+  }
+
+  // ── FINAL CTA (blueprint submit) ──────────────────────────────────────────
+  // Shown once an income is picked; unlocked only after the video plays through.
+  function updateBlueprintButton() {
+    const btn = document.getElementById("blueprint-submit");
+    const hint = document.getElementById("video-lock-hint");
+    if (!btn) return;
+
+    if (!incomeSelected) {
+      btn.style.display = "none";
+      if (hint) hint.style.display = "none";
+      return;
+    }
+
+    btn.style.display = "block";
+    if (videoEnded) {
+      btn.classList.remove("cta-btn--locked");
+      if (hint) hint.style.display = "none";
+    } else {
+      btn.classList.add("cta-btn--locked");
+      if (hint) hint.style.display = "block";
     }
   }
 
@@ -93,13 +225,15 @@
         formData.intent = opt.intent;
         formData.recruiting_season = opt.score;
 
-        // Visual feedback then auto-advance
+        // Visual feedback, then reveal the final CTA (which stays locked until
+        // the intro video has played through).
         document.querySelectorAll("#income-options .option-btn").forEach(function (b) {
           b.classList.remove("selected");
         });
         btn.classList.add("selected");
 
-        setTimeout(function () { submitForm(); }, 220);
+        incomeSelected = true;
+        updateBlueprintButton();
       });
 
       container.appendChild(btn);
@@ -126,6 +260,8 @@
 
   function goToStep(n) {
     if (n > currentStep && !validateStep(currentStep)) return;
+    // Any forward move means they're filling out the form — dock the video.
+    if (n >= 2) dockVideo();
     showStep(n);
   }
 
@@ -187,6 +323,8 @@
 
   // ── FORM SUBMIT ───────────────────────────────────────────────────────────
   window.submitForm = function () {
+    // Guard: never submit until an income is chosen and the video is finished.
+    if (!incomeSelected || !videoEnded) return;
 
     // Fire GA4 conversion event
     if (typeof gtag === "function") {
