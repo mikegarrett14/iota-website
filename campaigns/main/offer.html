@@ -56,47 +56,20 @@
   <!-- ── OFFER PAGE ────────────────────────────────────────────────────────── -->
   <div class="vsl-wrapper">
 
-    <h1 class="vsl-headline">
-      How to Scale Your Instagram to 100+ Recruiting Calls in 6 Months
-    </h1>
-
-    <p class="vsl-label" id="greeting-label">WATCH THIS SHORT VIDEO AS WE SEND THE GUIDE TO YOUR INBOX!</p>
-
-    <!-- Video
-         Set assets.vslVideoEmbedUrl in config.js to replace the placeholder.
-         Format: https://drive.google.com/file/d/YOUR_FILE_ID/preview -->
-    <div class="video-outer" id="video-outer">
-      <!-- Placeholder (shown until vslVideoEmbedUrl is set in config.js) -->
-      <div class="video-placeholder" id="video-placeholder">
-        <span class="play-icon">▶</span>
-        <strong>VSL Video</strong>
-        <span>Set <code>assets.vslVideoEmbedUrl</code> in config.js</span>
+    <section class="vsl-hero">
+      <h1 class="vsl-hero-headline" id="thankyou-headline">Thank You!</h1>
+      <p class="vsl-hero-emphasis">We&rsquo;ll call you shortly to walk you through it.</p>
+      <p class="vsl-hero-reassure">Your recruiting blueprint is already on its way to your inbox.</p>
+      <div class="vsl-hero-scrollcue">
+        <span>Would you rather do a video call?</span>
+        <span class="chevron">&#8595;</span>
       </div>
-      <!-- Iframe is injected by the init script below -->
-    </div>
-
-    <!-- Social proof checklist -->
-    <div class="proof-list">
-      <div class="proof-item">Built client accounts from 0 to 15k+ followers</div>
-      <div class="proof-item">100% done-for-you &mdash; clients just show up to film once</div>
-      <div class="proof-item">Organic recruits who are already presold before the first conversation</div>
-      <div class="proof-item">No job board fees &mdash; scales as your brand grows</div>
-    </div>
-
-    <!-- CTAs -->
-    <div class="vsl-ctas">
-      <button class="cta-primary cta-primary--locked" id="main-cta" onclick="scrollToCalendar()">
-        See if I&rsquo;m a fit for 100+ recruiting calls &rarr;&nbsp;<span id="main-cta-counter">(<span id="main-cta-countdown">15</span>)</span>
-      </button>
-      <button class="cta-secondary" id="guide-link" onclick="handleGuideClick()" style="display:none;">
-        No thanks, just take me to my free guide
-      </button>
-    </div>
+    </section>
 
     <!-- Calendar — always visible -->
     <div class="calendar-section calendar-section--always-visible" id="calendar-section">
-      <h3>Book Your Discovery Call</h3>
-      <p>Speak directly with our team to learn how we can install the 100+ recruiting call funnel for you.</p>
+      <h3>Would you rather do a video call?</h3>
+      <p>Choose a time that works for you instead.</p>
 
       <div class="calendar-embed-wrap" id="calendar-embed-wrap">
         <div class="calendar-placeholder" id="calendar-placeholder">
@@ -154,43 +127,12 @@
   <script src="../../shared/funnel.js"></script>
   <script>
     (function () {
-      // Personalise greeting from URL param
+      // Personalise the thank-you headline from URL param
       var params = new URLSearchParams(window.location.search);
       var firstName = params.get("fn");
       if (firstName) {
-        var label = document.getElementById("greeting-label");
-        if (label) label.textContent = firstName + ", WATCH THIS SHORT VIDEO AS WE SEND THE GUIDE TO YOUR INBOX!";
-      }
-
-      // Inject VSL video if URL is set
-      var videoUrl = CONFIG.assets.vslVideoEmbedUrl;
-      if (videoUrl) {
-        var placeholder = document.getElementById("video-placeholder");
-        if (placeholder) placeholder.remove();
-
-        var outer = document.getElementById("video-outer");
-        var container = document.createElement("div");
-        container.className = "video-container";
-
-        var iframe = document.createElement("iframe");
-        iframe.id = "vsl-player";
-        iframe.src = videoUrl + "&enablejsapi=1";
-        iframe.allow = "autoplay; fullscreen";
-        iframe.allowFullscreen = true;
-
-        var overlay = document.createElement("div");
-        overlay.id = "unmute-overlay";
-        overlay.className = "unmute-overlay";
-        overlay.onclick = unmuteVideo;
-        overlay.innerHTML = '<div class="unmute-overlay__icon">🔊</div><div class="unmute-overlay__text">Your Video Is Playing<br>Click To Unmute</div>';
-
-        container.appendChild(iframe);
-        container.appendChild(overlay);
-        outer.appendChild(container);
-
-        var apiScript = document.createElement("script");
-        apiScript.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(apiScript);
+        var headline = document.getElementById("thankyou-headline");
+        if (headline) headline.textContent = "Thank You, " + firstName + "!";
       }
 
       // Inject calendar if URL is set
@@ -214,66 +156,7 @@
         calScript.type = "text/javascript";
         document.body.appendChild(calScript);
       }
-
-      // Countdown to unlock primary CTA and reveal secondary
-      var guideLink = document.getElementById("guide-link");
-      var mainCta = document.getElementById("main-cta");
-      var countdownEl = document.getElementById("main-cta-countdown");
-      var remaining = 15;
-
-      var timer = setInterval(function () {
-        remaining -= 1;
-        if (remaining <= 0) {
-          clearInterval(timer);
-          mainCta.classList.remove("cta-primary--locked");
-          document.getElementById("main-cta-counter").remove();
-          guideLink.style.display = "";
-        } else {
-          countdownEl.textContent = remaining;
-        }
-      }, 1000);
     })();
-
-    function scrollToCalendar() {
-      document.getElementById("calendar-section").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    var ytPlayer;
-    var pendingUnmute = false;
-    window.onYouTubeIframeAPIReady = function () {
-      ytPlayer = new YT.Player("vsl-player", {
-        events: {
-          onReady: function () {
-            if (pendingUnmute) {
-              ytPlayer.unMute();
-              ytPlayer.setVolume(100);
-              pendingUnmute = false;
-            }
-          }
-        }
-      });
-    };
-
-    function unmuteVideo() {
-      if (ytPlayer && typeof ytPlayer.unMute === "function") {
-        ytPlayer.unMute();
-        ytPlayer.setVolume(100);
-      } else {
-        pendingUnmute = true;
-      }
-      var overlay = document.getElementById("unmute-overlay");
-      if (overlay) overlay.classList.add("hidden");
-    }
-
-    function handleGuideClick() {
-      if (document.getElementById("guide-link").classList.contains("cta-secondary--locked")) return;
-      var url = CONFIG.assets.guidePdfUrl;
-      if (url) {
-        window.open(url, "_blank");
-      } else {
-        alert("Your guide is on its way to your inbox!");
-      }
-    }
   </script>
 </body>
 </html>
