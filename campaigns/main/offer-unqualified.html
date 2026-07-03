@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iota Media — Thank You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../shared/styles.css?v=8" />
+  <script src="config.js?v=6"></script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wm33vflvsh");
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+  </script>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1298384508340315');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1298384508340315&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+
+  <!-- ── STICKY BANNER ────────────────────────────────────────────────────── -->
+  <div class="vsl-banner vsl-banner--sticky">
+    <img class="vsl-banner-logo" src="../../shared/logo-white.svg" alt="Iota Media" />
+  </div>
+
+  <!-- ── THANK-YOU PAGE (under $100k — no call) ──────────────────────────────── -->
+  <div class="vsl-wrapper">
+
+    <section class="vsl-hero">
+      <h1 class="vsl-hero-headline" id="thankyou-headline">Thank You!</h1>
+      <p class="vsl-hero-emphasis">Your blueprint includes a step-by-step video tutorial.</p>
+      <p class="vsl-hero-text">
+        Thanks for your interest! You don&rsquo;t quite qualify yet for a personal implementation call &mdash; so we built a full video walkthrough right into your blueprint, showing you exactly how to implement it yourself instead.
+      </p>
+      <p class="vsl-hero-reassure">It&rsquo;s on its way to your inbox right now.</p>
+      <div class="vsl-hero-scrollcue">
+        <span>Want us to do it all for you?</span>
+        <span class="chevron">&#8595;</span>
+      </div>
+    </section>
+
+    <!-- What it takes to qualify for done-for-you -->
+    <div class="calendar-section calendar-section--always-visible">
+      <h3>Curious what qualifies you to have us implement everything &amp; make your content for you?</h3>
+      <p>Watch this video, then come back to us once you&rsquo;re pulling $10k/mo!</p>
+      <div class="video-outer">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/UTYkTG2WVsM" allow="fullscreen" allowfullscreen title="What it takes to qualify for done-for-you"></iframe>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /vsl-wrapper -->
+
+  <script src="../../shared/funnel.js?v=6"></script>
+  <script>
+    (function () {
+      // Personalise the thank-you headline from URL param
+      var params = new URLSearchParams(window.location.search);
+      var firstName = params.get("fn");
+      if (firstName) {
+        var headline = document.getElementById("thankyou-headline");
+        if (headline) headline.textContent = "Thank You, " + firstName + "!";
+      }
+    })();
+  </script>
+</body>
+</html>

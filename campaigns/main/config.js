@@ -73,6 +73,9 @@ const CONFIG = {
 
     offerPage: "/campaigns/main/offer.html",
     offerPageLowIntent: "/campaigns/main/offer-low-intent.html",
+    // Under-$100k leads don't qualify for a call — they get a blueprint with a
+    // built-in video tutorial instead of the booking calendar.
+    offerPageUnqualified: "/campaigns/main/offer-unqualified.html",
   },
 
   // ── FORM OPTION LISTS ────────────────────────────────────────────────────────

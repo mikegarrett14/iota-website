@@ -222,6 +222,7 @@
 
       btn.addEventListener("click", function () {
         formData.incomeLabel = opt.label;
+        formData.incomeValue = opt.value;
         formData.intent = opt.intent;
         formData.recruiting_season = opt.score;
 
@@ -364,9 +365,16 @@
       });
     }
 
-    var page = formData.intent === "high"
-      ? CONFIG.routing.offerPage
-      : CONFIG.routing.offerPageLowIntent;
+    var page;
+    if (formData.incomeValue === "under_100k") {
+      // Under-$100k leads don't qualify for a call — send them to the
+      // video-tutorial thank-you page instead of the booking calendar.
+      page = CONFIG.routing.offerPageUnqualified;
+    } else if (formData.intent === "high") {
+      page = CONFIG.routing.offerPage;
+    } else {
+      page = CONFIG.routing.offerPageLowIntent;
+    }
     window.location.href = page + "?fn=" + encodeURIComponent(formData.firstName);
   };
 
