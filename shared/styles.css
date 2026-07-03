@@ -602,6 +602,19 @@ select.styled-select.error { border-color: #EF4444; }
   margin: 0;
 }
 
+/* Two-line headline: big greeting + smaller qualifying line as one block */
+.vsl-hero-headline--stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: clamp(2.3rem, 6vw, 3.6rem);
+}
+
+.vsl-hero-headline__sub {
+  font-size: 1em;
+  line-height: 1.15;
+}
+
 .vsl-hero-emphasis {
   font-size: clamp(1.5rem, 4vw, 2.4rem);
   font-weight: 800;

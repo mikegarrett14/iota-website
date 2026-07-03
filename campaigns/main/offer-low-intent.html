@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../shared/styles.css?v=3" />
+  <link rel="stylesheet" href="../../shared/styles.css?v=10" />
   <script src="config.js?v=2"></script>
 
   <!-- Microsoft Clarity -->
@@ -57,8 +57,11 @@
   <div class="vsl-wrapper">
 
     <section class="vsl-hero">
-      <h1 class="vsl-hero-headline" id="thankyou-headline">Thank You!</h1>
-      <p class="vsl-hero-emphasis">We&rsquo;ll call you shortly to walk you through it.</p>
+      <h1 class="vsl-hero-headline vsl-hero-headline--stacked">
+        <span id="thankyou-headline">Congrats!</span>
+        <span class="vsl-hero-headline__sub">You qualify for our team to set up the blueprint for you!</span>
+      </h1>
+      <p class="vsl-hero-emphasis">We&rsquo;ll call you shortly to walk you through the details.</p>
       <p class="vsl-hero-reassure">Your recruiting blueprint is already on its way to your inbox.</p>
       <div class="vsl-hero-scrollcue">
         <span>Would you rather do a video call?</span>
@@ -80,21 +83,13 @@
       </div>
     </div>
 
-    <!-- Results carousel -->
+    <!-- Recruiting strategy video -->
     <div class="results-section">
-      <h3 class="results-section__heading">Real Results From Our Clients</h3>
-      <div class="results-carousel">
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/kenna-profile.png" alt="@kenna_halls — 18K followers, $18M in sales" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/kenna-reels.jpeg" alt="@kenna_halls Reels — up to 316K views" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/jake-profile.jpeg" alt="@jake.robles — 17.9K followers, $60M+ in sales" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/zack-profile.jpeg" alt="@zackstewartsales — 17.2K followers, $2.23M in revenue" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/zack-profile-dark.png" alt="@zackstewartsales profile" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/text-scheduled-calls.jpg" alt="Client: scheduled 3 calls and hired someone" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/text-hockey-signing.jpg" alt="Client: got first signing from the ad" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/slack-jaron.jpeg" alt="Jaron: set 6 leads and signed 3 over the weekend" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/text-14-hired.jpeg" alt="14 hired last month" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/text-interview-schedule.jpeg" alt="15 interviews booked through IG in one day" /></div>
-        <div class="result-card result-card--screenshot"><img src="../../shared/images/results/spreadsheet-recruits.jpg" alt="IOTA Recruits tracker — 60+ recruits in pipeline" /></div>
+      <h3 class="results-section__heading">Curious what our full recruiting strategy looks like?</h3>
+      <div class="video-outer" style="margin-top:1rem;">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/1ovtoJr6zsU" allow="fullscreen" allowfullscreen title="Our full recruiting strategy"></iframe>
+        </div>
       </div>
     </div>
 
@@ -108,7 +103,7 @@
       var firstName = params.get("fn");
       if (firstName) {
         var headline = document.getElementById("thankyou-headline");
-        if (headline) headline.textContent = "Thank You, " + firstName + "!";
+        if (headline) headline.textContent = "Congrats, " + firstName + "!";
       }
 
       // Inject calendar if URL is set
