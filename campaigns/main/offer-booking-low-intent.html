@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iota Media — Watch This Before You Check Your Email</title>
+  <title>Iota Media — Book Your Call</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -53,26 +53,23 @@
     <img class="vsl-banner-logo" src="../../shared/logo-white.svg" alt="Iota Media" />
   </div>
 
-  <!-- ── OFFER PAGE ────────────────────────────────────────────────────────── -->
+  <!-- ── BOOKING PAGE (video on top, no thank-you hero) ──────────────────────── -->
   <div class="vsl-wrapper">
 
-    <section class="vsl-hero">
-      <h1 class="vsl-hero-headline vsl-hero-headline--stacked">
-        <span id="thankyou-headline">Congrats!</span>
-        <span class="vsl-hero-headline__sub">You qualify for our team to set up the blueprint for you!</span>
-      </h1>
-      <p class="vsl-hero-emphasis">We&rsquo;ll call you shortly to walk you through the details.</p>
-      <p class="vsl-hero-reassure">Your recruiting blueprint is already on its way to your inbox.</p>
-      <div class="vsl-hero-scrollcue">
-        <span>Would you rather do a video call?</span>
-        <span class="chevron">&#8595;</span>
+    <!-- Recruiting strategy video -->
+    <div class="results-section" style="border-top:none;padding-top:0;">
+      <h3 class="results-section__heading">Watch the first 5 mins of this video to learn what it would look like for us to install our full recruiting system</h3>
+      <div class="video-outer" style="margin-top:1rem;">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/1ovtoJr6zsU?controls=0&rel=0" allow="fullscreen" allowfullscreen title="Our full recruiting strategy"></iframe>
+        </div>
       </div>
-    </section>
+    </div>
 
     <!-- Calendar — always visible -->
     <div class="calendar-section calendar-section--always-visible" id="calendar-section">
-      <h3>Would you rather do a video call?</h3>
-      <p>Choose a time that works for you instead.</p>
+      <h3>Book your free discovery session here</h3>
+      <p>Choose a time that works for you.</p>
 
       <div class="calendar-embed-wrap" id="calendar-embed-wrap">
         <div class="calendar-placeholder" id="calendar-placeholder">
@@ -83,29 +80,10 @@
       </div>
     </div>
 
-    <!-- Recruiting strategy video -->
-    <div class="results-section">
-      <h3 class="results-section__heading">Watch the first 5 mins of this video to learn what it would look like for us to install our full recruiting system</h3>
-      <div class="video-outer" style="margin-top:1rem;">
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/1ovtoJr6zsU?controls=0&rel=0" allow="fullscreen" allowfullscreen title="Our full recruiting strategy"></iframe>
-        </div>
-      </div>
-    </div>
-
   </div><!-- /vsl-wrapper -->
 
-  <script src="../../shared/funnel.js"></script>
   <script>
     (function () {
-      // Personalise the thank-you headline from URL param
-      var params = new URLSearchParams(window.location.search);
-      var firstName = params.get("fn");
-      if (firstName) {
-        var headline = document.getElementById("thankyou-headline");
-        if (headline) headline.textContent = "Congrats, " + firstName + "!";
-      }
-
       // Inject calendar if URL is set
       var calUrl = CONFIG.integrations.calendarEmbedUrl;
       if (calUrl) {
@@ -115,11 +93,17 @@
         var wrap = document.getElementById("calendar-embed-wrap");
         var calIframe = document.createElement("iframe");
         calIframe.src = calUrl;
-        calIframe.height = "700";
         calIframe.style.width = "100%";
         calIframe.style.border = "none";
+        calIframe.style.overflow = "hidden";
         calIframe.style.display = "block";
+        calIframe.scrolling = "no";
         wrap.appendChild(calIframe);
+
+        var calScript = document.createElement("script");
+        calScript.src = "https://system.iotacompany.com/js/form_embed.js";
+        calScript.type = "text/javascript";
+        document.body.appendChild(calScript);
       }
     })();
   </script>
