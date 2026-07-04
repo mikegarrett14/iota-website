@@ -217,6 +217,69 @@ body {
 
 .funnel-video-outer.docked .funnel-video-badge { display: block; }
 
+/* Expand / collapse controls (kept above the unmute overlay so they're tappable) */
+.funnel-video-expand,
+.funnel-video-collapse {
+  display: none;
+  position: absolute;
+  z-index: 12;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(10, 36, 114, 0.92);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* "Full screen" pill on the docked mini-player */
+.funnel-video-expand {
+  bottom: 8px;
+  right: 8px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.funnel-video-outer.docked .funnel-video-expand { display: inline-flex; }
+
+/* Close button on the expanded player */
+.funnel-video-collapse {
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+}
+.funnel-video-outer.expanded .funnel-video-collapse { display: inline-flex; }
+
+/* Expanded (full-size) state — dark backdrop with the player centred */
+.funnel-video-outer.expanded {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.85);
+  animation: dockIn 0.25s ease;
+}
+
+.funnel-video-outer.expanded .funnel-video {
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
 /* Fade out once the video has finished playing */
 .funnel-video-outer.done {
   opacity: 0;

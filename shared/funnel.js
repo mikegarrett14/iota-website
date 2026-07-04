@@ -67,9 +67,27 @@
     badge.className = "funnel-video-badge";
     badge.textContent = "Keep watching 👀";
 
+    // Expand control — lets a docked viewer pop the video out to full size,
+    // and a close control to shrink it back into the corner.
+    const expandBtn = document.createElement("button");
+    expandBtn.type = "button";
+    expandBtn.className = "funnel-video-expand";
+    expandBtn.setAttribute("aria-label", "Watch full screen");
+    expandBtn.innerHTML = '<span aria-hidden="true">⤢</span> Full screen';
+    expandBtn.onclick = window.expandFunnelVideo;
+
+    const collapseBtn = document.createElement("button");
+    collapseBtn.type = "button";
+    collapseBtn.className = "funnel-video-collapse";
+    collapseBtn.setAttribute("aria-label", "Minimize video");
+    collapseBtn.innerHTML = '<span aria-hidden="true">✕</span>';
+    collapseBtn.onclick = window.collapseFunnelVideo;
+
     container.appendChild(iframe);
     container.appendChild(overlay);
     container.appendChild(badge);
+    container.appendChild(expandBtn);
+    container.appendChild(collapseBtn);
 
     // The IFrame API calls this global once it finishes loading.
     window.onYouTubeIframeAPIReady = function () {
@@ -121,9 +139,9 @@
     }
     updateBlueprintButton();
 
-    // Once watched, fade out the docked mini-player to declutter the form.
+    // Once watched, fade out the mini-player (docked or expanded) to declutter.
     const outer = document.getElementById("funnel-video-outer");
-    if (outer && outer.classList.contains("docked")) {
+    if (outer && (outer.classList.contains("docked") || outer.classList.contains("expanded"))) {
       outer.classList.add("done");
       setTimeout(function () { outer.style.display = "none"; }, 500);
     }
@@ -150,6 +168,22 @@
       outer.classList.add("docked");
     }
   }
+
+  // Pop the docked mini-player out to a large, centred view so the visitor can
+  // watch full size while they wait, then shrink it back to the corner.
+  window.expandFunnelVideo = function () {
+    const outer = document.getElementById("funnel-video-outer");
+    if (!outer) return;
+    outer.classList.remove("docked");
+    outer.classList.add("expanded");
+  };
+
+  window.collapseFunnelVideo = function () {
+    const outer = document.getElementById("funnel-video-outer");
+    if (!outer || videoEnded) return;
+    outer.classList.remove("expanded");
+    outer.classList.add("docked");
+  };
 
   // ── FINAL CTA (blueprint submit) ──────────────────────────────────────────
   // Shown once an income is picked; unlocked only after the video plays through.
