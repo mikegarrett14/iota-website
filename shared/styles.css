@@ -202,7 +202,7 @@ body {
 .funnel-video-outer.docked {
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  top: 16px;
   width: 300px;
   max-width: 46vw;
   margin: 0;

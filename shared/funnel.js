@@ -33,7 +33,6 @@
     initFunnelVideo();
     initIndustryOptions();
     initIncomeOptions();
-    initVideoDocking();
     showStep(1);
   });
 
@@ -142,7 +141,7 @@
   };
 
   // ── VIDEO DOCKING ─────────────────────────────────────────────────────────
-  // As soon as the visitor engages with the form, shrink the video into a
+  // Once the visitor advances past the name step, shrink the video into a
   // corner so it keeps playing while they fill things out.
   function dockVideo() {
     if (videoEnded) return;
@@ -150,13 +149,6 @@
     if (outer && !outer.classList.contains("docked")) {
       outer.classList.add("docked");
     }
-  }
-
-  function initVideoDocking() {
-    ["first-name", "last-name"].forEach(function (id) {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener("focus", dockVideo);
-    });
   }
 
   // ── FINAL CTA (blueprint submit) ──────────────────────────────────────────
