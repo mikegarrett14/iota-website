@@ -16,7 +16,6 @@
   let videoEnded = false;      // true once the intro video has played through
   let incomeSelected = false;  // true once the visitor picks an income band
   let funnelPlayer = null;     // YouTube IFrame API player instance
-  let pendingUnmute = false;   // unmute requested before the player was ready
   let completionPoll = null;   // interval that watches for near-end completion
 
   // ── UTM CAPTURE ───────────────────────────────────────────────────────────
@@ -55,14 +54,6 @@
     iframe.allow = "autoplay; fullscreen";
     iframe.allowFullscreen = true;
 
-    const overlay = document.createElement("div");
-    overlay.id = "funnel-unmute-overlay";
-    overlay.className = "unmute-overlay";
-    overlay.onclick = window.unmuteFunnelVideo;
-    overlay.innerHTML =
-      '<div class="unmute-overlay__icon">🔊</div>' +
-      '<div class="unmute-overlay__text">Your Video Is Playing<br>Click To Unmute</div>';
-
     const badge = document.createElement("div");
     badge.className = "funnel-video-badge";
     badge.textContent = "Keep watching 👀";
@@ -84,7 +75,6 @@
     collapseBtn.onclick = window.collapseFunnelVideo;
 
     container.appendChild(iframe);
-    container.appendChild(overlay);
     container.appendChild(badge);
     container.appendChild(expandBtn);
     container.appendChild(collapseBtn);
@@ -93,13 +83,6 @@
     window.onYouTubeIframeAPIReady = function () {
       funnelPlayer = new YT.Player("funnel-player", {
         events: {
-          onReady: function () {
-            if (pendingUnmute) {
-              funnelPlayer.unMute();
-              funnelPlayer.setVolume(100);
-              pendingUnmute = false;
-            }
-          },
           onStateChange: function (e) {
             if (e.data === YT.PlayerState.ENDED) {
               markVideoEnded();
@@ -146,17 +129,6 @@
       setTimeout(function () { outer.style.display = "none"; }, 500);
     }
   }
-
-  window.unmuteFunnelVideo = function () {
-    if (funnelPlayer && typeof funnelPlayer.unMute === "function") {
-      funnelPlayer.unMute();
-      funnelPlayer.setVolume(100);
-    } else {
-      pendingUnmute = true;
-    }
-    const overlay = document.getElementById("funnel-unmute-overlay");
-    if (overlay) overlay.classList.add("hidden");
-  };
 
   // ── VIDEO DOCKING ─────────────────────────────────────────────────────────
   // Once the visitor advances past the name step, shrink the video into a
