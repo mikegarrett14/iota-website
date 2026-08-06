@@ -706,6 +706,24 @@ select.styled-select.error { border-color: #EF4444; }
   margin: 0;
 }
 
+.vsl-hero-guarantee {
+  background: #EAF4FB;
+  border: 2px solid #2176AE;
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  font-size: clamp(1.15rem, 3vw, 1.6rem);
+  font-weight: 700;
+  color: #0A2472;
+  line-height: 1.35;
+  max-width: 640px;
+  margin: 0;
+}
+
+.vsl-hero-guarantee strong {
+  color: #2176AE;
+  font-weight: 900;
+}
+
 .vsl-hero-scrollcue {
   margin-top: 1.5rem;
   font-size: 0.95rem;
