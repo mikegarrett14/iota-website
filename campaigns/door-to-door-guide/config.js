@@ -24,7 +24,7 @@ const CONFIG = {
     // Guide cover image (optional). Not rendered on the landing page right now —
     // the landing is form-first with no intro video. Drop a cover here if you
     // later want to show one above the form.
-    guidePreviewImageUrl: "/shared/content-guide-preview.jpg",
+    guidePreviewImageUrl: "/shared/content-guide-preview.png",
 
     // Intro video is intentionally DISABLED for this campaign. With this left
     // empty, funnel.js skips the watch-to-unlock gate and the "Send me the free
