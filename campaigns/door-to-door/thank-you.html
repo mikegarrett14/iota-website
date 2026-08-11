@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Booked — We'll Be In Touch | IOTA</title>
+  <meta name="description" content="Your door-to-door content call is booked. Our team will reach out to you shortly." />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1281243344095834');
+  fbq('track', 'PageView');
+  fbq('track', 'Schedule');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1281243344095834&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+    gtag('event', 'conversion', { event_category: 'funnel', event_label: 'd2d_call_booked' });
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #ffffff;
+      --bg2:     #EAF4FB;
+      --border:  #E2E8F0;
+      --blue:    #2176AE;
+      --navy:    #0A2472;
+      --gray:    #475569;
+      --gray-soft: #64748B;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 50% 0%, #EAF4FB 0%, var(--bg) 60%);
+      min-height: 100vh;
+      color: var(--navy);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .navbar { background: var(--navy); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; }
+    .nav-inner img { height: 26px; width: auto; display: block; }
+
+    /* ── CONTENT ── */
+    .ty-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 64px 22px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ty-icon {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(33,118,174,0.28);
+      margin-bottom: 26px;
+    }
+
+    .ty-eyebrow {
+      display: inline-block;
+      background: rgba(33,118,174,0.12);
+      border: 1px solid rgba(33,118,174,0.35);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+    }
+
+    .ty-headline {
+      font-size: clamp(30px, 6vw, 44px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.08;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+
+    .ty-sub {
+      font-size: 18px;
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .ty-sub strong { color: var(--navy); }
+
+    .ty-steps {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+    .ty-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+    .ty-step__num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .ty-step__text { font-size: 15px; color: var(--gray); line-height: 1.55; }
+    .ty-step__text strong { display: block; color: var(--navy); font-weight: 700; margin-bottom: 2px; font-size: 16px; }
+
+    .ty-foot {
+      margin-top: 30px;
+      font-size: 15px;
+      color: var(--gray-soft);
+    }
+    .ty-foot strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <img src="/shared/logo-white.svg" alt="IOTA Media" />
+    </div>
+  </nav>
+
+  <div class="ty-wrap">
+
+    <div class="ty-icon">✓</div>
+
+    <div class="ty-eyebrow">Your Slot Is Locked In</div>
+
+    <h1 class="ty-headline" id="ty-headline">You're booked!</h1>
+
+    <p class="ty-sub">
+      Your call is confirmed. <strong>Our team will be reaching out to you shortly</strong> to walk you through everything before we get started on your content.
+    </p>
+
+    <div class="ty-steps">
+      <div class="ty-step">
+        <div class="ty-step__num">1</div>
+        <div class="ty-step__text">
+          <strong>Check your inbox</strong>
+          You'll get a confirmation email with your call time and link — add it to your calendar so you don't miss it.
+        </div>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step__num">2</div>
+        <div class="ty-step__text">
+          <strong>We'll reach out to you</strong>
+          Expect a message from our team to confirm the details and answer anything before your call.
+        </div>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step__num">3</div>
+        <div class="ty-step__text">
+          <strong>Come ready to move fast</strong>
+          Summer's almost over — think through your knocking schedule for the next few weeks so we can plan filming while you're still on the doors.
+        </div>
+      </div>
+    </div>
+
+    <p class="ty-foot">
+      Talk soon — <strong>the IOTA team.</strong>
+    </p>
+
+  </div>
+
+  <script>
+    // Personalize the headline from a ?fn= first-name param, if present
+    var firstName = new URLSearchParams(window.location.search).get("fn");
+    if (firstName) {
+      var h = document.getElementById("ty-headline");
+      if (h) h.textContent = firstName + ", you're booked!";
+    }
+  </script>
+</body>
+</html>
