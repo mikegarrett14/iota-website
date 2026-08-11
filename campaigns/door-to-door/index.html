@@ -267,13 +267,16 @@
     /* ── CASE STUDY REELS ── */
     .reels { background: var(--bg); }
     .reels-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 18px;
     }
     .reel-card {
       position: relative;
       display: block;
+      flex: 0 0 auto;
+      width: clamp(150px, 20vw, 210px);
       aspect-ratio: 9 / 16;
       border-radius: 12px;
       overflow: hidden;
@@ -424,7 +427,7 @@
       .btn--lg { font-size: 18px; padding: 18px 32px; }
       .whynow-callout { font-size: 19px; }
       .calendar-wrapper iframe { height: 1500px; }
-      .reels-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+      .reels-grid { gap: 12px; }
     }
   </style>
 </head>
