@@ -40,10 +40,15 @@
   // unlock the final "Send me the free blueprint" button once it plays through.
   function initFunnelVideo() {
     const container = document.getElementById("funnel-video");
-    if (!container) return; // not on the landing page
-
     const url = CONFIG.assets.funnelVideoEmbedUrl;
-    if (!url) return; // leave the placeholder visible
+
+    // No intro video on this page/campaign (empty funnelVideoEmbedUrl or no
+    // video container) → there's nothing to watch, so don't gate the final CTA.
+    // Treat the video as already finished; the button unlocks on income select.
+    if (!container || !url) {
+      videoEnded = true;
+      return;
+    }
 
     const placeholder = document.getElementById("funnel-video-placeholder");
     if (placeholder) placeholder.remove();
