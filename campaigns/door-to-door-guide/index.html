@@ -47,6 +47,53 @@
   src="https://www.facebook.com/tr?id=983892814051041&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+
+  <!-- Guide cover (designed graphic — intentionally NOT a link) -->
+  <style>
+    .lm-cover { text-align: center; margin: 4px auto 14px; }
+    .lm-cover__book {
+      position: relative;
+      width: 230px;
+      max-width: 74%;
+      margin: 0 auto;
+      aspect-ratio: 3 / 4;
+      border-radius: 12px;
+      padding: 24px 20px;
+      color: #fff;
+      background:
+        radial-gradient(120% 80% at 18% 4%, #2a63b8 0%, rgba(42,99,184,0) 55%),
+        linear-gradient(158deg, #0A2472 0%, #0A2472 42%, #133c8a 100%);
+      border-left: 4px solid #2176AE;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.10),
+        -9px 0 0 -4px #081d47,
+        0 20px 38px rgba(10,36,114,0.34);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      user-select: none;
+    }
+    .lm-cover__brand { font-size: 10px; letter-spacing: 3px; font-weight: 700; color: #9db8e6; }
+    .lm-cover__badge {
+      margin-top: 6px;
+      font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+      color: #3a2a00; background: #F5A623;
+      padding: 3px 12px; border-radius: 100px;
+    }
+    .lm-cover__filmstrip { display: flex; gap: 5px; margin: 12px 0 8px; }
+    .lm-cover__filmstrip span { width: 13px; height: 17px; border-radius: 3px; background: #2176AE; }
+    .lm-cover__filmstrip span:nth-child(even) { opacity: 0.5; }
+    .lm-cover__title { font-size: 20px; font-weight: 900; line-height: 1.12; letter-spacing: -0.5px; margin: 0; }
+    .lm-cover__rule { width: 38px; height: 3px; background: #2176AE; border-radius: 2px; margin: 11px 0; }
+    .lm-cover__sub { font-size: 12.5px; line-height: 1.4; color: #cdddf6; margin: 0; font-weight: 600; }
+    .lm-cover__foot {
+      margin-top: 14px; font-size: 9.5px; letter-spacing: 1px; font-weight: 800; text-transform: uppercase;
+      color: #0A2472; background: #fff; padding: 4px 12px; border-radius: 100px;
+    }
+    .lm-cover__hint { margin: 14px auto 0; font-size: 13px; color: #64748B; font-weight: 600; }
+  </style>
 </head>
 <body>
 
@@ -70,30 +117,38 @@
       <p class="funnel-subline">For door-to-door reps: exactly how to film yourself on the doors — plus <strong>40 viral scripts</strong> you can start using today.</p>
     </div>
 
-    <!-- Guide preview image — shows visitors exactly what they're getting -->
-    <div style="text-align:center; margin:0 auto 4px;">
-      <img src="/shared/content-guide-preview.png"
-           alt="Preview of the free End-of-Summer Content Guide — 40 reel frameworks for door-to-door salesmen"
-           style="width:100%; max-width:300px; height:auto; display:inline-block;" />
+    <!-- Guide cover — a designed graphic, not a clickable download.
+         The hint below redirects the "click the cover" impulse to the form. -->
+    <div class="lm-cover">
+      <div class="lm-cover__book">
+        <span class="lm-cover__brand">IOTA MEDIA</span>
+        <span class="lm-cover__badge">FREE GUIDE</span>
+        <div class="lm-cover__filmstrip" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <h2 class="lm-cover__title">The End-of-Summer<br />Content Guide</h2>
+        <div class="lm-cover__rule"></div>
+        <p class="lm-cover__sub">40 viral reel scripts<br />+ filming &amp; editing playbook</p>
+        <span class="lm-cover__foot">66-page guide · for D2D reps</span>
+      </div>
+      <p class="lm-cover__hint">↓ Enter your email below to get it — instant &amp; free</p>
     </div>
 
     <!-- Form -->
     <div class="funnel-form">
 
-      <!-- ── STEP 1: Name ──────────────────────────────────────────────── -->
+      <!-- ── STEP 1: Email (asked first so it's clear info is needed) ───── -->
       <div class="step" id="step-1">
-        <p class="step-question">What's your <strong>name?</strong></p>
+        <p class="step-question">Where should I <strong>send the guide?</strong></p>
+        <input type="email" id="email" placeholder="EMAIL ADDRESS" autocomplete="email" />
+        <button class="cta-btn" onclick="nextStep(1)">GET INSTANT ACCESS →</button>
+      </div>
+
+      <!-- ── STEP 2: Name ──────────────────────────────────────────────── -->
+      <div class="step hidden" id="step-2">
+        <p class="step-question">And your <strong>name?</strong></p>
         <div class="input-row">
           <input type="text" id="first-name" placeholder="FIRST NAME" autocomplete="given-name" />
           <input type="text" id="last-name"  placeholder="LAST NAME"  autocomplete="family-name" />
         </div>
-        <button class="cta-btn" onclick="nextStep(1)">LET'S START</button>
-      </div>
-
-      <!-- ── STEP 2: Email ─────────────────────────────────────────────── -->
-      <div class="step hidden" id="step-2">
-        <p class="step-question">Where should I <strong>email</strong> your guide?</p>
-        <input type="email" id="email" placeholder="EMAIL ADDRESS" autocomplete="email" />
         <button class="cta-btn" onclick="nextStep(2)">CONTINUE</button>
         <button class="back-link" onclick="prevStep(2)">← Previous</button>
       </div>
@@ -154,6 +209,6 @@
 
   </div><!-- /funnel-wrapper -->
 
-  <script src="../../shared/funnel.js?v=9"></script>
+  <script src="../../shared/funnel.js?v=10"></script>
 </body>
 </html>
