@@ -270,10 +270,18 @@
   }
 
   // ── VALIDATION ────────────────────────────────────────────────────────────
+  // Validates by which fields are present in the current step, not by step
+  // number — so campaigns can reorder steps (e.g. ask email before name)
+  // without this logic breaking. Steps that only contain one of these fields
+  // just run that one check.
   function validateStep(n) {
     clearError();
+    const stepEl = document.getElementById("step-" + n);
+    if (!stepEl) return true;
+    const inStep = function (id) { return !!stepEl.querySelector("#" + id); };
 
-    if (n === 1) {
+    // Name (first + last)
+    if (inStep("first-name") || inStep("last-name")) {
       const first = val("first-name");
       const last  = val("last-name");
       if (!first || !last) {
@@ -286,7 +294,8 @@
       formData.lastName  = last;
     }
 
-    if (n === 2) {
+    // Email
+    if (inStep("email")) {
       const email = val("email");
       if (!email || !isValidEmail(email)) {
         showError("Please enter a valid email address.");
@@ -296,7 +305,8 @@
       formData.email = email;
     }
 
-    if (n === 3) {
+    // Phone
+    if (inStep("phone")) {
       const phone = val("phone");
       if (!phone || phone.replace(/\D/g, "").length < 7) {
         showError("Please enter a valid phone number.");
@@ -306,7 +316,8 @@
       formData.phone = phone;
     }
 
-    if (n === 4) {
+    // Industry
+    if (inStep("industry-options")) {
       if (!formData.industry) {
         showError("Please select your industry.");
         return false;
