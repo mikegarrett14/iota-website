@@ -210,5 +210,26 @@
   </div><!-- /funnel-wrapper -->
 
   <script src="../../shared/funnel.js?v=10"></script>
+
+  <!-- Swap the cover hint after the email step: step 1 asks for the email,
+       later steps reassure it's just a few quick questions. -->
+  <script>
+    (function () {
+      var hint = document.querySelector('.lm-cover__hint');
+      if (!hint) return;
+      var STEP1 = '↓ Enter your email below to get it — instant & free';
+      var LATER = 'Answer a few questions for your guide!';
+      function updateHint() {
+        var step1 = document.getElementById('step-1');
+        var onStep1 = step1 && !step1.classList.contains('hidden');
+        hint.textContent = onStep1 ? STEP1 : LATER;
+      }
+      var mo = new MutationObserver(updateHint);
+      document.querySelectorAll('.step').forEach(function (s) {
+        mo.observe(s, { attributes: true, attributeFilter: ['class'] });
+      });
+      updateHint();
+    })();
+  </script>
 </body>
 </html>
