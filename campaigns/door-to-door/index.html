@@ -745,40 +745,29 @@
   <script src="https://system.iotacompany.com/js/form_embed.js" type="text/javascript"></script>
 
   <!-- ── MID-FUNNEL "Lead" SIGNAL ─────────────────────────────────────────
-       Fires a single Meta "Lead" event the first time a visitor shows booking
-       intent — either by clicking a "Book Your Call"/"Claim Your Slot" button
-       or by scrolling the calendar section into view. This gives Meta a
-       higher-volume, higher-intent event to optimize toward than the rare
-       booking, without double-counting (guarded by a one-time flag). -->
+       Fires a single Meta "Lead" event only when a visitor DELIBERATELY clicks
+       a "Book Your Call" / "Claim Your Slot" button (not on passive scroll).
+       This is a real intent signal — it pushes Meta to optimize toward people
+       who move to book, instead of cheap scrollers. Guarded by a one-time flag
+       so it fires at most once per visit. -->
   <script>
     (function () {
       var fired = false;
-      function fireLead(source) {
+      function fireLead() {
         if (fired) return;
         fired = true;
         if (typeof fbq === 'function') {
-          fbq('track', 'Lead', { content_name: 'D2D Summer — reached calendar', source: source });
+          fbq('track', 'Lead', { content_name: 'D2D Summer — clicked Book Your Call' });
         }
         if (typeof gtag === 'function') {
-          gtag('event', 'reached_calendar', { event_category: 'funnel', event_label: source });
+          gtag('event', 'clicked_book_call', { event_category: 'funnel', event_label: 'cta_click' });
         }
       }
 
-      // 1) Any CTA that jumps to the calendar (#book)
+      // Fire only on a deliberate CTA click (any button that jumps to #book)
       document.querySelectorAll('a[href="#book"]').forEach(function (btn) {
-        btn.addEventListener('click', function () { fireLead('cta_click'); });
+        btn.addEventListener('click', fireLead);
       });
-
-      // 2) Calendar section scrolled into view
-      var calendar = document.getElementById('book');
-      if (calendar && 'IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) { fireLead('calendar_in_view'); io.disconnect(); }
-          });
-        }, { threshold: 0.4 });
-        io.observe(calendar);
-      }
     })();
   </script>
 
