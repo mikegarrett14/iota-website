@@ -9,12 +9,13 @@
 
   // ── STATE ──────────────────────────────────────────────────────────────────
   let currentStep = 1;
-  const totalSteps = 5;
   const formData = {};
 
   // Intro-video gating state
   let videoEnded = false;      // true once the intro video has played through
   let incomeSelected = false;  // true once the visitor picks an income band
+  let teamSizeAsked = false;   // true when this campaign shows the team-size step
+  let repMinimumMet = null;    // true/false once a team size is picked, else null
   let funnelPlayer = null;     // YouTube IFrame API player instance
   let completionPoll = null;   // interval that watches for near-end completion
 
@@ -31,6 +32,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initFunnelVideo();
     initIndustryOptions();
+    initTeamSizeOptions();
     initIncomeOptions();
     showStep(1);
   });
@@ -169,7 +171,7 @@
     const hint = document.getElementById("video-lock-hint");
     if (!btn) return;
 
-    if (!incomeSelected) {
+    if (!incomeSelected || (teamSizeAsked && repMinimumMet === null)) {
       btn.style.display = "none";
       if (hint) hint.style.display = "none";
       return;
@@ -204,13 +206,58 @@
           otherWrap.style.display = "none";
           formData.industryOther = "";
           btn.classList.add("selected");
-          setTimeout(function () { goToStep(5); }, 220);
+          setTimeout(function () { goToStep(currentStep + 1); }, 220);
         }
       });
     });
   }
 
-  // ── BUILD INCOME OPTIONS (Step 5) ─────────────────────────────────────────
+  // ── BUILD TEAM SIZE OPTIONS ───────────────────────────────────────────────
+  // Only appears on campaigns whose config defines `routing.teamSizeOptions`
+  // AND whose form has a #team-size-options container. Campaigns without both
+  // skip the step entirely and score on income alone.
+  function initTeamSizeOptions() {
+    const container = document.getElementById("team-size-options");
+    const options = CONFIG.routing.teamSizeOptions;
+    if (!container || !options || !options.length) return;
+
+    teamSizeAsked = true;
+
+    options.forEach(function (opt) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "option-btn";
+      btn.textContent = opt.label;
+      btn.dataset.value = opt.value;
+
+      btn.addEventListener("click", function () {
+        formData.team_size = opt.label;
+        formData.teamSizeValue = opt.value;
+        repMinimumMet = opt.meetsRepMinimum === true;
+
+        container.querySelectorAll(".option-btn").forEach(function (b) {
+          b.classList.remove("selected");
+        });
+        btn.classList.add("selected");
+
+        setTimeout(function () { goToStep(currentStep + 1); }, 220);
+      });
+
+      container.appendChild(btn);
+    });
+  }
+
+  // ── LEAD SCORE ────────────────────────────────────────────────────────────
+  // Starts from the income band's colour, then applies the rep-count gate:
+  // a team under 10 active reps drops to red, but only below the $500k bands
+  // (which score green and qualify on income alone).
+  function computeLeadScore() {
+    let score = formData.incomeScore;
+    if (score !== "green" && repMinimumMet === false) score = "red";
+    return score;
+  }
+
+  // ── BUILD INCOME OPTIONS (final step) ─────────────────────────────────────
   function initIncomeOptions() {
     const container = document.getElementById("income-options");
     if (!container) return;
@@ -227,7 +274,7 @@
         formData.incomeLabel = opt.label;
         formData.incomeValue = opt.value;
         formData.intent = opt.intent;
-        formData.recruiting_season = opt.score;
+        formData.incomeScore = opt.score;
 
         // Visual feedback, then reveal the final CTA (which stays locked until
         // the intro video has played through).
@@ -316,6 +363,14 @@
       formData.phone = phone;
     }
 
+    // Team size
+    if (inStep("team-size-options")) {
+      if (repMinimumMet === null) {
+        showError("Please select your team size.");
+        return false;
+      }
+    }
+
     // Industry
     if (inStep("industry-options")) {
       if (!formData.industry) {
@@ -340,6 +395,17 @@
   window.submitForm = function () {
     // Guard: never submit until an income is chosen and the video is finished.
     if (!incomeSelected || !videoEnded) return;
+    if (teamSizeAsked && repMinimumMet === null) return;
+
+    const leadScore = computeLeadScore();
+    formData.recruiting_season = leadScore;
+
+    // Campaigns that opt in report intent by score, so "high" always means
+    // "this lead gets the booking calendar" (see routing at the end of this
+    // function). Campaigns without the flag keep the income band's own intent.
+    if (CONFIG.routing.intentFollowsScore) {
+      formData.intent = leadScore === "red" ? "low" : "high";
+    }
 
     // Fire GA4 conversion event
     if (typeof gtag === "function") {
@@ -358,7 +424,9 @@
     const endpoint = CONFIG.integrations.formWebhookUrl;
     if (endpoint) {
       const payload = Object.assign({}, formData);
-      // Other industry always scores red regardless of income
+      delete payload.incomeScore;
+      // Other industry always scores red regardless of income or team size.
+      // Payload only — it doesn't change which page the lead lands on.
       if (payload.industry === "other") {
         payload.recruiting_season = "red";
       }
@@ -379,15 +447,16 @@
       });
     }
 
+    // Routing runs off the lead score, not the income band on its own.
+    // Red never sees a calendar; yellow and green both get the offer page.
+    // Campaigns that still score orange keep their separate low-intent page.
     var page;
-    if (formData.incomeValue === "under_100k") {
-      // Under-$100k leads don't qualify for a call — send them to the
-      // video-tutorial thank-you page instead of the booking calendar.
+    if (leadScore === "red") {
       page = CONFIG.routing.offerPageUnqualified;
-    } else if (formData.intent === "high") {
-      page = CONFIG.routing.offerPage;
-    } else {
+    } else if (leadScore === "orange" && CONFIG.routing.offerPageLowIntent) {
       page = CONFIG.routing.offerPageLowIntent;
+    } else {
+      page = CONFIG.routing.offerPage;
     }
     window.location.href = page + "?fn=" + encodeURIComponent(formData.firstName);
   };

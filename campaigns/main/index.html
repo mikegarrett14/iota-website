@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../shared/styles.css?v=12" />
-  <script src="/campaigns/main/config.js?v=8"></script>
+  <script src="/campaigns/main/config.js?v=11"></script>
 
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
@@ -146,8 +146,16 @@
         <button class="back-link" onclick="prevStep(4)">← Previous</button>
       </div>
 
-      <!-- ── STEP 5: Income (qualification gate — auto-advances on click) ── -->
+      <!-- ── STEP 5: Team size (qualification gate — auto-advances on click) ── -->
       <div class="step hidden" id="step-5">
+        <p class="step-question">How many <strong>active reps</strong> are on your team?</p>
+        <!-- Options are injected from config.js by funnel.js -->
+        <div class="option-list" id="team-size-options"></div>
+        <button class="back-link" onclick="prevStep(5)">← Previous</button>
+      </div>
+
+      <!-- ── STEP 6: Income (qualification gate) ─────────────────────────── -->
+      <div class="step hidden" id="step-6">
         <p class="step-question">What is your <strong>annual income?</strong></p>
         <!-- Options are injected from config.js by funnel.js -->
         <div class="option-list" id="income-options"></div>
@@ -159,7 +167,7 @@
         <p class="video-lock-hint" id="video-lock-hint" style="display:none;">
           🔒 Finish watching the 1-min video to unlock your free blueprint.
         </p>
-        <button class="back-link" onclick="prevStep(5)">← Previous</button>
+        <button class="back-link" onclick="prevStep(6)">← Previous</button>
       </div>
 
       <!-- Error message (shared across all steps) -->
@@ -173,6 +181,6 @@
 
   </div><!-- /funnel-wrapper -->
 
-  <script src="../../shared/funnel.js?v=9"></script>
+  <script src="../../shared/funnel.js?v=12"></script>
 </body>
 </html>

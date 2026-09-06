@@ -85,28 +85,56 @@ The `shared/` folder is used by all campaigns — changes there affect every cam
 
 ## Form flow
 
-The main form at `campaigns/main/index.html` has 5 steps:
+The main form at `campaigns/main/index.html` has 6 steps:
 
 1. Name (first + last)
 2. Email
 3. Phone
-4. Annual income (dropdown — determines routing)
-5. Service type + recruiting model (two dropdowns)
+4. Industry (tap to select — auto-advances)
+5. Team size (tap to select — auto-advances)
+6. Annual income (tap to select — reveals the submit button)
+
+The door-to-door guide funnel has no team-size step and scores on income alone.
+Any campaign can drop the step by removing `routing.teamSizeOptions` from its
+`config.js` (or the `#team-size-options` container from its HTML).
 
 ---
 
 ## Qualification logic
 
-| Annual Income | Intent | Path |
-|---|---|---|
-| Under $100k/year | low | Low-intent → course page |
-| $100k – $250k/year | low | Low-intent → course page |
-| $250k – $500k/year | low | Low-intent → course page |
-| $500k – $750k/year | high | High-intent → VSL + booking page |
-| $750k – $1M/year | high | High-intent → VSL + booking page |
-| $1M+/year | high | High-intent → VSL + booking page |
+The lead colour is sent to GHL as `recruiting_season` and decides the destination page.
 
-To change the threshold, update the `intent` field on each option in `config.js` → `routing.incomeOptions`.
+| Annual income | 10+ active reps | Under 10 active reps |
+|---|---|---|
+| Under $200k | 🔴 red | 🔴 red |
+| $200k - $500k | 🟡 yellow | 🔴 red |
+| $500k - $750k | 🟢 green | 🟢 green |
+| $750k+ | 🟢 green | 🟢 green |
+
+The rep-count gate only applies below $500k — the $500k+ bands qualify on income alone.
+
+Option labels in this campaign use plain hyphens, not en dashes, so exact-match
+filters in GHL are safe to type by hand. The door-to-door guide config still uses
+en dashes in its labels — don't "fix" those without checking the GHL data first.
+
+| Colour | Path |
+|---|---|
+| 🔴 red | `offer-unqualified.html` — blueprint + video tutorial, no calendar |
+| 🟡 yellow | `offer.html` — VSL + booking calendar |
+| 🟢 green | `offer.html` — VSL + booking calendar |
+
+A few extra rules:
+
+- **Industry = "Other"** forces `recruiting_season: "red"` in the webhook payload only.
+  It does not change which page the lead lands on.
+- **`intent` follows the score, not the income band**, because
+  `routing.intentFollowsScore` is set in this campaign's config: red posts `"low"`,
+  yellow and green post `"high"`. So `intent: "high"` always means "this lead got
+  the booking calendar", which is what the GHL workflow branches on. Campaigns
+  without that flag (the D2D guide) keep the income band's own `intent`.
+- To change the bands or colours, edit `config.js` → `routing.incomeOptions` and
+  `routing.teamSizeOptions`. The rep gate itself lives in `computeLeadScore()` in
+  `shared/funnel.js`.
 
 ---
 
@@ -120,10 +148,13 @@ On form submission, the following JSON is POSTed to the webhook at `config.js` �
   "lastName": "Smith",
   "email": "john@example.com",
   "phone": "5551234567",
-  "incomeLabel": "$500k – $750k/year",
+  "industry": "Roofing",
+  "team_size": "25 - 49 reps",
+  "teamSizeValue": "25_49",
+  "incomeLabel": "$500k - $750k/year",
+  "incomeValue": "500k_750k",
   "intent": "high",
-  "service": "Door-to-door sales",
-  "recruiting_season": "Year-round"
+  "recruiting_season": "green"
 }
 ```
 
@@ -135,10 +166,14 @@ On form submission, the following JSON is POSTed to the webhook at `config.js` �
 | `lastName` | Last Name (standard) |
 | `email` | Email (standard) |
 | `phone` | Phone (standard) |
+| `industry` | `{{ contact.industry }}` — text field |
+| `team_size` | `{{ contact.team_size }}` — text field (must be created in GHL) |
 | `incomeLabel` | `{{ contact.income_label }}` — dropdown field |
 | `intent` | `{{ contact.intent }}` — text field (`"high"` or `"low"`) |
-| `service` | `{{ contact.service }}` — text field |
-| `recruiting_season` | `{{ contact.recruiting_season }}` — text field |
+| `recruiting_season` | `{{ contact.recruiting_season }}` — text field, holds the lead colour |
+
+`recruiting_season` is a repurposed field: it carries `red` / `yellow` / `green`, not a
+season. The main funnel no longer sends `orange` — the door-to-door guide funnel still does.
 
 ---
 

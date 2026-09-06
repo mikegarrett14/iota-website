@@ -60,20 +60,41 @@ const CONFIG = {
 
   // ── ROUTING ─────────────────────────────────────────────────────────────────
   routing: {
-    // Income options shown in Step 4 of the form.
-    // All options route to the same offer page.
+    // Income options shown in the income step of the form.
+    // `score` is the lead colour sent to GHL as `recruiting_season`.
     incomeOptions: [
-      { label: "Under $100k/year",    value: "under_100k", intent: "low",  score: "red"    },
-      { label: "$100k – $250k/year",  value: "100k_250k",  intent: "low",  score: "orange" },
-      { label: "$250k – $500k/year",  value: "250k_500k",  intent: "low",  score: "yellow" },
-      { label: "$500k – $750k/year",  value: "500k_750k",  intent: "high", score: "green"  },
-      { label: "$750k – $1M/year",    value: "750k_1m",    intent: "high", score: "green"  },
-      { label: "$1M+/year",           value: "1m_plus",    intent: "high", score: "green"  },
+      { label: "Under $200k/year",    value: "under_200k", intent: "low",  score: "red"    },
+      { label: "$200k - $500k/year",  value: "200k_500k",  intent: "low",  score: "yellow" },
+      { label: "$500k - $750k/year",  value: "500k_750k",  intent: "high", score: "green"  },
+      { label: "$750k+/year",         value: "750k_plus",  intent: "high", score: "green"  },
     ],
 
+    // Team size options shown in the step before income.
+    // A team under 10 active reps drops the lead to red — but only below the
+    // $500k bands, which score green on income alone regardless of team size.
+    // Remove this list to drop the team-size step from a campaign entirely.
+    teamSizeOptions: [
+      { label: "Fewer than 10 reps", value: "under_10", meetsRepMinimum: false },
+      { label: "10 - 24 reps",       value: "10_24",    meetsRepMinimum: true  },
+      { label: "25 - 49 reps",       value: "25_49",    meetsRepMinimum: true  },
+      { label: "50+ reps",           value: "50_plus",  meetsRepMinimum: true  },
+    ],
+
+    // Keep the `intent` sent to GHL in step with the lead score rather than the
+    // raw income band: red posts "low", yellow and green post "high". Without
+    // this a yellow lead reaches the booking calendar but still posts
+    // intent: "low", so GHL workflows that branch on intent tag it wrong.
+    intentFollowsScore: true,
+
+    // Yellow and green both land here — VSL + booking calendar.
     offerPage: "/campaigns/main/offer.html",
+
+    // Not reachable from the funnel any more: routing sends yellow to
+    // offerPage, and this campaign has no orange band. The page is still
+    // live for anything that links to it directly.
     offerPageLowIntent: "/campaigns/main/offer-low-intent.html",
-    // Under-$100k leads don't qualify for a call — they get a blueprint with a
+
+    // Red leads don't qualify for a call — they get a blueprint with a
     // built-in video tutorial instead of the booking calendar.
     offerPageUnqualified: "/campaigns/main/offer-unqualified.html",
   },
