@@ -132,6 +132,11 @@ A few extra rules:
   yellow and green post `"high"`. So `intent: "high"` always means "this lead got
   the booking calendar", which is what the GHL workflow branches on. Campaigns
   without that flag (the D2D guide) keep the income band's own `intent`.
+- **Meta only gets `Lead` for qualified leads**, because `routing.metaLeadQualifiedOnly`
+  is set: yellow and green fire the standard `Lead`; red (and Industry = "Other")
+  fire the custom `UnqualifiedLead`. `thank-you.html` fires the custom
+  `QualifiedBooking` once per qualified lead. Campaigns without the flag fire `Lead`
+  on every submit.
 - To change the bands or colours, edit `config.js` → `routing.incomeOptions` and
   `routing.teamSizeOptions`. The rep gate itself lives in `computeLeadScore()` in
   `shared/funnel.js`.

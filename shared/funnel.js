@@ -412,9 +412,19 @@
       gtag("event", "form_submit", { intent: formData.intent });
     }
 
-    // Fire Meta Pixel Lead event
+    // Fire Meta Pixel Lead event. Campaigns with metaLeadQualifiedOnly only
+    // send the standard Lead for yellow/green, so ads optimising on Lead learn
+    // from qualified leads. Red (including Industry = "Other", which GHL scores
+    // red) gets a separate custom event so the volume is still visible.
+    // The thank-you page reads iotaLeadQualified to fire QualifiedBooking.
+    var metaQualified = leadScore !== "red" && formData.industry !== "other";
+    try { localStorage.setItem("iotaLeadQualified", metaQualified ? "1" : "0"); } catch (e) {}
     if (typeof fbq === "function") {
-      fbq("track", "Lead");
+      if (!CONFIG.routing.metaLeadQualifiedOnly || metaQualified) {
+        fbq("track", "Lead");
+      } else {
+        fbq("trackCustom", "UnqualifiedLead");
+      }
     }
 
     // Persist to localStorage so the destination page can personalise

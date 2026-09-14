@@ -144,6 +144,16 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1298384508340315');
   fbq('track', 'PageView');
+  // Qualified booking: only yellow/green leads see the calendar, and funnel.js
+  // flags them in localStorage on submit. Fire once per lead so reloads don't
+  // double count, and never for visitors who didn't come through the form.
+  try {
+    if (localStorage.getItem('iotaLeadQualified') === '1' &&
+        !localStorage.getItem('iotaQualifiedBookingSent')) {
+      fbq('trackCustom', 'QualifiedBooking');
+      localStorage.setItem('iotaQualifiedBookingSent', '1');
+    }
+  } catch (e) {}
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1298384508340315&ev=PageView&noscript=1"
