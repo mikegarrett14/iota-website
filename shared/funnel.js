@@ -11,7 +11,7 @@
   let currentStep = 1;
   const formData = {};
 
-  // Intro-video gating state
+  // Intro-video and form state
   let videoEnded = false;      // true once the intro video has played through
   let incomeSelected = false;  // true once the visitor picks an income band
   let teamSizeAsked = false;   // true when this campaign shows the team-size step
@@ -39,14 +39,13 @@
 
   // ── INTRO VIDEO ───────────────────────────────────────────────────────────
   // Builds the YouTube player, autoplays it muted, and wires up the events that
-  // unlock the final "Send me the free blueprint" button once it plays through.
+  // fade out the docked mini-player once it plays through.
   function initFunnelVideo() {
     const container = document.getElementById("funnel-video");
     const url = CONFIG.assets.funnelVideoEmbedUrl;
 
     // No intro video on this page/campaign (empty funnelVideoEmbedUrl or no
-    // video container) → there's nothing to watch, so don't gate the final CTA.
-    // Treat the video as already finished; the button unlocks on income select.
+    // video container) → nothing to watch, so treat it as already finished.
     if (!container || !url) {
       videoEnded = true;
       return;
@@ -165,7 +164,7 @@
   };
 
   // ── FINAL CTA (blueprint submit) ──────────────────────────────────────────
-  // Shown once an income is picked; unlocked only after the video plays through.
+  // Shown (and clickable) once an income is picked.
   function updateBlueprintButton() {
     const btn = document.getElementById("blueprint-submit");
     const hint = document.getElementById("video-lock-hint");
@@ -177,14 +176,11 @@
       return;
     }
 
+    // The video no longer gates the button; submitting navigates away, which
+    // is what takes the video off screen.
     btn.style.display = "block";
-    if (videoEnded) {
-      btn.classList.remove("cta-btn--locked");
-      if (hint) hint.style.display = "none";
-    } else {
-      btn.classList.add("cta-btn--locked");
-      if (hint) hint.style.display = "block";
-    }
+    btn.classList.remove("cta-btn--locked");
+    if (hint) hint.style.display = "none";
   }
 
   // ── INDUSTRY OPTIONS (Step 4) ─────────────────────────────────────────────
@@ -276,8 +272,7 @@
         formData.intent = opt.intent;
         formData.incomeScore = opt.score;
 
-        // Visual feedback, then reveal the final CTA (which stays locked until
-        // the intro video has played through).
+        // Visual feedback, then reveal the final CTA.
         document.querySelectorAll("#income-options .option-btn").forEach(function (b) {
           b.classList.remove("selected");
         });
@@ -393,8 +388,8 @@
 
   // ── FORM SUBMIT ───────────────────────────────────────────────────────────
   window.submitForm = function () {
-    // Guard: never submit until an income is chosen and the video is finished.
-    if (!incomeSelected || !videoEnded) return;
+    // Guard: never submit until an income is chosen.
+    if (!incomeSelected) return;
     if (teamSizeAsked && repMinimumMet === null) return;
 
     const leadScore = computeLeadScore();

@@ -159,14 +159,10 @@
         <p class="step-question">What is your <strong>annual income?</strong></p>
         <!-- Options are injected from config.js by funnel.js -->
         <div class="option-list" id="income-options"></div>
-        <!-- Final CTA. Hidden until an income is picked, and stays locked
-             until the intro video has played all the way through. -->
-        <button class="cta-btn cta-btn--locked" id="blueprint-submit" onclick="submitForm()" style="display:none;">
+        <!-- Final CTA. Hidden until an income is picked. -->
+        <button class="cta-btn" id="blueprint-submit" onclick="submitForm()" style="display:none;">
           SEND ME THE FREE BLUEPRINT
         </button>
-        <p class="video-lock-hint" id="video-lock-hint" style="display:none;">
-          🔒 Finish watching the 1-min video to unlock your free blueprint.
-        </p>
         <button class="back-link" onclick="prevStep(6)">← Previous</button>
       </div>
 
