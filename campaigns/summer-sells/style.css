@@ -150,3 +150,75 @@ body {
 @media (min-width: 700px) {
   .vsl { border-radius: 10px; }
 }
+
+/* =============================================================================
+   THANK-YOU PAGE
+   Shown after the GHL form redirects on submit. Replaces GHL's default
+   white confirmation box.
+   ============================================================================= */
+
+.thanks {
+  padding: 2.5rem 20px 0;
+  text-align: center;
+}
+
+.thanks__eyebrow {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.thanks__title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 7.5vw, 2.5rem);
+  line-height: 1.25;
+}
+
+.thanks__lede {
+  font-family: var(--serif);
+  font-size: clamp(0.9rem, 3.7vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+.thanks__flyer {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 2rem 0 0;
+  border-radius: 8px;
+}
+
+.thanks__details {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.thanks__details p {
+  font-family: var(--serif);
+  font-size: clamp(0.85rem, 3.4vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.thanks__when {
+  color: var(--ink) !important;
+  font-weight: 500;
+}
+
+.thanks__note {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 1.5rem;
+}
