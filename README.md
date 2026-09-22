@@ -182,6 +182,70 @@ season. The main funnel no longer sends `orange` — the door-to-door guide funn
 
 ---
 
+## Summer Newman event page (`campaigns/summer-sells/`)
+
+A standalone landing page for the Sales and Business Networking Event, hosted on
+our own domain. It replaces the Stan page at
+`stan.store/summersells/p/sales-and-business-networking-event`, with a VSL at
+the top and the GoHighLevel form in place of Stan's native registration form.
+
+```
+campaigns/summer-sells/
+  index.html    ← the whole page: VSL, event copy, embedded GHL form
+  style.css     ← self-contained styles for this page only
+  assets/       ← headshot used for the favicon and og:image
+```
+
+**This campaign does not use `shared/styles.css` or `config.js`.** It runs a
+cream-and-serif personal-brand look (`#FDFAF7` page, Noto Serif Display + Inter)
+rather than the IOTA blue brand, and it has no qualification form, so there is
+nothing for `funnel.js` to do. Everything it needs lives in its own folder.
+
+The type scale and the 660px column in `style.css` are the measured values from
+the Stan page — 22px italic headings and 12px body at a 375px viewport, written
+in `vw` with a ceiling so the proportions hold out to the full column.
+
+The VSL (`nKVryVZLHp8`, "Summer Biz Class VSL") sits where Stan had a stock
+header photo, and autoplays muted like the VSLs on the other campaigns.
+
+### Routes
+
+| URL | Serves |
+|---|---|
+| `/summersells`, `/summer-sells`, `/event`, `/networking-event` | `campaigns/summer-sells/index.html` |
+
+### The form embed
+
+The page embeds GHL form `OAq6UzWznh4ItJbF8DLj`. Its fields line up with the
+Stan original it replaces — name, email, phone, "Which Best Describes You?" and
+"How'd You Hear About The Event?". Two things to know before editing it:
+
+- `data-layout` must be `"{'id':'INLINE'}"` — single quotes inside double.
+  With JSON-style double quotes, `form_embed.js` treats the embed as a popup
+  and parks the iframe off-screen, so the form never appears.
+- `form_embed.js` keeps the iframe hidden until the form inside reports ready,
+  which takes 10-20 seconds on a cold load. The inline script under the embed
+  holds a "Loading the form…" placeholder until then, and after ~30s falls back
+  to a link to the form's own hosted URL.
+
+To swap in a different form, change the `src` and the `id` /
+`data-form-id` / `data-layout-iframe-id` values, plus `FORM_URL` in the
+fallback script.
+
+### Event details that will go stale
+
+The date, time and address are hard-coded in `index.html` — there's no config
+for this campaign. The address links to Google Maps. Update all three together
+when the event changes.
+
+### Tracking
+
+The page carries the same GA and Clarity tags as the other campaigns, plus the
+Meta Pixel firing **PageView only**. It deliberately fires no `Lead` event, so
+it can't interfere with the qualified-only `Lead` setup on the main funnel.
+
+---
+
 ## Rules
 
 - All settings (URLs, endpoints, form options) live in `config.js` — never edit `funnel.js` for routine changes

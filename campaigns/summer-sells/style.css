@@ -1,0 +1,146 @@
+/* =============================================================================
+   SUMMER NEWMAN — Sales and Business Networking Event landing page
+   Self-contained: this campaign does NOT use /shared/styles.css, because it
+   runs a personal-brand look (cream + serif) rather than the IOTA blue brand.
+   Palette, type scale and column width are the measured values from the Stan
+   page this replaces (stan.store/summersells/p/sales-and-business-networking-event).
+   ============================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #FDFAF7;   /* page cream */
+  --card:    #E9DED7;   /* panel background */
+  --ink:     #000000;
+  --muted:   rgba(0,0,0,0.53);
+  --link:    #007BFF;
+  --line:    rgba(0,0,0,0.14);
+  --serif:   'Noto Serif Display', Georgia, 'Times New Roman', serif;
+  --sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --col:     660px;     /* Stan's own content width at desktop */
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.stage {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 0 3rem;
+}
+
+/* ── VSL ──────────────────────────────────────────────────────────────────── */
+.vsl {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.vsl iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ── BODY COPY ────────────────────────────────────────────────────────────── */
+/* Sizes are the measured Stan values at a 375px viewport, written in vw so the
+   proportions hold, with a ceiling so they stay sane in the 660px column. */
+.offer { padding: 1.5rem 20px 0; }
+
+.offer__title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.375rem, 5.87vw, 2rem);   /* 22px @ 375 */
+  line-height: 1.5;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 1.25rem 0;
+}
+
+.offer p {
+  font-family: var(--serif);
+  font-size: clamp(0.8rem, 3.2vw, 1rem);      /* 12px @ 375 */
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 1.1rem;
+}
+
+.offer p.meta { margin-bottom: 0.9rem; }
+
+.addr {
+  color: var(--link);
+  text-decoration: none;
+}
+
+.addr:hover { text-decoration: underline; }
+
+.offer p.lede {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.offer__kicker {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.375rem, 5.87vw, 2rem);   /* 22px @ 375 */
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+/* ── GHL FORM EMBED ───────────────────────────────────────────────────────── */
+/* The form's own card is white and comes from GoHighLevel, so nothing wraps it
+   — a cream frame around it just reads as a double border.
+   form_embed.js sets the iframe's real height over postMessage, so min-height
+   is only a pre-load placeholder. Keep it well under the form's full height:
+   after submit GHL shrinks the iframe to the short success message, and a tall
+   min-height would leave a blank cream gap under it. */
+.formwrap { min-height: 480px; }
+.formwrap.is-ready { min-height: 0; }
+
+.formwrap__note {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 3.5rem 1rem;
+}
+
+.formwrap__note a { color: var(--ink); }
+
+.formwrap iframe {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+.foot {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 2.5rem 20px 0;
+}
+
+@media (min-width: 700px) {
+  .vsl { border-radius: 0 0 10px 10px; }
+}
