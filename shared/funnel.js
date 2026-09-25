@@ -407,15 +407,18 @@
       gtag("event", "form_submit", { intent: formData.intent });
     }
 
-    // Fire Meta Pixel Lead event. Campaigns with metaLeadQualifiedOnly only
-    // send the standard Lead for yellow/green, so ads optimising on Lead learn
-    // from qualified leads. Red (including Industry = "Other", which GHL scores
-    // red) gets a separate custom event so the volume is still visible.
-    // The thank-you page reads iotaLeadQualified to fire QualifiedBooking.
-    var metaQualified = leadScore !== "red" && formData.industry !== "other";
+    // Fire Meta Pixel Lead event. Campaigns with metaLeadTargetIndustryOnly
+    // send the standard Lead for anyone in a D2D or insurance industry (every
+    // option except "Other"), whatever their score, so ads optimising on Lead
+    // learn from the right industries. Industry = "Other" gets a separate
+    // custom event so the volume is still visible.
+    // The thank-you page reads iotaLeadQualified (yellow/green) to fire
+    // QualifiedBooking.
+    var inTargetIndustry = formData.industry !== "other";
+    var metaQualified = leadScore !== "red" && inTargetIndustry;
     try { localStorage.setItem("iotaLeadQualified", metaQualified ? "1" : "0"); } catch (e) {}
     if (typeof fbq === "function") {
-      if (!CONFIG.routing.metaLeadQualifiedOnly || metaQualified) {
+      if (!CONFIG.routing.metaLeadTargetIndustryOnly || inTargetIndustry) {
         fbq("track", "Lead");
       } else {
         fbq("trackCustom", "UnqualifiedLead");

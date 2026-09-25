@@ -86,10 +86,10 @@ const CONFIG = {
     // intent: "low", so GHL workflows that branch on intent tag it wrong.
     intentFollowsScore: true,
 
-    // Only send Meta's standard "Lead" event for yellow and green leads, so ads
-    // optimising on Lead learn from qualified leads. Red leads (and Industry =
-    // "Other") fire the custom "UnqualifiedLead" event instead.
-    metaLeadQualifiedOnly: true,
+    // Send Meta's standard "Lead" event for anyone in a D2D or insurance
+    // industry, regardless of score. Industry = "Other" fires the custom
+    // "UnqualifiedLead" event instead.
+    metaLeadTargetIndustryOnly: true,
 
     // Yellow and green both land here — VSL + booking calendar.
     offerPage: "/campaigns/main/offer.html",
