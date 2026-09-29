@@ -247,6 +247,43 @@ it can't interfere with the qualified-only `Lead` setup on the main funnel.
 
 ---
 
+## Client recruiting pages (`campaigns/join/`)
+
+One template for every client's recruiting landing page: a headline, the client's
+VSL, and their booking calendar under it. Ads send recruits straight here instead
+of into a DM script.
+
+```
+campaigns/join/
+  index.html   ← the template: picks the client from the URL
+  clients.js   ← one entry per client: title, VSL, calendar link
+  style.css    ← self-contained, neutral, no IOTA branding
+```
+
+| URL | Shows |
+|---|---|
+| `/join/<slug>` | the client's page |
+| `/join/<slug>/booked` | the booking confirmation |
+
+Locally: `/campaigns/join/index.html?c=<slug>` (add `&booked=1` for the confirmation).
+
+**Adding a client:** add an entry to `clients.js`, then add both of its lines to
+`_redirects`. A client with `vsl: null` shows `JOIN_DEFAULT_VSL`, the generic video
+that runs until they film their own.
+
+**Calendars:** paste the booking link as-is. Calendly, GHL booking widgets and
+Google Calendar appointment schedules are each detected from the URL.
+
+**Tracking:** PageView on the IOTA pixel (or the entry's `pixelId`), and a custom
+`ClientBooking` event with `{ client: <slug> }` on the `/booked` page only. It is
+deliberately not `Lead` or `Schedule`, so recruit bookings never feed the IOTA
+funnel's own optimisation. Build a custom conversion per client by filtering on
+`client`. Calendly bookings redirect to `/booked` from the page. GHL and Google
+calendars need their post-booking redirect set to
+`https://www.iotacompany.com/join/<slug>/booked`.
+
+---
+
 ## Rules
 
 - All settings (URLs, endpoints, form options) live in `config.js` — never edit `funnel.js` for routine changes

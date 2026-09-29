@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Now Hiring — Door-to-Door Sales</title>
+  <meta name="description" content="Watch the video, then book a quick call to see if you're a fit for the team." />
+  <meta name="robots" content="noindex" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wm33vflvsh");
+  </script>
+
+  <!-- Meta Pixel loader — init happens below, once we know which client this is -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/campaigns/join/style.css?v=2" />
+  <script src="/campaigns/join/clients.js?v=2"></script>
+</head>
+<body>
+
+  <main class="page" id="page">
+
+    <!-- ── WATCH + BOOK ─────────────────────────────────────────────────────── -->
+    <section class="step" id="step-watch">
+      <p class="eyebrow">Now hiring</p>
+      <h1 class="title" id="title"></h1>
+      <p class="subtitle" id="subtitle"></p>
+
+      <p class="steplabel"><span>1</span> Watch this first</p>
+      <div class="vsl" id="vsl"></div>
+    </section>
+
+    <section class="step step--book" id="step-book">
+      <p class="steplabel"><span>2</span> Book your call</p>
+      <h2 class="book-title" id="book-title">Book your call</h2>
+      <p class="book-note">Pick any open time. It&rsquo;s a quick call to see if the job is a fit &mdash; no pressure either way.</p>
+      <div class="cal" id="cal"></div>
+    </section>
+
+    <!-- ── BOOKED (shown at /join/<slug>/booked) ────────────────────────────── -->
+    <section class="booked" id="booked" hidden>
+      <div class="booked__check" aria-hidden="true">&#10003;</div>
+      <h1 class="title">You&rsquo;re booked.</h1>
+      <p class="subtitle" id="booked-sub"></p>
+      <ul class="booked__list">
+        <li>Check your texts and email for the confirmation.</li>
+        <li>Put it in your calendar now so it doesn&rsquo;t slip.</li>
+        <li>Take the call somewhere quiet where you can talk.</li>
+      </ul>
+    </section>
+
+    <!-- ── UNKNOWN SLUG ─────────────────────────────────────────────────────── -->
+    <section class="booked" id="missing" hidden>
+      <h1 class="title">This page has moved.</h1>
+      <p class="subtitle">Double-check the link you were sent, or message the person who sent it.</p>
+    </section>
+
+    <footer class="foot" id="foot"></footer>
+  </main>
+
+  <script>
+  (function () {
+    var IOTA_PIXEL = '1298384508340315';
+    var params = new URLSearchParams(location.search);
+
+    // ── Which client, and which view? ───────────────────────────────────────
+    // Live:  /join/<slug>  and  /join/<slug>/booked  (rewritten in _redirects)
+    // Local: /campaigns/join/index.html?c=<slug>[&booked=1]
+    var parts = location.pathname.replace(/\/+$/, '').split('/');
+    var i = parts.indexOf('join');
+    var slug = params.get('c') || (i > -1 ? parts[i + 1] : '');
+    var isBooked = params.has('booked') || parts[parts.length - 1] === 'booked';
+    slug = (slug || '').toLowerCase();
+
+    var client = (window.JOIN_CLIENTS || {})[slug];
+    var $ = function (id) { return document.getElementById(id); };
+
+    fbq('init', (client && client.pixelId) || IOTA_PIXEL);
+    fbq('track', 'PageView');
+
+    if (!client) {
+      $('step-watch').hidden = true;
+      $('step-book').hidden = true;
+      $('missing').hidden = false;
+      return;
+    }
+
+    document.title = client.title + ' | ' + client.name;
+    $('foot').textContent = '© ' + new Date().getFullYear() + ' ' + client.name;
+
+    // ── Booked view ─────────────────────────────────────────────────────────
+    // The only place a booking is reported, whichever calendar sent them here.
+    // Custom event (not Lead/Schedule) so client bookings never mix with the
+    // IOTA funnel's own conversion signals; filter on `client` for a custom
+    // conversion per client.
+    if (isBooked) {
+      $('step-watch').hidden = true;
+      $('step-book').hidden = true;
+      $('booked').hidden = false;
+      $('booked-sub').textContent = client.firstName + ' will see you on the call.';
+
+      var key = 'join-booked-' + slug;
+      var seen = false;
+      try { seen = sessionStorage.getItem(key) === '1'; sessionStorage.setItem(key, '1'); } catch (e) {}
+      if (!seen) {
+        fbq('trackCustom', 'ClientBooking', { client: slug });
+        gtag('event', 'client_booking', { client: slug });
+      }
+      return;
+    }
+
+    $('title').textContent = client.title;
+    if (client.subtitle) $('subtitle').textContent = client.subtitle;
+    else $('subtitle').remove();
+    $('book-title').textContent = 'Book your call with ' + client.firstName;
+
+    // ── Video ───────────────────────────────────────────────────────────────
+    var fallback = window.JOIN_DEFAULT_VSL || {};
+    var src = client.vsl || fallback.vsl;
+    var vertical = client.vsl ? client.vertical : fallback.vertical;
+    var vsl = $('vsl');
+    if (vertical) vsl.classList.add('vsl--vertical');
+
+    var video = embedVideo(src);
+    if (video) {
+      vsl.appendChild(video);
+    } else {
+      vsl.classList.add('vsl--empty');
+      vsl.innerHTML = '<span>Video coming soon</span>';
+    }
+
+    // ── Calendar ────────────────────────────────────────────────────────────
+    var cal = $('cal');
+    var calUrl = (client.calendar || '').trim();
+    var bookedUrl = bookedHref();
+
+    if (!calUrl) {
+      cal.innerHTML = '<p class="cal__empty">Booking opens soon.</p>';
+    } else if (/calendly\.com/.test(calUrl)) {
+      mountCalendly(calUrl);
+    } else if (/calendar\.google\.com/.test(calUrl)) {
+      mountFrame(appendParams(calUrl, { gv: 'true' }), 'cal__frame cal__frame--google');
+    } else {
+      // GHL booking widget: a plain fixed-height iframe, same as the D2D pages.
+      // Don't load form_embed.js here: without an INLINE data-layout it treats
+      // the iframe as a popup and hides it off-screen.
+      mountFrame(calUrl, 'cal__frame cal__frame--ghl').scrolling = 'no';
+    }
+
+    // ── helpers ─────────────────────────────────────────────────────────────
+    function embedVideo(v) {
+      if (!v) return null;
+      var yt = v.match(/^[\w-]{11}$/) ? v :
+        (v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
+      if (yt) {
+        return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1');
+      }
+      var drive = (v.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
+      if (drive) return frame('https://drive.google.com/file/d/' + drive + '/preview');
+      if (/\.(mp4|mov|webm)(\?|$)/i.test(v)) {
+        var el = document.createElement('video');
+        el.src = v; el.controls = true; el.playsInline = true; el.preload = 'metadata';
+        return el;
+      }
+      return frame(v);
+    }
+
+    function frame(url) {
+      var f = document.createElement('iframe');
+      f.src = url;
+      f.title = client.title;
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
+      f.allowFullscreen = true;
+      return f;
+    }
+
+    function mountFrame(url, cls) {
+      var f = document.createElement('iframe');
+      f.src = url;
+      f.className = cls;
+      f.title = 'Book a call with ' + client.firstName;
+      cal.appendChild(f);
+      return f;
+    }
+
+    function mountCalendly(url) {
+      var p = {
+        embed_domain: location.hostname,
+        embed_type: 'Inline',
+        hide_gdpr_banner: '1'
+      };
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
+        if (params.get(k)) p[k] = params.get(k);
+      });
+      var f = mountFrame(appendParams(url, p), 'cal__frame cal__frame--calendly');
+
+      window.addEventListener('message', function (e) {
+        if (e.origin !== 'https://calendly.com' || !e.data || !e.data.event) return;
+        if (e.data.event === 'calendly.page_height' && e.data.payload && e.data.payload.height) {
+          f.style.height = e.data.payload.height;
+        }
+        if (e.data.event === 'calendly.event_scheduled') {
+          // Let Calendly show its own confirmation for a beat, then hand off.
+          setTimeout(function () { location.href = bookedUrl; }, 2500);
+        }
+      });
+    }
+
+    function appendParams(url, p) {
+      var u = new URL(url);
+      Object.keys(p).forEach(function (k) { u.searchParams.set(k, p[k]); });
+      return u.toString();
+    }
+
+    function bookedHref() {
+      if (i > -1 && !params.get('c')) return '/join/' + slug + '/booked';
+      return location.pathname + '?c=' + encodeURIComponent(slug) + '&booked=1';
+    }
+  })();
+  </script>
+</body>
+</html>

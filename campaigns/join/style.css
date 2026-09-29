@@ -1,0 +1,212 @@
+/* =============================================================================
+   CLIENT RECRUITING PAGES — /join/<slug>
+   Self-contained: no /shared/styles.css. These pages speak for the client, not
+   IOTA, so they carry no IOTA branding — just a clean, neutral hiring page.
+   Built phone-first: nearly all traffic is Instagram ads.
+   ============================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #F6F5F2;
+  --card:   #FFFFFF;
+  --ink:    #111111;
+  --muted:  #5E5E5A;
+  --line:   #E4E2DC;
+  --accent: #111111;
+  --sans:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --col:    560px;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 16px 2.5rem;
+}
+
+.step { padding-top: 1.75rem; }
+
+/* ── HEADLINE ─────────────────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1C7C3F;
+  background: #E3F2E8;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+
+.title {
+  font-size: clamp(1.75rem, 8vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+.steplabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.steplabel span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+}
+
+/* ── VSL ──────────────────────────────────────────────────────────────────── */
+.vsl {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Phone-filmed videos: 9:16, but capped so the calendar still peeks in below. */
+.vsl--vertical {
+  aspect-ratio: 9 / 16;
+  width: min(100%, calc(70vh * 9 / 16));
+  margin: 0 auto;
+}
+
+.vsl iframe,
+.vsl video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+.vsl--empty {
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+}
+
+/* ── CALENDAR ─────────────────────────────────────────────────────────────── */
+.step--book { padding-top: 0.5rem; }
+
+.book-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.book-note {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0.35rem 0 1rem;
+}
+
+.cal {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.cal__frame {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+/* Calendly posts its real height; this is the pre-load size. */
+.cal__frame--calendly { height: 1000px; }
+.cal__frame--google   { height: 1100px; }
+/* GHL calendars don't report their height; these match the D2D pages. */
+.cal__frame--ghl      { height: 1400px; }
+@media (max-width: 600px) { .cal__frame--ghl { height: 1500px; } }
+
+.cal__empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ── BOOKED / MISSING ─────────────────────────────────────────────────────── */
+.booked {
+  padding-top: 4rem;
+  text-align: center;
+}
+
+.booked__check {
+  display: inline-grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #1C7C3F;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.booked__list {
+  list-style: none;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.booked__list li {
+  padding: 0.45rem 0 0.45rem 1.6rem;
+  position: relative;
+}
+
+.booked__list li::before {
+  content: "\2192";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+.foot {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+  padding-top: 2.5rem;
+}
+.foot:empty { display: none; }
