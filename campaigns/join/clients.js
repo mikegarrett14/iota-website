@@ -38,9 +38,9 @@ window.JOIN_CLIENTS = {
     subtitle: "Watch the video, then grab a time below to see if you're a fit.",
     vsl: null,            // Brenton hasn't filmed yet: shows the default video
     vertical: true,
-    // PLACEHOLDER: IOTA's own D2D calendar, for previewing only. Swap in
-    // Brenton's booking link before any ad traffic goes here.
-    calendar: "https://system.iotacompany.com/widget/booking/tL1EmCuMwhwkWzqkWoFy"
+    // GHL "Brenton Clark - Sales Team Interview" (IOTA Media sub-account),
+    // hosted by Brenton's user; redirects to /join/brenton/booked on booking.
+    calendar: "https://system.iotacompany.com/widget/booking/psxVohjCe7PKw2ZpXsld"
   },
 
   summer: {
