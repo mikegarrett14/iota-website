@@ -36,8 +36,8 @@ window.JOIN_CLIENTS = {
     firstName: "Brenton",
     title: "Join Brenton's Sales Team",
     subtitle: "Watch the video, then grab a time below to see if you're a fit.",
-    vsl: null,            // Brenton hasn't filmed yet: shows the default video
-    vertical: true,
+    vsl: "8XbqGyPs3yU",   // "Brenton Clark VSL" on the IOTA Media YouTube
+    vertical: false,      // filmed 16:9
     // GHL "Brenton Clark - Sales Team Interview" (IOTA Media sub-account),
     // hosted by Brenton's user; redirects to /join/brenton/booked on booking.
     calendar: "https://system.iotacompany.com/widget/booking/psxVohjCe7PKw2ZpXsld"
