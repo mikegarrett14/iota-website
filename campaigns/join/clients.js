@@ -34,7 +34,7 @@ window.JOIN_CLIENTS = {
   brenton: {
     name: "Brenton Clark",
     firstName: "Brenton",
-    title: "Join Brenton's Sales Team",
+    title: "Interview for Brenton's Sales Team",
     subtitle: "Watch the video, then grab a time below to see if you're a fit.",
     vsl: "8XbqGyPs3yU",   // "Brenton Clark VSL" on the IOTA Media YouTube
     vertical: false,      // filmed 16:9
