@@ -39,8 +39,7 @@ window.JADEN = {
   knockouts: {
     age: ["under-18"],
     status: ["college"],          // Jaden: no full-time college students
-    commission: ["need-hourly"],
-    travel: ["cant-travel"]
+    commission: ["need-hourly"]
   },
 
   pixelId: null          // Meta pixel override; null = IOTA pixel

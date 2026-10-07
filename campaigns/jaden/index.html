@@ -42,7 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/campaigns/jaden/style.css?v=3" />
-  <script src="/campaigns/jaden/config.js?v=3"></script>
+  <script src="/campaigns/jaden/config.js?v=4"></script>
 </head>
 <body>
 
@@ -91,7 +91,7 @@
         </div>
         <div class="learn__item">
           <svg class="learn__icon"><use href="#i-bolt"/></svg>
-          <p><b>Train with me every Friday:</b> after your interview, you join my free sales training call every Friday. That&rsquo;s where you learn the 4 skills I teach every rep: recruit, train, sell, and manage.</p>
+          <p><b>Show up to a free sales training:</b> after your interview, show up to one of our free sales training calls. That&rsquo;s where you learn the 4 skills I teach every rep: recruit, train, sell, and manage.</p>
         </div>
         <div class="learn__item">
           <svg class="learn__icon"><use href="#i-bolt"/></svg>
@@ -153,13 +153,13 @@
       <h2 class="display display--md maroon">Straight answers&hellip;</h2>
 
       <details class="faq"><summary>I&rsquo;m not a salesperson. I&rsquo;d be bad at this.</summary>
-        <p>Neither was I. Selling is a skill, not a personality. I teach you to read body language and say what the homeowner is already thinking, and you practice it every Friday and on the doors with me next to you.</p></details>
+        <p>Neither was I. Selling is a skill, not a personality. I teach you to read body language and say what the homeowner is already thinking, and you practice it on our free sales training calls and on the doors with me next to you.</p></details>
       <details class="faq"><summary>No salary means I could work hard and make nothing.</summary>
         <p>That&rsquo;s true, and I won&rsquo;t pretend it isn&rsquo;t. Commission pays you for results, not effort. That&rsquo;s exactly why I train you on the doors myself.</p></details>
       <details class="faq"><summary>Door to door feels sketchy. My family will think I joined a scam.</summary>
         <p>Mine thought I was making the worst mistake of my life. We sell real products for real companies. On the call I&rsquo;ll show you exactly who you&rsquo;d be selling for and how you get paid, and you can bring someone to that conversation.</p></details>
       <details class="faq"><summary>I&rsquo;d have to leave everyone and everything.</summary>
-        <p>You don&rsquo;t have to move. Training is online every Friday, and a blitz is a few days at a time. You come, you knock, you find out what you&rsquo;re capable of, and you go home.</p></details>
+        <p>You don&rsquo;t have to move. Our sales training calls are online, and a blitz is a few days at a time. You come, you knock, you find out what you&rsquo;re capable of, and you go home.</p></details>
       <details class="faq"><summary>You only want me because you get paid on me.</summary>
         <p>I do make money when my team does. That&rsquo;s the point: I only win if you win. It&rsquo;s also why I don&rsquo;t take everyone. A rep who doesn&rsquo;t work costs me time and money, so the application protects both of us.</p></details>
     </section>
@@ -198,7 +198,7 @@
 
       <div id="apply">
         <h2 class="modal__title" id="modal-title">Book Your Interview</h2>
-        <p class="modal__sub">Six quick questions, then pick a time for a free one-on-one interview call with me.</p>
+        <p class="modal__sub">Five quick questions, then pick a time for a free one-on-one interview call with me.</p>
 
         <form class="quiz" id="quiz" novalidate>
           <div class="quiz__bar"><span id="bar"></span></div>
@@ -235,12 +235,6 @@
             <label><input type="radio" name="commission" value="need-hourly" />No, I need a guaranteed paycheck</label>
           </fieldset>
 
-          <fieldset class="q" data-q="travel" hidden>
-            <legend>Blitzes mean traveling with the team for a few days at a time. Are you open to that?</legend>
-            <label><input type="radio" name="travel" value="yes" />Yes, I can be there</label>
-            <label><input type="radio" name="travel" value="depends" />Depends on the dates</label>
-            <label><input type="radio" name="travel" value="cant-travel" />I can&rsquo;t travel right now</label>
-          </fieldset>
 
           <fieldset class="q" data-q="why" hidden>
             <legend>Why now? What would change if this worked?</legend>
@@ -390,8 +384,7 @@
     var NO_WHY = {
       age: 'You have to be 18 or older to join the team.',
       status: 'I’m only taking people who can go all in right now, and school needs to come first while you’re in it.',
-      commission: 'This one is commission only, so it isn’t the right fit if you need a guaranteed paycheck right now.',
-      travel: 'A blitz means traveling with the team, so this one isn’t the right fit right now.'
+      commission: 'This one is commission only, so it isn’t the right fit if you need a guaranteed paycheck right now.'
     };
 
     form.addEventListener('submit', function (e) {
