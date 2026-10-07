@@ -284,11 +284,12 @@ calendars need their post-booking redirect set to
 
 **Jaden's blitz page (`campaigns/jaden/`)** is a long-form page of its own rather than
 a `clients.js` entry, served at `/join/jaden` and `/join/jaden/booked`. It's laid out
-after the She Sells Remote masterclass page (countdown bar, white hero card with the VSL,
+after the She Sells Remote masterclass page (white hero card with the VSL,
 for-you / not-for-you cards, host bio, lime "limited spots" band). Every button opens a
 modal with a one-question-per-screen application, and only qualified applicants see his
-calendar. Everything he changes (blitz dates, city, pay,
-knockout answers, calendar, webhook) lives in `campaigns/jaden/config.js`. While
+calendar. The copy is evergreen (no blitz dates or
+countdown), so it never needs updating per blitz. Everything he changes (pay line,
+knockout answers, VSL, photo, calendar, webhook) lives in `campaigns/jaden/config.js`. While
 `draft: true`, [bracketed] blanks and unconfirmed claims show highlighted. Submitting
 the application fires `ClientApplication { client, qualified }`.
 

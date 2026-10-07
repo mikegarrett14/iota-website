@@ -82,20 +82,11 @@ a { color: var(--maroon); }
 /* ── PRE-HEADER ───────────────────────────────────────────────────────────── */
 .prehead {
   position: sticky; top: 0; z-index: 20;
-  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem;
   background: var(--cream); padding: 0.6rem 16px;
   border-bottom: 1px solid var(--rule);
 }
-.timer { display: flex; gap: 0.7rem; }
-.timer div { text-align: center; min-width: 2.2rem; }
-.timer b { display: block; color: var(--green); font-size: 1.5rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; padding-top: 0.2rem; }
-.timer span { font-size: 0.625rem; text-transform: uppercase; color: rgba(0,0,0,0.4); letter-spacing: 0.04em; }
-@media (max-width: 380px) {
-  .timer { gap: 0.4rem; }
-  .timer span { font-size: 0.55rem; }
-  .pill--sm { font-size: 0.8rem; padding: 10px 14px 8px; }
-}
-@media (min-width: 900px) { .prehead { justify-content: center; gap: 3rem; } }
+@media (min-width: 900px) { .prehead { justify-content: center; } }
 
 /* ── HERO ─────────────────────────────────────────────────────────────────── */
 .hero { padding: 2rem 16px 0; }

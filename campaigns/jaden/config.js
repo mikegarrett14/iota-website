@@ -13,21 +13,8 @@ window.JADEN = {
   firstName: "Jaden",
   instagram: "rev.ponto",
 
-  // ── The next blitz ─────────────────────────────────────────────────────────
-  blitz: {
-    // ISO start time for the countdown. null hides the timer.
-    // TODO: real date. This one is a placeholder so the mock shows a timer.
-    start: "2026-11-02T08:00:00-08:00",
-    dates:    "[Nov 2–6]",
-    city:     "[City, State]",
-    days:     "[5]",
-    spots:    "[12]",
-    product:  "[solar / pest control]",
-    day:      "[meet at 11, train, then knock until dark]",
-    housing:  "[Housing covered / you cover your own room]",
-    travel:   "[You get yourself there / we carpool from OC]",
-    pay:      "[Commission on every deal you sign, paid within X days]"
-  },
+  // How reps get paid, shown in "how you get started".
+  pay: "[Commission on every deal you sign, paid within X days]",
 
   // ── Video ──────────────────────────────────────────────────────────────────
   // YouTube ID or URL, Drive file URL, or direct .mp4. null = placeholder box.
