@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/campaigns/join/style.css?v=2" />
+  <link rel="stylesheet" href="/campaigns/join/style.css?v=3" />
   <script src="/campaigns/join/clients.js?v=4"></script>
 </head>
 <body>
@@ -180,9 +180,7 @@
       if (!v) return null;
       var yt = v.match(/^[\w-]{11}$/) ? v :
         (v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
-      if (yt) {
-        return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1');
-      }
+      if (yt) return youtubeAutoplay(yt);
       var drive = (v.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
       if (drive) return frame('https://drive.google.com/file/d/' + drive + '/preview');
       if (/\.(mp4|mov|webm)(\?|$)/i.test(v)) {
@@ -191,6 +189,39 @@
         return el;
       }
       return frame(v);
+    }
+
+    // YouTube: autoplay muted (browsers block autoplay with sound), with a
+    // "tap to unmute" cover. The tap unmutes and restarts from 0:00 so the
+    // viewer hears the hook.
+    function youtubeAutoplay(id) {
+      var f = frame('https://www.youtube.com/embed/' + id +
+        '?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1');
+      f.id = 'vsl-player';
+      var cover = document.createElement('button');
+      cover.type = 'button';
+      cover.className = 'vsl__unmute';
+      cover.innerHTML = '<span aria-hidden="true">&#128266;</span>Your video is playing<small>Tap to turn on sound</small>';
+      var player = null;
+      window.onYouTubeIframeAPIReady = function () { player = new YT.Player('vsl-player'); };
+      cover.addEventListener('click', function () {
+        if (player && player.unMute) {
+          player.unMute();
+          player.seekTo(0, true);
+          player.playVideo();
+        } else {
+          f.src = f.src.replace('mute=1', 'mute=0');
+        }
+        cover.remove();
+        gtag('event', 'vsl_unmute', { client: slug });
+      });
+      var api = document.createElement('script');
+      api.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(api);
+      var wrap = document.createDocumentFragment();
+      wrap.appendChild(f);
+      wrap.appendChild(cover);
+      return wrap;
     }
 
     function frame(url) {

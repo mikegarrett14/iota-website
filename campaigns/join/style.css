@@ -113,6 +113,28 @@ body {
   background: #000;
 }
 
+/* Muted-autoplay prompt: covers the playing video until the first tap, which
+   unmutes and restarts it from the top. */
+.vsl__unmute {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font: 700 1.15rem/1.3 var(--sans);
+  text-align: center;
+}
+.vsl__unmute span { font-size: 2.4rem; line-height: 1; }
+.vsl__unmute small { font-weight: 500; font-size: 0.9rem; opacity: 0.85; }
+.vsl__unmute:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+
 .vsl--empty {
   display: grid;
   place-items: center;
