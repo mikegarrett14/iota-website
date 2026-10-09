@@ -52,8 +52,6 @@
     <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.2 2 4.5 13.6h6.1L9.4 22l9.1-12.2h-6.2L13.2 2Z"/></symbol>
   </svg>
 
-  <div class="draftbar" id="draftbar" hidden>Draft: highlighted text is a blank or a claim Jaden still has to confirm.</div>
-
   <!-- ── PRE-HEADER: book button ──────────────────────────────────────── -->
   <header class="prehead" id="prehead">
     <button type="button" class="pill pill--maroon pill--sm" data-open>Book a call</button>
@@ -289,10 +287,7 @@
     fbq('track', 'PageView');
 
     $('year').textContent = new Date().getFullYear();
-    if (C.draft) {
-      document.body.classList.add('is-draft');
-      $('draftbar').hidden = false;
-    }
+    if (C.draft) document.body.classList.add('is-draft');
 
     // ── Booked view: /join/jaden/booked (local: ?booked=1) ──────────────────
     // Same custom event as the /join/<slug> pages so it never feeds IOTA's Lead.
