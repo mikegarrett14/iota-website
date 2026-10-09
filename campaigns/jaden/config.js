@@ -14,7 +14,7 @@ window.JADEN = {
   instagram: "rev.ponto",
 
   // How reps get paid, shown in "how you get started".
-  pay: "[Commission on every deal you sign, paid within X days]",
+  pay: "Commission on every deal you sign, paid within 14 days",
 
   // ── Video ──────────────────────────────────────────────────────────────────
   // YouTube ID or URL, Drive file URL, or direct .mp4. null = placeholder box.
