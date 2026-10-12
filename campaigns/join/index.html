@@ -41,8 +41,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/campaigns/join/style.css?v=4" />
-  <script src="/campaigns/join/clients.js?v=7"></script>
+  <link rel="stylesheet" href="/campaigns/join/style.css?v=5" />
+  <script src="/campaigns/join/clients.js?v=8"></script>
 </head>
 <body>
 
@@ -181,7 +181,7 @@
       // GHL booking widget: a plain fixed-height iframe, same as the D2D pages.
       // Don't load form_embed.js here: without an INLINE data-layout it treats
       // the iframe as a popup and hides it off-screen.
-      mountFrame(calUrl, 'cal__frame cal__frame--ghl').scrolling = 'no';
+      fitGhl(mountFrame(calUrl, 'cal__frame cal__frame--ghl'));
     }
 
     // ── Testimonials ────────────────────────────────────────────────────────
@@ -265,6 +265,34 @@
       f.title = 'Book a call with ' + client.firstName;
       cal.appendChild(f);
       return f;
+    }
+
+    // GHL's widget ships iframe-resizer's child script, which reports its
+    // height once the parent sends the handshake form_embed.js would send.
+    // Until it answers, the frame keeps the tall fallback height from the CSS.
+    function fitGhl(f) {
+      f.scrolling = 'no';
+      f.id = 'ghl-cal';
+      var origin = new URL(f.src).origin;
+      var hello = '[iFrameSizer]' + f.id + ':8:false:false:32:true:true:null:bodyOffset:null:null:0:false:parent:scroll:false';
+      var fitted = false;
+      function ask() { try { f.contentWindow.postMessage(hello, origin); } catch (e) {} }
+      f.addEventListener('load', function () {
+        var tries = 0;
+        (function retry() { if (fitted || tries++ > 20) return; ask(); setTimeout(retry, 500); })();
+      });
+      window.addEventListener('message', function (e) {
+        if (e.origin !== origin || typeof e.data !== 'string') return;
+        var m = e.data.match(/^\[iFrameSizer\]ghl-cal:(\d+(?:\.\d+)?):/);
+        if (!m) return;
+        var h = Math.ceil(parseFloat(m[1]));
+        var shrank = fitted && h < f.offsetHeight - 150;
+        fitted = true;
+        f.style.height = h + 'px';
+        // A new step (time slots -> contact form) is shorter and starts at the
+        // top of the widget: bring that back on screen if it scrolled away.
+        if (shrank && f.getBoundingClientRect().top < 0) f.scrollIntoView({ block: 'start' });
+      });
     }
 
     function mountCalendly(url) {

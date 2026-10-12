@@ -169,12 +169,14 @@ body {
   display: block;
   width: 100%;
   border: 0;
+  scroll-margin-top: 12px;
 }
 
 /* Calendly posts its real height; this is the pre-load size. */
 .cal__frame--calendly { height: 1000px; }
 .cal__frame--google   { height: 1100px; }
-/* GHL calendars don't report their height; these match the D2D pages. */
+/* GHL calendars size themselves (fitGhl in index.html); this is the fallback
+   height until the widget answers, tall enough for its longest step. */
 .cal__frame--ghl      { height: 1400px; }
 @media (max-width: 600px) { .cal__frame--ghl { height: 1500px; } }
 
