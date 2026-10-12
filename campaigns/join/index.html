@@ -41,8 +41,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/campaigns/join/style.css?v=3" />
-  <script src="/campaigns/join/clients.js?v=5"></script>
+  <link rel="stylesheet" href="/campaigns/join/style.css?v=4" />
+  <script src="/campaigns/join/clients.js?v=7"></script>
 </head>
 <body>
 
@@ -63,6 +63,15 @@
       <h2 class="book-title" id="book-title">Book your call</h2>
       <p class="book-note">Pick any open time. It&rsquo;s a quick call to see if the job is a fit &mdash; no pressure either way.</p>
       <div class="cal" id="cal"></div>
+    </section>
+
+    <!-- ── TESTIMONIALS (only when the client has some) ─────────────────────── -->
+    <section class="step step--proof" id="step-proof" hidden>
+      <p class="steplabel"><span>3</span> Testimonials</p>
+      <h2 class="book-title">Hear it from people who&rsquo;ve done it</h2>
+      <p class="book-note">Swipe to see more.</p>
+      <div class="proof" id="proof"></div>
+      <a class="proof__cta" href="#step-book">Book your call</a>
     </section>
 
     <!-- ── BOOKED (shown at /join/<slug>/booked) ────────────────────────────── -->
@@ -175,17 +184,33 @@
       mountFrame(calUrl, 'cal__frame cal__frame--ghl').scrolling = 'no';
     }
 
+    // ── Testimonials ────────────────────────────────────────────────────────
+    // Lazy iframes: nothing loads until the visitor scrolls down to them.
+    (client.testimonials || []).forEach(function (v, n) {
+      var el = embedVideo(v, true);
+      if (!el) return;
+      el.title = 'Testimonial ' + (n + 1);
+      el.loading = 'lazy';
+      var card = document.createElement('div');
+      card.className = 'proof__card';
+      card.appendChild(el);
+      $('proof').appendChild(card);
+      $('step-proof').hidden = false;
+    });
+
     // ── helpers ─────────────────────────────────────────────────────────────
-    function embedVideo(v) {
+    // `plain` skips the VSL's muted autoplay (used for testimonials).
+    function embedVideo(v, plain) {
       if (!v) return null;
       var yt = v.match(/^[\w-]{11}$/) ? v :
         (v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
+      if (yt && plain) return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1');
       if (yt) return youtubeAutoplay(yt);
       var drive = (v.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
       if (drive) return frame('https://drive.google.com/file/d/' + drive + '/preview');
       if (/\.(mp4|mov|webm)(\?|$)/i.test(v)) {
         var el = document.createElement('video');
-        el.src = v; el.controls = true; el.playsInline = true; el.preload = 'metadata';
+        el.src = v; el.controls = true; el.playsInline = true; el.preload = plain ? 'none' : 'metadata';
         return el;
       }
       return frame(v);

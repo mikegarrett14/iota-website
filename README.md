@@ -271,6 +271,11 @@ Locally: `/campaigns/join/index.html?c=<slug>` (add `&booked=1` for the confirma
 `_redirects`. A client with `vsl: null` shows `JOIN_DEFAULT_VSL`, the generic video
 that runs until they film their own.
 
+**Testimonials:** an optional `testimonials` list on a client adds a swipeable row of
+phone-shaped videos under the calendar, with a "Book your call" button that jumps back
+up. Use YouTube links (unlisted is fine). Drive's player fails for most visitors when
+embedded. The VSL autoplays muted; testimonials only play when tapped.
+
 **Calendars:** paste the booking link as-is. Calendly, GHL booking widgets and
 Google Calendar appointment schedules are each detected from the URL.
 

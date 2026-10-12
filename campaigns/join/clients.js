@@ -19,6 +19,10 @@
                 For GHL and Google calendars, set the calendar's post-booking
                 redirect to https://www.iotacompany.com/join/<slug>/booked so the
                 booking is tracked. Calendly bookings are caught on the page.
+     testimonials  Optional. Phone-filmed (9:16) testimonial videos, shown in a
+                swipeable row under the calendar. Same link formats as `vsl`.
+                Use YouTube (unlisted is fine): Drive's player fails when
+                embedded for most visitors.
      pixelId    Optional Meta pixel override. Defaults to the IOTA pixel.
    ============================================================================= */
 
@@ -36,11 +40,20 @@ window.JOIN_CLIENTS = {
     firstName: "Brenton",
     title: "Interview for Brenton's Sales Team",
     subtitle: "Watch the video, then grab a time below to see if you're a fit.",
-    vsl: "8XbqGyPs3yU",   // "Brenton Clark VSL" on the IOTA Media YouTube
+    vsl: "0UUcjgbFc44",   // "Brenton Clark VSL v2" on the IOTA Media YouTube (old cut: 8XbqGyPs3yU)
     vertical: false,      // filmed 16:9
     // GHL "Brenton Clark - Sales Team Interview" (IOTA Media sub-account),
     // hosted by Brenton's user; redirects to /join/brenton/booked on booking.
-    calendar: "https://system.iotacompany.com/widget/booking/psxVohjCe7PKw2ZpXsld"
+    calendar: "https://system.iotacompany.com/widget/booking/psxVohjCe7PKw2ZpXsld",
+    // "Brenton Clark Testimonial 1/3/4/5" on the IOTA Media YouTube (unlisted).
+    // Testimonial 2 (kHtUW8Q3_2A) is left out: YouTube blocks it worldwide over
+    // a music claim on its background track.
+    testimonials: [
+      "fUZH8AwKReY",
+      "veGEyymj9MI",
+      "5HuWrU3UYYQ",
+      "86URoam31AU"
+    ]
   },
 
   summer: {
