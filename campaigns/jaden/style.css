@@ -234,5 +234,7 @@ a { color: var(--maroon); }
 .quiz__back { background: none; border: 0; color: var(--muted); font: 500 0.9rem var(--sans); margin-top: 1rem; cursor: pointer; }
 
 .cal { margin-top: 1.2rem; }
-.cal__frame { display: block; width: 100%; height: 900px; border: 0; }
+/* Fallback height until the widget reports its own (fitGhl in index.html);
+   tall enough for the time-slot step so nothing is cut off. */
+.cal__frame { display: block; width: 100%; height: 1500px; border: 0; }
 .cal__empty { color: var(--muted); padding: 2.5rem 1rem; text-align: center; background: var(--cream); border-radius: 6px; }

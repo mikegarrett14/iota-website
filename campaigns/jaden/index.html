@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/campaigns/jaden/style.css?v=3" />
+  <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
   <script src="/campaigns/jaden/config.js?v=5"></script>
 </head>
 <body>
@@ -434,8 +434,37 @@
       f.src = u.toString();
       f.className = 'cal__frame';
       f.title = 'Book a call with ' + C.firstName;
-      f.scrolling = 'no';
+      fitGhl(f);
       cal.appendChild(f);
+    }
+
+    // Same as the /join/<slug> pages: GHL's widget reports its height once the
+    // parent sends iframe-resizer's handshake, so the frame fits each step
+    // (date picker, time slots, contact form). The CSS height is the fallback.
+    function fitGhl(f) {
+      f.scrolling = 'no';
+      f.id = 'ghl-cal';
+      var origin = new URL(f.src).origin;
+      var hello = '[iFrameSizer]' + f.id + ':8:false:false:32:true:true:null:bodyOffset:null:null:0:false:parent:scroll:false';
+      var fitted = false;
+      f.addEventListener('load', function () {
+        var tries = 0;
+        (function retry() {
+          if (fitted || tries++ > 20) return;
+          try { f.contentWindow.postMessage(hello, origin); } catch (e) {}
+          setTimeout(retry, 500);
+        })();
+      });
+      window.addEventListener('message', function (e) {
+        if (e.origin !== origin || typeof e.data !== 'string') return;
+        var m = e.data.match(/^\[iFrameSizer\]ghl-cal:(\d+(?:\.\d+)?):/);
+        if (!m) return;
+        var h = Math.ceil(parseFloat(m[1]));
+        var shrank = fitted && h < f.offsetHeight - 150;
+        fitted = true;
+        f.style.height = h + 'px';
+        if (shrank && f.getBoundingClientRect().top < 0) f.scrollIntoView({ block: 'start' });
+      });
     }
 
     function embedVideo(v) {
