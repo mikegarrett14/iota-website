@@ -22,7 +22,8 @@ window.JADEN = {
   vertical: true,
 
   // Photo for the "Hi, I'm Jaden" section (path or URL). null = placeholder.
-  photo: null,
+  // Cover frame of his pinned Instagram post (@rev.ponto), cropped square.
+  photo: "/campaigns/jaden/jaden.jpg",
 
   // ── Booking ────────────────────────────────────────────────────────────────
   // GHL booking widget URL. Set the calendar's post-booking redirect to
