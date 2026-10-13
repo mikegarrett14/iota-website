@@ -1,0 +1,55 @@
+/* =============================================================================
+   /apply — IOTA's main door-to-door recruiting page
+   Loaded AFTER /campaigns/jaden/style.css, which supplies the whole design
+   (tokens, type, pills, hero card, sections, footer). Only what /apply adds
+   lives here: the video inside the hero copy, numbered steps, the money card
+   and the application section.
+   ============================================================================= */
+
+/* ── HERO: one column, video under the subline ────────────────────────────── */
+.hero__copy .vsl { width: 100%; margin: 1.5rem 0 1.6rem; }
+/* Qualifier for the headline's earnings figure. Stays directly under the
+   headline at body size; it is part of the claim, not fine print. */
+.hero__note { color: var(--body); font-size: 1rem; margin-top: 1rem; max-width: 34rem; }
+@media (min-width: 900px) {
+  .hero__card--solo { grid-template-columns: 1fr; max-width: 860px; }
+  .hero__card--solo .hero__sub { max-width: none; }
+}
+
+/* ── HOW IT WORKS: a numeral where Jaden's page has the bolt icon ─────────── */
+.learn__num {
+  display: block; margin-bottom: 0.6rem;
+  font-family: var(--serif); font-size: 2.1rem; line-height: 1; color: var(--maroon);
+}
+
+/* ── THE MONEY ────────────────────────────────────────────────────────────── */
+.money { max-width: 1120px; margin: 0 auto; padding: 1rem 16px 3rem; }
+.money__card { background: var(--white); border-radius: 20px; padding: 2.25rem 1.5rem; text-align: center; }
+.money__card p { color: var(--body); font-size: 1.125rem; line-height: 1.55; max-width: 40rem; margin: 1.25rem auto 0; }
+@media (min-width: 900px) { .money__card { padding: 3rem; } }
+
+/* ── HOST: shown while ZACK_BIO is empty ──────────────────────────────────── */
+.todo { background: #FFE58A; color: #4A3800; border-radius: 3px; padding: 0 0.2em; }
+
+/* ── APPLICATION ──────────────────────────────────────────────────────────── */
+/* scroll-margin clears the sticky Apply bar when a button scrolls here. */
+.apply { padding: 3.5rem 0 3rem; scroll-margin-top: 3.75rem; }
+.apply__head { max-width: 760px; margin: 0 auto; padding: 0 16px 1.75rem; text-align: center; }
+.apply__sub { color: var(--body); margin: 0.9rem auto 0; max-width: 34rem; }
+/* Edge to edge on phones so the form gets the whole screen width. */
+.apply__form { background: var(--white); max-width: 720px; margin: 0 auto; overflow: hidden; }
+/* min-height is the floor for a two-step form; GHL's form_embed.js sets the
+   exact height once the form reports it. */
+.apply__form iframe { display: block; width: 100%; min-height: 900px; border: 0; }
+.apply__empty {
+  display: grid; place-items: center; min-height: 900px; padding: 2rem 16px;
+  background: #DADADA; color: #6B6B6B; font-size: 1.05rem; text-align: center;
+}
+@media (min-width: 760px) {
+  .apply { padding-left: 16px; padding-right: 16px; }
+  .apply__form { border-radius: 20px; padding: 1.5rem; }
+  .apply__form iframe, .apply__empty { min-height: 820px; }
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+.foot__fine + .foot__fine { margin-top: 0.35rem; }

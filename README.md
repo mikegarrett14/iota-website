@@ -298,6 +298,19 @@ knockout answers, VSL, photo, calendar, webhook) lives in `campaigns/jaden/confi
 `draft: true`, [bracketed] blanks and unconfirmed claims show highlighted. Submitting
 the application fires `ClientApplication { client, qualified }`.
 
+**Main recruiting page (`campaigns/apply/`)** is served at `/apply` (locally
+`/campaigns/apply/index.html`), with Zack Wood as the face of it. It reuses Jaden's
+stylesheet as-is, with `campaigns/apply/style.css` adding only what's new (hero video
+placement, numbered steps, the money card, the application section), so a design change
+in `campaigns/jaden/style.css` shows on both pages. It never names a hiring company.
+Every "Apply now" button scrolls to the GHL form at the bottom; there is no calendar.
+The constants at the top of `index.html` are what you swap: `VSL_EMBED_URL`,
+`GHL_FORM_EMBED` (form URL or the `<iframe>` tag, without GHL's `<script>` line) and
+`ZACK_BIO`; his photo is `campaigns/apply/zack.jpg`. `?client=` and `utm_source` from the
+page URL are appended to the form's URL when present (nothing is sent when they're
+missing), so the GHL form needs hidden fields with the query keys `client` and
+`utm_source`.
+
 ---
 
 ## Rules
