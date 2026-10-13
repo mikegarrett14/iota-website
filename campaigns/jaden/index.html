@@ -42,7 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
-  <script src="/campaigns/jaden/config.js?v=6"></script>
+  <script src="/campaigns/jaden/config.js?v=7"></script>
 </head>
 <body>
 
@@ -405,8 +405,9 @@
 
       if (C.webhook) {
         try {
+          // Form-encoded: GHL's inbound webhook rejects a text/plain JSON body.
           fetch(C.webhook, { method: 'POST', mode: 'no-cors', keepalive: true,
-            headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(d) });
+            body: new URLSearchParams(d) });
         } catch (x) {}
       }
       fbq('trackCustom', 'ClientApplication', { client: SLUG, qualified: d.qualified });

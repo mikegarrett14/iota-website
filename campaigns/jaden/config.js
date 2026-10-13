@@ -34,7 +34,9 @@ window.JADEN = {
   // GHL inbound-webhook URL that receives every application (qualified or
   // not), so the texts can follow up with people who never book. Empty = the
   // answers only travel to GHL as calendar prefill.
-  webhook: "",
+  // Workflow "Page application → Applied" in Jaden's GHL: creates the contact
+  // and a card in Recruits → Applied.
+  webhook: "https://services.leadconnectorhq.com/hooks/nftTHiPNV8ioXmY2Q5Rp/webhook-trigger/da0ddfc8-3f11-4dd9-9b2c-72e8e009fa09",
 
   // ── Qualification knockouts ────────────────────────────────────────────────
   // Answers that end the application with a polite "not right now".
