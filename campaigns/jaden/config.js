@@ -27,7 +27,9 @@ window.JADEN = {
   // ── Booking ────────────────────────────────────────────────────────────────
   // GHL booking widget URL. Set the calendar's post-booking redirect to
   // https://www.iotacompany.com/join/jaden/booked so bookings are tracked.
-  calendar: "",
+  // "Interview with Jaden Ponto" (15 min, hosted by Jaden) in his own GHL
+  // account ("Rev sales"), calendar ID 8YkR9uKYDDWWdLAPy8yj.
+  calendar: "https://api.leadconnectorhq.com/widget/bookings/jaden-ponto-rev-1on1",
 
   // GHL inbound-webhook URL that receives every application (qualified or
   // not), so the texts can follow up with people who never book. Empty = the
