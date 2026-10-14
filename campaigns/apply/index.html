@@ -13,14 +13,9 @@
     // player link, Wistia, etc.). Empty = grey placeholder box.
     var VSL_EMBED_URL = '';
 
-    // GHL application form. Paste either the form's URL
-    // (https://api.leadconnectorhq.com/widget/form/XXXX) or the <iframe ...>
-    // tag from GHL's embed code. Leave out the <script> line GHL gives you:
-    // the page loads form_embed.js itself. Empty = grey placeholder box.
-    // ?client= and utm_source from the page URL are added to the form's URL,
-    // so give the two hidden fields in GHL the query keys "client" and
-    // "utm_source". A missing one is not sent.
-    var GHL_FORM_EMBED = '';
+    // The application form is built into the page (apply-form.js). It posts to
+    // /api/apply, which forwards to GHL; the webhook URL is the Netlify env var
+    // GHL_WEBHOOK_URL, never in this file (the repo is public).
 
     // Zack's 3 to 4 sentence bio. Empty = highlighted placeholder.
     var ZACK_BIO = "I loved sports, I was in college, and I could see my degree was leading to a dead-end job. My first sales job was knocking doors for a power washing company with no experience, and a couple of hours in I made $1,000 on a single sale. That changed my life, and working with other door-to-door companies I watched it change other people’s lives too. I want as many people as possible to get that shot, so I’m the one who personally matches you with the right opportunity.";
@@ -65,7 +60,7 @@
   <!-- The design is Jaden's page's stylesheet, shared as-is; apply/style.css
        only adds the hero video placement and the application section. -->
   <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
-  <link rel="stylesheet" href="/campaigns/apply/style.css?v=3" />
+  <link rel="stylesheet" href="/campaigns/apply/style.css?v=5" />
 </head>
 <body>
 
@@ -200,7 +195,156 @@
         <h2 class="display display--md green">Apply in 5 minutes</h2>
         <p class="apply__sub">Step 1 is your name and number. Step 2 is a 60-second video: who you are, the hardest thing you&rsquo;ve ever done, and why sales, why now. No video, no interview.</p>
       </div>
-      <div class="apply__form" id="apply-form"></div>
+      <div class="flow" id="flow">
+        <div class="quiz__bar flow__bar"><span id="flow-bar"></span></div>
+        <button type="button" class="quiz__back flow__back" id="flow-back" hidden>&larr; Back</button>
+        <p class="flow__cheer" id="flow-cheer" aria-live="polite"></p>
+
+        <form class="flow__step" data-step="first_name" novalidate>
+          <label class="flow__q" for="f-first">What&rsquo;s your first name?</label>
+          <input class="flow__input" id="f-first" name="first_name" autocomplete="given-name" autocapitalize="words" maxlength="80" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <form class="flow__step" data-step="last_name" novalidate hidden>
+          <label class="flow__q" for="f-last">And your last name?</label>
+          <input class="flow__input" id="f-last" name="last_name" autocomplete="family-name" autocapitalize="words" maxlength="80" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <div class="flow__step" data-step="age_range" role="group" aria-labelledby="q-age" hidden>
+          <p class="flow__q" id="q-age">How old are you?</p>
+          <button type="button" class="flow__tile" data-value="Under 18" aria-pressed="false">Under 18</button>
+          <button type="button" class="flow__tile" data-value="18 to 21" aria-pressed="false">18 to 21</button>
+          <button type="button" class="flow__tile" data-value="22 to 27" aria-pressed="false">22 to 27</button>
+          <button type="button" class="flow__tile" data-value="28 to 35" aria-pressed="false">28 to 35</button>
+          <button type="button" class="flow__tile" data-value="36 or older" aria-pressed="false">36 or older</button>
+        </div>
+
+        <form class="flow__step" data-step="city" novalidate hidden>
+          <label class="flow__q" for="f-city">What city do you live in?</label>
+          <input class="flow__input" id="f-city" name="city" autocomplete="address-level2" autocapitalize="words" maxlength="100" placeholder="City" required />
+          <select class="flow__input" name="state" autocomplete="address-level1" aria-label="State" required>
+            <option value="">State</option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="DC">District of Columbia</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+          </select>
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <form class="flow__step" data-step="phone" novalidate hidden>
+          <label class="flow__q" for="f-phone">Where should we text you?</label>
+          <input class="flow__input" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(555) 555-5555" maxlength="14" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+          <p class="flow__fine">By tapping Next, you agree to receive texts from IOTA about this job opportunity. Msg &amp; data rates may apply. Reply STOP to opt out.</p>
+        </form>
+
+        <form class="flow__step" data-step="start_date" novalidate hidden>
+          <label class="flow__q" for="f-start">When could you start full-time?</label>
+          <input class="flow__input" id="f-start" name="start_date" type="date" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <div class="flow__step" data-step="full_time_travel" role="group" aria-labelledby="q-travel" hidden>
+          <p class="flow__q" id="q-travel">Could you work full-time when the job starts, including some summer travel?</p>
+          <button type="button" class="flow__tile" data-value="Yes" aria-pressed="false">Yes</button>
+          <button type="button" class="flow__tile" data-value="No" aria-pressed="false">No</button>
+        </div>
+
+        <form class="flow__step" data-step="competed" novalidate hidden>
+          <label class="flow__q" for="f-competed">What&rsquo;s something you competed at and were near the top of?</label>
+          <input class="flow__input" id="f-competed" name="competed" maxlength="300" placeholder="A sport, a job, school, anything" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <form class="flow__step" data-step="hardest_commitment" novalidate hidden>
+          <label class="flow__q" for="f-hardest">What&rsquo;s the hardest job or commitment you stuck with, and for how long?</label>
+          <input class="flow__input" id="f-hardest" name="hardest_commitment" maxlength="300" required />
+          <p class="err" hidden></p>
+          <button type="submit" class="submit flow__next">Next</button>
+        </form>
+
+        <div class="flow__step" data-step="video" hidden>
+          <p class="flow__q">Record your 60-second video.</p>
+          <p class="flow__desc">Who you are, the hardest thing you&rsquo;ve ever done, and why sales, why now. No video, no interview.</p>
+          <div class="flow__pick">
+            <label class="submit flow__file">Record my video
+              <input type="file" accept="video/*" capture="user" />
+            </label>
+            <label class="flow__alt">or choose a video you already have
+              <input type="file" accept="video/*" />
+            </label>
+          </div>
+          <div class="flow__upload" hidden>
+            <div class="flow__ubar"><span></span></div>
+            <p class="flow__ustatus" aria-live="polite"></p>
+          </div>
+          <p class="err" hidden></p>
+        </div>
+
+        <div class="flow__step flow__end" data-step="under18" hidden>
+          <p class="flow__q">Thanks for your interest! You need to be 18 to apply. Come back when you are.</p>
+        </div>
+
+        <div class="flow__step flow__end" data-step="done" hidden>
+          <p class="flow__q">Got it, <span data-first></span>. If your video stands out, we&rsquo;ll call you, usually today. Keep your phone on.</p>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -215,7 +359,6 @@
   <script>
   (function () {
     var IOTA_PIXEL = '1298384508340315';
-    var params = new URLSearchParams(location.search);
     var $ = function (id) { return document.getElementById(id); };
 
     fbq('init', IOTA_PIXEL);
@@ -237,34 +380,8 @@
       vsl.classList.add('vsl--empty');
       vsl.innerHTML = '<span>Zack&rsquo;s video goes here</span>';
     }
-
-    // ── Application form (GHL embed) ────────────────────────────────────────
-    var box = $('apply-form');
-    var code = (GHL_FORM_EMBED || '').trim();
-    if (!code) {
-      box.innerHTML = '<p class="apply__empty">Application form goes here</p>';
-      return;
-    }
-    var isUrl = /^https?:\/\//i.test(code);
-    var tpl = document.createElement('template');
-    if (!isUrl) tpl.innerHTML = code;
-    var f = tpl.content.querySelector('iframe') || document.createElement('iframe');
-    var u = new URL(isUrl ? code : f.getAttribute('src'), location.href);
-    // Tracking: client tag and source ride along so GHL fills its hidden
-    // fields. A missing one is left off.
-    ['client', 'utm_source'].forEach(function (k) {
-      var val = (params.get(k) || '').trim();
-      if (val) u.searchParams.set(k, val);
-    });
-    f.src = u.toString();
-    if (!f.title) f.title = 'Application form';
-    box.appendChild(f);
-
-    // GHL's own script: sizes the frame to the form as its steps change.
-    var s = document.createElement('script');
-    s.src = 'https://link.msgsndr.com/js/form_embed.js';
-    document.body.appendChild(s);
   })();
   </script>
+  <script src="/campaigns/apply/apply-form.js?v=3"></script>
 </body>
 </html>

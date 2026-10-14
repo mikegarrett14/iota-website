@@ -36,20 +36,79 @@
 .apply { padding: 3.5rem 0 3rem; scroll-margin-top: 3.75rem; }
 .apply__head { max-width: 760px; margin: 0 auto; padding: 0 16px 1.75rem; text-align: center; }
 .apply__sub { color: var(--body); margin: 0.9rem auto 0; max-width: 34rem; }
-/* Edge to edge on phones so the form gets the whole screen width. */
-.apply__form { background: var(--white); max-width: 720px; margin: 0 auto; overflow: hidden; }
-/* min-height is the floor for a two-step form; GHL's form_embed.js sets the
-   exact height once the form reports it. */
-.apply__form iframe { display: block; width: 100%; min-height: 900px; border: 0; }
-.apply__empty {
-  display: grid; place-items: center; min-height: 900px; padding: 2rem 16px;
-  background: #DADADA; color: #6B6B6B; font-size: 1.05rem; text-align: center;
+
+/* Step-by-step form (apply-form.js). Reuses Jaden's .quiz__bar, .quiz__back,
+   .submit and .err; one question per screen, edge to edge on phones. */
+.flow {
+  background: var(--white); max-width: 640px; margin: 0 auto; min-height: 30rem;
+  padding: 0 16px 2rem; scroll-margin-top: 3.75rem; position: relative;
 }
+.flow__bar { margin: 0 -16px; border-radius: 0; height: 5px; }
+.flow__bar span { width: 0; transition: width 0.45s ease; }
+.flow__back { display: block; margin: 0.9rem 0 0; padding: 0.4rem 0; font-size: 0.95rem; }
+.flow__cheer {
+  min-height: 1.6rem; margin: 0.9rem 0 0.4rem; color: var(--green); font-weight: 600;
+  opacity: 0; transition: opacity 0.25s;
+}
+.flow__cheer.is-on { opacity: 1; }
+.flow__back:not([hidden]) + .flow__cheer { margin-top: 0.3rem; }
+
+.flow__step { display: grid; gap: 0.75rem; animation: flow-in 0.25s ease; }
+@keyframes flow-in { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .flow__step { animation: none; } .flow__bar span { transition: none; } }
+
+.flow__q {
+  display: block; font-family: var(--sans); font-weight: 600; color: var(--body);
+  font-size: 1.5rem; line-height: 1.25; margin-bottom: 0.5rem;
+}
+.flow__desc { color: var(--body); margin: -0.25rem 0 0.5rem; }
+.flow__input {
+  width: 100%; font: inherit; font-size: 1.15rem; color: var(--ink); background: #fff;
+  border: 1px solid #CCCCCC; border-radius: 5px; padding: 1.1rem 1rem 0.95rem; min-height: 3.6rem;
+  -webkit-appearance: none; appearance: none;
+}
+.flow__input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+select.flow__input {
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 1rem center;
+  padding-right: 2.75rem;
+}
+select.flow__input:invalid { color: #757575; }
+input[type=date].flow__input { display: block; min-height: 3.6rem; }
+.flow__next { margin-top: 0.25rem; min-height: 3.6rem; }
+.flow__fine { font-size: 0.75rem; color: rgba(47,47,47,0.7); line-height: 1.4; }
+
+/* Tap tiles: same look as Jaden's answer tiles, taller for thumbs. */
+.flow__tile {
+  display: flex; align-items: center; width: 100%; min-height: 3.75rem; cursor: pointer; text-align: left;
+  background: #fff; color: var(--ink); border: 1px solid #CCCCCC; border-radius: 5px;
+  padding: 1.05rem 1rem 0.85rem; font: 500 1.15rem/1.2 var(--sans);
+  transition: border-color 0.12s, background 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) { .flow__tile:hover { border-color: var(--green); } }
+.flow__tile[aria-pressed=true] { border-color: var(--green); background: #EEF5EF; box-shadow: 0 0 0 1px var(--green); }
+.flow__tile:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* Video: the label is the button; the file input hides inside it. */
+.flow__pick { display: grid; gap: 0.9rem; justify-items: center; }
+.flow__file { display: flex; align-items: center; justify-content: center; min-height: 3.6rem; position: relative; }
+.flow__alt { color: var(--maroon); text-decoration: underline; cursor: pointer; padding: 0.5rem; position: relative; }
+.flow__pick input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.flow__file:focus-within, .flow__alt:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.flow__ubar { height: 10px; background: var(--cream); border-radius: 99px; overflow: hidden; }
+.flow__ubar span { display: block; height: 100%; width: 0; background: var(--green); transition: width 0.2s; }
+.flow__ustatus { color: var(--body); text-align: center; margin-top: 0.75rem; }
+
+.flow__end .flow__q { font-size: 1.6rem; margin-top: 1rem; }
+
 @media (min-width: 760px) {
   .apply { padding-left: 16px; padding-right: 16px; }
-  .apply__form { border-radius: 20px; padding: 1.5rem; }
-  .apply__form iframe, .apply__empty { min-height: 820px; }
+  .flow { border-radius: 20px; overflow: hidden; padding: 0 2rem 2.5rem; }
+  .flow__bar { margin: 0 -2rem; }
 }
 
 /* ── FOOTER ───────────────────────────────────────────────────────────────── */
 .foot__fine + .foot__fine { margin-top: 0.35rem; }
+
+/* Next and the video button wear the page's pill shape. */
+.flow .submit { border-radius: 50px; text-transform: uppercase; font-weight: 500; padding: 16px 24px 13px; }

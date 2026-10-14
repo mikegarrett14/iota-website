@@ -301,15 +301,26 @@ the application fires `ClientApplication { client, qualified }`.
 **Main recruiting page (`campaigns/apply/`)** is served at `/apply` (locally
 `/campaigns/apply/index.html`), with Zack Wood as the face of it. It reuses Jaden's
 stylesheet as-is, with `campaigns/apply/style.css` adding only what's new (hero video
-placement, numbered steps, the money card, the application section), so a design change
+placement, numbered steps, the money card, the application form), so a design change
 in `campaigns/jaden/style.css` shows on both pages. It never names a hiring company.
-Every "Apply now" button scrolls to the GHL form at the bottom; there is no calendar.
-The constants at the top of `index.html` are what you swap: `VSL_EMBED_URL`,
-`GHL_FORM_EMBED` (form URL or the `<iframe>` tag, without GHL's `<script>` line) and
-`ZACK_BIO`; his photo is `campaigns/apply/zack.jpg`. `?client=` and `utm_source` from the
-page URL are appended to the form's URL when present (nothing is sent when they're
-missing), so the GHL form needs hidden fields with the query keys `client` and
-`utm_source`.
+Every "Apply now" button scrolls to the application at the bottom. `VSL_EMBED_URL` and
+`ZACK_BIO` are constants at the top of `index.html`; his photo is
+`campaigns/apply/zack.jpg`.
+
+The application (`campaigns/apply/apply-form.js`) is one question per screen and talks
+to two Netlify Functions in `netlify/functions/`:
+
+| Route | Does |
+|---|---|
+| `POST /api/apply` (`apply.mjs`) | Forwards step 1 (sent when the phone number is submitted) and step 2 (sent after the video uploads) to GHL as JSON. Retries once, logs failures with the full payload, and always answers 200. |
+| `POST /api/apply/upload` (`apply-upload.mjs`) | Signs a Cloudinary upload. The browser sends the video straight to Cloudinary in 20 MB chunks (max 300 MB), into the `apply-videos` folder. |
+
+Set these in Netlify (Site configuration → Environment variables), never in code, since
+this repo is public: `GHL_WEBHOOK_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`,
+`CLOUDINARY_API_SECRET`. `client` and `source` in both payloads come from `?client=` and
+`?utm_source=` on the page URL (empty strings when missing). Answers are kept in
+`sessionStorage` so a refresh doesn't lose them. The functions don't run under the
+python server; use `netlify dev` to test them locally.
 
 ---
 
