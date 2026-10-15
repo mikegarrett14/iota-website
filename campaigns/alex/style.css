@@ -13,6 +13,28 @@ a.pill--sand { color: var(--maroon); }
 
 /* ── HERO: one column, the video under the subline (as on /apply) ────────── */
 .hero__copy .vsl { width: 100%; margin: 1.5rem 0 0.2rem; border-radius: 8px; }
+
+/* Cover over the YouTube video until it's tapped (hides the channel name). */
+.vsl__cover {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: 0; border: 0; background: #000; cursor: pointer;
+  display: grid; place-items: center;
+}
+.vsl__cover img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.82); transition: filter .2s;
+}
+.vsl__cover:hover img, .vsl__cover:focus-visible img { filter: brightness(.95); }
+.vsl__play {
+  position: relative; width: 76px; height: 76px; border-radius: 50%;
+  background: var(--sand); box-shadow: 0 6px 24px rgba(0,0,0,.3);
+  display: grid; place-items: center; transition: transform .2s;
+}
+.vsl__play::before {
+  content: ""; margin-left: 6px;
+  border-left: 22px solid var(--maroon); border-top: 14px solid transparent; border-bottom: 14px solid transparent;
+}
+.vsl__cover:hover .vsl__play { transform: scale(1.06); }
 @media (min-width: 900px) {
   .hero__card--solo { grid-template-columns: 1fr; max-width: 860px; }
   .hero__card--solo .hero__sub { max-width: none; }
