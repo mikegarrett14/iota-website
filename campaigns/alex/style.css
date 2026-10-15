@@ -1,0 +1,39 @@
+/* =============================================================================
+   /join/alex — Alex Garber's paid sales internship page
+   Loaded AFTER /campaigns/jaden/style.css, which supplies the whole design
+   (tokens, type, pills, hero card, sections, quiz, calendar, footer). Only what
+   this page adds lives here: the hero without a video, numbered steps, the
+   inline booking step and the photo fallback.
+   ============================================================================= */
+
+/* Buttons here are links that scroll to #book. */
+a.pill { color: inherit; }
+a.pill--green, a.pill--maroon { color: #fff; }
+a.pill--sand { color: var(--maroon); }
+
+/* ── HERO: one column while VIDEO_URL is empty ────────────────────────────── */
+@media (min-width: 900px) {
+  .hero__card--solo { grid-template-columns: 1fr; max-width: 860px; }
+  .hero__card--solo .hero__sub { max-width: none; }
+}
+
+/* ── HOW IT WORKS: a numeral where Jaden's page has the bolt icon ─────────── */
+.learn__num {
+  display: block; margin-bottom: 0.6rem;
+  font-family: var(--serif); font-size: 2.1rem; line-height: 1; color: var(--maroon);
+}
+
+/* ── [confirm] blanks: always highlighted until they're answered ──────────── */
+.todo { background: #FFE58A; color: #4A3800; border-radius: 3px; padding: 0 0.2em; }
+
+/* ── BOOKING STEP ─────────────────────────────────────────────────────────── */
+/* scroll-margin clears the sticky pre-header when a button scrolls here. */
+.book { padding: 3.5rem 16px 3rem; scroll-margin-top: 3.75rem; }
+.book__card {
+  max-width: 640px; margin: 0 auto; background: var(--white); border-radius: 20px;
+  padding: 2.25rem 1.25rem 1.75rem;
+}
+.book .quiz { margin-top: 1.6rem; }
+.book .result { margin-top: 2.25rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+.book__stop { margin-top: 1.6rem; padding: 1.4rem 1rem; background: var(--cream); border-radius: 6px; text-align: center; color: var(--body); }
+@media (min-width: 900px) { .book__card { padding: 3rem; } }
