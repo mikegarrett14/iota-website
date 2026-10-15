@@ -42,7 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
-  <link rel="stylesheet" href="/campaigns/alex/style.css?v=4" />
+  <link rel="stylesheet" href="/campaigns/alex/style.css?v=3" />
 </head>
 <body>
 
@@ -294,7 +294,7 @@
       if (!v) return null;
       var yt = v.match(/^[\w-]{11}$/) ? v :
         (v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
-      if (yt) return cover(yt);
+      if (yt) return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1');
       var drive = (v.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
       if (drive) return frame('https://drive.google.com/file/d/' + drive + '/preview');
       if (/\.(mp4|mov|webm)(\?|$)/i.test(v)) {
@@ -303,27 +303,6 @@
         return el;
       }
       return frame(v);
-    }
-    // Our own cover until they tap play, so YouTube's channel name and logo
-    // don't show up front. The player loads (and starts) on tap.
-    function cover(yt) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'vsl__cover';
-      b.setAttribute('aria-label', 'Play video');
-      var img = new Image();
-      img.alt = '';
-      img.onerror = function () { img.onerror = null; img.src = 'https://i.ytimg.com/vi/' + yt + '/hqdefault.jpg'; };
-      img.src = 'https://i.ytimg.com/vi/' + yt + '/maxresdefault.jpg';
-      var play = document.createElement('span');
-      play.className = 'vsl__play';
-      play.setAttribute('aria-hidden', 'true');
-      b.appendChild(img);
-      b.appendChild(play);
-      b.addEventListener('click', function () {
-        b.replaceWith(frame('https://www.youtube.com/embed/' + yt + '?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3'));
-      });
-      return b;
     }
     function frame(url) {
       var f = document.createElement('iframe');
