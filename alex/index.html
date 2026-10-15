@@ -10,7 +10,7 @@
   <script>
     // ── CONFIG ──────────────────────────────────────────────────────────────
     const APPLY_URL = "";   // Alex's personal Vivint pipeline link, filled in later. While empty, every Apply button stays hidden.
-    const VIDEO_URL = "";   // Hero hype video, e.g. "/alex/hype.mp4". While empty, a placeholder shows.
+    const VIDEO_URL = "mmngwiXTlyc";   // Hero video: YouTube ID or URL, Drive file URL, or an .mp4 like "/alex/hype.mp4". Empty = placeholder. Now: "Big As You - The Vivint Opportunity", same as /join/alex.
 
     // ── BOOKED BANNER ───────────────────────────────────────────────────────
     // The booking redirect may append appointment details (name, email, time).
@@ -153,7 +153,9 @@
       position: relative; width: 100%; aspect-ratio: 9 / 16;
       background: #000; border: 1px solid var(--line); overflow: hidden;
     }
-    .video video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+    .video video, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+    .video video { object-fit: contain; }
+    .hero--landscape .hero__media { max-width: none; }
     .video__ph {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
@@ -247,7 +249,10 @@
       position: absolute; left: 0; bottom: 0; background: var(--black); color: var(--white);
       padding: 12px 18px; font: 400 22px/1 var(--display); text-transform: uppercase; letter-spacing: .04em;
     }
-    .quote { font-size: 19px; line-height: 1.6; margin: 26px 0 0; max-width: 560px; }
+    .story { margin-top: 26px; max-width: 600px; }
+    .story p { font-size: 18px; line-height: 1.65; margin: 0 0 18px; }
+    .story .story__kicker { font-weight: 700; font-size: 20px; line-height: 1.5; }
+    .story .foot { font-size: 12px; margin: 0; }
     .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 34px; }
     .stat {
       background: var(--black); color: var(--white);
@@ -308,6 +313,8 @@
       .hero { padding: 80px 0 100px; }
       .hero .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; }
       .hero__media { justify-self: end; }
+      .hero--landscape .wrap { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+      .hero--landscape .hero__media { justify-self: stretch; max-width: 1000px; }
       .timeline { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); overflow: visible; margin: 64px 0 0; padding: 0; }
       .swipe { display: none; }
       .meet { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; }
@@ -415,13 +422,18 @@
       <div class="wrap meet">
         <div class="photo">
           <div class="photo__ph">Alex Garber</div>
-          <img src="/alex/alex.jpg" alt="Alex Garber" onerror="this.remove()" />
+          <img src="/campaigns/alex/alex.jpg" alt="Alex Garber" onerror="this.remove()" />
           <span class="photo__tag">Regional Leader</span>
         </div>
         <div>
           <p class="eyebrow">Meet your team leader</p>
           <h2 class="display h2">Alex<br />Garber</h2>
-          <p class="quote">I had a lot of failed businesses before I found sales. My first year I made $97,000. Now my job is producing top reps and leaders, and if you're on my team, that's you.</p>
+          <div class="story">
+            <p>I started selling candy in 4th grade and got in trouble for it two years in a row. In 6th grade I hired a 7th and 8th grader to sell for me. At 18 I started an Instagram clothing brand that sold 3 shirts its first week. I figured out the marketing myself and grew it to 1,000+ customers and $44K before it stalled in college.</p>
+            <p>That's when I found door-to-door sales. I made $97,000 my first year. Six years and 1,200+ installs later, I'm the youngest and fastest rep to ever hit Regional in my company, my team won The Cup in 2023, and I've trained reps who now outsell me. I bought my first rental property in 2021 and own four houses now.</p>
+            <p class="story__kicker">I had a lot of failed businesses before sales. Now my job is producing top reps and leaders, and if you're on my team, that's you.</p>
+            <p class="foot">These are my results and the results of reps I've trained. They aren't typical and they aren't a promise.</p>
+          </div>
           <div class="stats">
             <div class="stat stat--wide"><b>Youngest &amp; fastest</b><span>rep to hit Regional</span></div>
             <div class="stat"><b>$97K</b><span>first year</span></div>
@@ -547,19 +559,40 @@
         document.querySelectorAll("[data-apply-wrap]").forEach(function (el) { el.hidden = false; });
       }
 
-      // Hero video: replace the placeholder once VIDEO_URL is set
-      if (VIDEO_URL) {
+      // Hero video: replace the placeholder once VIDEO_URL is set.
+      // A landscape video moves under the headline at full width.
+      const url = VIDEO_URL.trim();
+      if (url) {
         const box = document.getElementById("video");
-        const v = document.createElement("video");
-        v.src = VIDEO_URL;
-        v.controls = true;
-        v.playsInline = true;
-        v.preload = "metadata";
-        v.addEventListener("loadedmetadata", function () {
-          if (v.videoWidth && v.videoHeight) box.style.aspectRatio = v.videoWidth + " / " + v.videoHeight;
-        });
+        const hero = document.querySelector(".hero");
+        const landscape = function () { hero.classList.add("hero--landscape"); box.style.aspectRatio = "16 / 9"; };
+        const yt = /^[\w-]{11}$/.test(url) ? url :
+          (url.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
+        const drive = (url.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
+        let el;
+        if (yt || drive) {
+          el = document.createElement("iframe");
+          el.src = yt
+            ? "https://www.youtube.com/embed/" + yt + "?playsinline=1&rel=0&modestbranding=1"
+            : "https://drive.google.com/file/d/" + drive + "/preview";
+          el.title = "Video from Alex Garber";
+          el.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+          el.allowFullscreen = true;
+          if (!/\/shorts\//.test(url)) landscape();
+        } else {
+          el = document.createElement("video");
+          el.src = url;
+          el.controls = true;
+          el.playsInline = true;
+          el.preload = "metadata";
+          el.addEventListener("loadedmetadata", function () {
+            if (!el.videoWidth || !el.videoHeight) return;
+            if (el.videoWidth > el.videoHeight) landscape();
+            box.style.aspectRatio = el.videoWidth + " / " + el.videoHeight;
+          });
+        }
         box.innerHTML = "";
-        box.appendChild(v);
+        box.appendChild(el);
       }
     })();
   </script>
