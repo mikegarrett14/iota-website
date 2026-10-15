@@ -177,6 +177,20 @@
     }
     .video__label { font: 400 30px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
     .video__note { font-size: 13px; opacity: .6; margin: 0; }
+    .video__cover {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      padding: 0; border: 0; background: #000; color: var(--white); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    }
+    .video__cover img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(1) brightness(.6); transition: filter .25s;
+    }
+    .video__cover:hover img, .video__cover:focus-visible img { filter: grayscale(1) brightness(.75); }
+    .video__cover .video__play, .video__cover .video__label { position: relative; }
+    .video__cover .video__play { background: rgba(0,0,0,.35); transition: transform .2s; }
+    .video__cover:hover .video__play { transform: scale(1.06); }
+    .video__cover .video__label { font-size: clamp(20px, 4vw, 34px); }
 
     /* ── Photo bands ──────────────────────────────────────────── */
     .band {
@@ -570,15 +584,34 @@
           (url.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
         const drive = (url.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
         let el;
-        if (yt || drive) {
-          el = document.createElement("iframe");
-          el.src = yt
-            ? "https://www.youtube.com/embed/" + yt + "?playsinline=1&rel=0&modestbranding=1"
-            : "https://drive.google.com/file/d/" + drive + "/preview";
-          el.title = "Video from Alex Garber";
-          el.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
-          el.allowFullscreen = true;
+        const frame = function (src) {
+          const f = document.createElement("iframe");
+          f.src = src;
+          f.title = "Video from Alex Garber";
+          f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
+          f.allowFullscreen = true;
+          return f;
+        };
+        if (yt) {
+          // Our own cover until they tap play, so YouTube's channel name and
+          // logo don't show up front. The player loads (and starts) on tap.
+          el = document.createElement("button");
+          el.type = "button";
+          el.className = "video__cover";
+          el.setAttribute("aria-label", "Play video");
+          el.innerHTML =
+            '<img src="https://i.ytimg.com/vi/' + yt + '/maxresdefault.jpg" alt="" ' +
+              'onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/' + yt + '/hqdefault.jpg\'" />' +
+            '<span class="video__play" aria-hidden="true"></span>' +
+            '<span class="video__label">Watch before your call</span>';
+          el.addEventListener("click", function () {
+            box.innerHTML = "";
+            box.appendChild(frame("https://www.youtube.com/embed/" + yt + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3"));
+          });
           if (!/\/shorts\//.test(url)) landscape();
+        } else if (drive) {
+          el = frame("https://drive.google.com/file/d/" + drive + "/preview");
+          landscape();
         } else {
           el = document.createElement("video");
           el.src = url;
