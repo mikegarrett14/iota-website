@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Built Different | Alex Garber, Orlando</title>
+  <meta name="description" content="You booked your interview with Alex Garber. Here's what selling with his Vivint team in Orlando looks like." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────────────────
+    const APPLY_URL = "";   // Alex's personal Vivint pipeline link, filled in later. While empty, every Apply button stays hidden.
+    const VIDEO_URL = "";   // Hero hype video, e.g. "/alex/hype.mp4". While empty, a placeholder shows.
+
+    // ── BOOKED BANNER ───────────────────────────────────────────────────────
+    // The booking redirect may append appointment details (name, email, time).
+    // Any param that isn't tracking counts as "booked". We read them once, then
+    // strip them from the address bar so they never reach analytics.
+    (function () {
+      const TRACKING = /^(utm_|fbclid$|gclid$|ttclid$|msclkid$|_gl$)/i;
+      const params = new URLSearchParams(location.search);
+      let booked = false;
+      const keep = new URLSearchParams();
+      params.forEach(function (value, key) {
+        if (TRACKING.test(key)) keep.append(key, value);
+        else booked = true;
+      });
+      window.__BOOKED__ = booked;
+      if (booked && window.history && history.replaceState) {
+        const qs = keep.toString();
+        history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+      }
+    })();
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wm33vflvsh");
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --ink: #111;
+      --white: #fff;
+      --paper: #f4f4f2;
+      --grey: #8a8a8a;
+      --line: rgba(255,255,255,.18);
+      --line-dark: rgba(0,0,0,.12);
+      --gutter: 20px;
+      --max: 1180px;
+      --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+      --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font: 400 17px/1.55 var(--body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+    section { padding: 88px 0; }
+    .light { background: var(--white); color: var(--ink); }
+    .paper { background: var(--paper); color: var(--ink); }
+
+    .display {
+      font-family: var(--display);
+      font-weight: 400;
+      text-transform: uppercase;
+      line-height: .92;
+      letter-spacing: .005em;
+      margin: 0;
+    }
+    .h2 { font-size: clamp(40px, 9vw, 84px); }
+    .h3 { font-size: clamp(26px, 5vw, 34px); line-height: 1; }
+    .eyebrow {
+      font: 600 12px/1 var(--body);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+      opacity: .7;
+    }
+    .lede { font-size: 18px; max-width: 620px; margin: 22px 0 0; opacity: .85; }
+    .foot { font-size: 12px; line-height: 1.5; opacity: .6; margin: 22px 0 0; }
+
+    /* ── Apply button ─────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 56px; padding: 0 34px;
+      font: 400 22px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid currentColor;
+      transition: background .15s, color .15s, transform .15s;
+    }
+    .btn--white { background: var(--white); color: var(--black); border-color: var(--white); }
+    .btn--white:hover { background: transparent; color: var(--white); }
+    .btn--black { background: var(--black); color: var(--white); border-color: var(--black); }
+    .btn--black:hover { background: transparent; color: var(--black); }
+    .btn:active { transform: translateY(1px); }
+    .btn-row { margin-top: 36px; }
+
+    /* ── 1. Booked banner ─────────────────────────────────────── */
+    .booked {
+      background: var(--white); color: var(--black);
+      padding: 12px var(--gutter);
+      font-size: 14px; line-height: 1.45; font-weight: 500;
+      text-align: center;
+    }
+    .booked b { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+
+    /* ── 2. Hero ──────────────────────────────────────────────── */
+    .hero { padding: 56px 0 72px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(255,255,255,.10), transparent 55%),
+        repeating-linear-gradient(90deg, transparent 0 79px, rgba(255,255,255,.035) 79px 80px);
+      pointer-events: none;
+    }
+    .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: center; }
+    .hero__title { font-size: clamp(64px, 21vw, 150px); line-height: .86; }
+    .hero__title span { display: block; }
+    .hero__title .outline { color: transparent; -webkit-text-stroke: 2px var(--white); }
+    .hero__sub { font-size: 20px; font-weight: 500; margin: 26px 0 0; max-width: 460px; }
+    .hero__media { width: 100%; max-width: 380px; justify-self: center; }
+
+    .video {
+      position: relative; width: 100%; aspect-ratio: 9 / 16;
+      background: #000; border: 1px solid var(--line); overflow: hidden;
+    }
+    .video video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+    .video__ph {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      text-align: center; padding: 24px;
+      background:
+        linear-gradient(160deg, #1d1d1d 0%, #060606 100%);
+    }
+    .video__ph::after {
+      content: ""; position: absolute; inset: 14px; border: 1px dashed rgba(255,255,255,.22); pointer-events: none;
+    }
+    .video__play {
+      width: 78px; height: 78px; border-radius: 50%;
+      border: 2px solid var(--white);
+      display: grid; place-items: center;
+    }
+    .video__play::before {
+      content: ""; margin-left: 6px;
+      border-left: 22px solid var(--white); border-top: 14px solid transparent; border-bottom: 14px solid transparent;
+    }
+    .video__label { font: 400 30px/1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+    .video__note { font-size: 13px; opacity: .6; margin: 0; }
+
+    /* ── Photo bands ──────────────────────────────────────────── */
+    .band {
+      position: relative; min-height: 46vh;
+      display: flex; align-items: center;
+      padding: 80px 0;
+      background-color: #151515;
+      background-image:
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.72)),
+        var(--img, none),
+        repeating-linear-gradient(135deg, #1a1a1a 0 2px, #121212 2px 14px);
+      background-size: cover; background-position: center;
+      filter: grayscale(1);
+      text-align: center;
+    }
+    .band .display { font-size: clamp(44px, 11vw, 120px); }
+    .band p { margin: 18px auto 0; max-width: 560px; font-size: 18px; opacity: .85; }
+
+    /* ── 3. Summer jobs vs this ───────────────────────────────── */
+    .vs { display: grid; gap: 28px; margin-top: 48px; }
+    .vs__col { padding: 32px 24px; }
+    .vs__col--them { background: var(--paper); color: var(--ink); }
+    .vs__col--us { background: var(--black); color: var(--white); }
+    .vs__col h3 { margin-bottom: 26px; }
+    .pay { list-style: none; margin: 0; padding: 0; }
+    .pay li {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      padding: 14px 0; border-bottom: 1px solid var(--line-dark);
+      font-weight: 500;
+    }
+    .vs__col--us .pay li { border-color: var(--line); }
+    .pay li:last-child { border-bottom: 0; }
+    .pay .amt { font-family: var(--display); font-size: 28px; letter-spacing: .02em; }
+    .vs__col--them .amt { color: #6b6b6b; }
+    .vs__col--us .amt { font-size: clamp(36px, 9vw, 52px); }
+    .vs__col--us .pay li { padding: 18px 0; }
+    .vs__col--us .role { font-size: 15px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+
+    /* ── 4. Timeline ──────────────────────────────────────────── */
+    .timeline {
+      list-style: none; margin: 48px calc(var(--gutter) * -1) 0; padding: 0 var(--gutter) 12px;
+      display: grid; grid-auto-flow: column; grid-auto-columns: 78%;
+      gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+      -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+    }
+    .timeline li {
+      scroll-snap-align: start;
+      position: relative; padding: 46px 28px 0 0;
+      border-top: 2px solid var(--white);
+    }
+    .timeline li::before {
+      content: ""; position: absolute; top: -9px; left: 0;
+      width: 16px; height: 16px; background: var(--white); border-radius: 50%;
+    }
+    .timeline .yr { font: 400 64px/1 var(--display); display: block; }
+    .timeline p { margin: 14px 0 0; font-size: 16px; opacity: .85; max-width: 260px; }
+    .swipe { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .5; margin: 16px 0 0; }
+
+    /* ── 5. Meet Alex ─────────────────────────────────────────── */
+    .meet { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: start; }
+    .photo {
+      position: relative; aspect-ratio: 4 / 5; background: #e6e6e3; overflow: hidden;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+    .photo__ph {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font: 400 34px/1 var(--display); text-transform: uppercase; color: #a5a5a0; text-align: center; padding: 20px;
+    }
+    .photo__tag {
+      position: absolute; left: 0; bottom: 0; background: var(--black); color: var(--white);
+      padding: 12px 18px; font: 400 22px/1 var(--display); text-transform: uppercase; letter-spacing: .04em;
+    }
+    .quote { font-size: 19px; line-height: 1.6; margin: 26px 0 0; max-width: 560px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 34px; }
+    .stat {
+      background: var(--black); color: var(--white);
+      padding: 22px 18px; min-height: 128px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .stat b { font: 400 34px/1 var(--display); text-transform: uppercase; display: block; }
+    .stat span { font-size: 13px; line-height: 1.35; margin-top: 8px; opacity: .75; }
+    .stat--wide { grid-column: 1 / -1; }
+
+    /* ── 6. Why reps pick us ──────────────────────────────────── */
+    .cards { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 48px; }
+    .card { background: var(--black); padding: 34px 26px 38px; }
+    .card__n { font: 400 15px/1 var(--display); letter-spacing: .14em; opacity: .5; }
+    .card h3 { margin: 18px 0 12px; }
+    .card p { margin: 0; opacity: .8; font-size: 16px; }
+
+    /* ── 7. Next steps ────────────────────────────────────────── */
+    .steps { list-style: none; margin: 48px 0 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+    .steps li {
+      counter-increment: s;
+      display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center;
+      padding: 26px 22px; border: 2px solid var(--ink);
+    }
+    .steps li::before {
+      content: counter(s); font: 400 64px/.8 var(--display); width: 48px; text-align: center;
+    }
+    .steps h3 { font-size: clamp(24px, 6vw, 32px); }
+    .steps p { margin: 8px 0 0; font-size: 15px; opacity: .7; }
+    .steps li:first-child { background: var(--ink); color: var(--white); }
+
+    /* ── 8. Final band ────────────────────────────────────────── */
+    .final { text-align: center; padding: 120px 0; }
+    .final .display { font-size: clamp(56px, 15vw, 170px); }
+    .final p { margin: 20px auto 0; max-width: 520px; font-size: 18px; opacity: .8; }
+
+    /* ── 9. Footer ────────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--line); padding: 44px 0 56px; }
+    .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
+    .foot__name { font: 400 26px/1 var(--display); text-transform: uppercase; letter-spacing: .03em; }
+    .ig { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 15px; }
+    .ig svg { width: 22px; height: 22px; }
+    .ig:hover { text-decoration: underline; }
+    .disclaimer { font-size: 12px; line-height: 1.55; opacity: .5; margin: 28px 0 0; max-width: 760px; }
+
+    /* ── Desktop ──────────────────────────────────────────────── */
+    @media (min-width: 760px) {
+      :root { --gutter: 40px; }
+      section { padding: 120px 0; }
+      .vs { grid-template-columns: 1fr 1fr; gap: 0; }
+      .vs__col { padding: 48px 44px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(3, 1fr); }
+      .steps li { grid-template-columns: 1fr; align-items: start; padding: 32px 28px 36px; }
+      .steps li::before { text-align: left; font-size: 88px; }
+    }
+    @media (min-width: 1000px) {
+      .hero { padding: 80px 0 100px; }
+      .hero .wrap { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 64px; }
+      .hero__media { justify-self: end; }
+      .timeline { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); overflow: visible; margin: 64px 0 0; padding: 0; }
+      .swipe { display: none; }
+      .meet { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; }
+      .cards { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── 1. BOOKED BANNER ─────────────────────────────────────────────────── -->
+  <div class="booked" id="booked" role="status" hidden>
+    <b>You're booked.</b> Alex will FaceTime you at your interview time, so keep your phone on you. Watch the video below before your call.
+  </div>
+
+  <main>
+
+    <!-- ── 2. HERO ────────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Vivint &middot; Orlando, FL</p>
+          <h1 class="display hero__title"><span>Built</span><span class="outline">Different</span></h1>
+          <p class="hero__sub">Sell with Alex Garber's team in Orlando.</p>
+          <div class="btn-row" data-apply-wrap hidden>
+            <a class="btn btn--white" data-apply href="#" target="_blank" rel="noopener">Apply now</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="video" id="video">
+            <div class="video__ph">
+              <span class="video__play" aria-hidden="true"></span>
+              <span class="video__label">Watch before<br />your call</span>
+              <p class="video__note">Video from Alex coming soon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PHOTO BAND ─────────────────────────────────────────────────────── -->
+    <div class="band" style="--img: url('/alex/band-1.jpg')">
+      <div class="wrap">
+        <h2 class="display">Your summer.<br />Your call.</h2>
+      </div>
+    </div>
+
+    <!-- ── 3. SUMMER JOBS VS THIS ─────────────────────────────────────────── -->
+    <section class="light">
+      <div class="wrap">
+        <p class="eyebrow">Do the math</p>
+        <h2 class="display h2">Same summer.<br />Different paycheck.</h2>
+        <div class="vs">
+          <div class="vs__col vs__col--them">
+            <h3 class="display h3">This summer you could do what everyone else does</h3>
+            <ul class="pay">
+              <li><span>Bartender</span><span class="amt">$15,336</span></li>
+              <li><span>Construction</span><span class="amt">$19,712</span></li>
+              <li><span>Customer service</span><span class="amt">$17,456</span></li>
+              <li><span>Retail</span><span class="amt">$13,640</span></li>
+              <li><span>Server</span><span class="amt">$14,752</span></li>
+              <li><span>Landscaper</span><span class="amt">$15,728</span></li>
+            </ul>
+            <p class="foot">Typical summer earnings. Source: US Bureau of Labor Statistics data, May 2025.</p>
+          </div>
+          <div class="vs__col vs__col--us">
+            <h3 class="display h3">Or you could sell with Vivint</h3>
+            <ul class="pay">
+              <li><span class="role">Rookie</span><span class="amt">$38,000</span></li>
+              <li><span class="role">Sophomore</span><span class="amt">$74,000</span></li>
+              <li><span class="role">Vet</span><span class="amt">$170,000</span></li>
+              <li><span class="role">Manager</span><span class="amt">$250,000</span></li>
+            </ul>
+            <p class="foot">Source: Vivint internal commissions data. Results vary and aren't guaranteed.</p>
+          </div>
+        </div>
+        <div class="btn-row" data-apply-wrap hidden>
+          <a class="btn btn--black" data-apply href="#" target="_blank" rel="noopener">Apply now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. 25 YEARS OF HISTORY ─────────────────────────────────────────── -->
+    <section>
+      <div class="wrap">
+        <p class="eyebrow">Since 1999</p>
+        <h2 class="display h2">25 years<br />in the making</h2>
+        <p class="lede">You're not betting on a startup. You're joining a company that has been winning door to door for a quarter century.</p>
+        <ol class="timeline">
+          <li><span class="yr">1999</span><p>Todd Pedersen starts APX Alarm.</p></li>
+          <li><span class="yr">2012</span><p>Blackstone acquires Vivint for $2 billion.</p></li>
+          <li><span class="yr">2015</span><p>1 million customers, plus naming rights to the Utah Jazz arena.</p></li>
+          <li><span class="yr">2020</span><p>Vivint goes public on the New York Stock Exchange.</p></li>
+          <li><span class="yr">2023</span><p>NRG acquires Vivint.</p></li>
+        </ol>
+        <p class="swipe">Swipe &rarr;</p>
+      </div>
+    </section>
+
+    <!-- ── 5. MEET YOUR TEAM LEADER ───────────────────────────────────────── -->
+    <section class="paper">
+      <div class="wrap meet">
+        <div class="photo">
+          <div class="photo__ph">Alex Garber</div>
+          <img src="/alex/alex.jpg" alt="Alex Garber" onerror="this.remove()" />
+          <span class="photo__tag">Regional Leader</span>
+        </div>
+        <div>
+          <p class="eyebrow">Meet your team leader</p>
+          <h2 class="display h2">Alex<br />Garber</h2>
+          <p class="quote">I had a lot of failed businesses before I found sales. My first year I made $97,000. Now my job is producing top reps and leaders, and if you're on my team, that's you.</p>
+          <div class="stats">
+            <div class="stat stat--wide"><b>Youngest &amp; fastest</b><span>rep to hit Regional</span></div>
+            <div class="stat"><b>$97K</b><span>first year</span></div>
+            <div class="stat"><b>1,200+</b><span>installs</span></div>
+            <div class="stat stat--wide"><b>The Cup</b><span>won in 2023</span></div>
+            <div class="stat stat--wide"><b>Trained reps who now outsell me</b><span>on Alex's team</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PHOTO BAND ─────────────────────────────────────────────────────── -->
+    <div class="band" style="--img: url('/alex/band-2.jpg')">
+      <div class="wrap">
+        <h2 class="display">Knock.<br />Learn. Win.</h2>
+        <p>Every top rep on this team started exactly where you are right now.</p>
+      </div>
+    </div>
+
+    <!-- ── 6. WHY REPS PICK US ────────────────────────────────────────────── -->
+    <section>
+      <div class="wrap">
+        <p class="eyebrow">Why reps pick us</p>
+        <h2 class="display h2">More than<br />a summer job</h2>
+        <div class="cards">
+          <div class="card">
+            <span class="card__n">01</span>
+            <h3 class="display h3">Earning potential</h3>
+            <p>You're paid on what you sell, with no ceiling. The harder you work, the bigger the check.</p>
+          </div>
+          <div class="card">
+            <span class="card__n">02</span>
+            <h3 class="display h3">Training</h3>
+            <p>No experience needed. We teach you the pitch, the product and the mindset before you knock a single door.</p>
+          </div>
+          <div class="card">
+            <span class="card__n">03</span>
+            <h3 class="display h3">Leadership &amp; mentorship</h3>
+            <p>You learn directly from Alex and the managers he's built. Somebody is always in your corner.</p>
+          </div>
+          <div class="card">
+            <span class="card__n">04</span>
+            <h3 class="display h3">Balance &amp; trips</h3>
+            <p>Work hard, then go enjoy it. Top performers earn incentive trips and real time off.</p>
+          </div>
+          <div class="card">
+            <span class="card__n">05</span>
+            <h3 class="display h3">Team culture</h3>
+            <p>You'll be around people who push each other to win. It feels more like a team than a job.</p>
+          </div>
+          <div class="card">
+            <span class="card__n">06</span>
+            <h3 class="display h3">Skills that transfer</h3>
+            <p>Confidence, communication and handling rejection. These pay off in any career you choose next.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 7. WHAT HAPPENS NEXT ───────────────────────────────────────────── -->
+    <section class="light">
+      <div class="wrap">
+        <p class="eyebrow">What happens next</p>
+        <h2 class="display h2">Three steps</h2>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3 class="display">Alex FaceTimes you at your interview time</h3>
+              <p>Keep your phone on you and pick up. It's a real conversation, not a test.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3 class="display">Come shadow the team in Orlando</h3>
+              <p>See the job up close and meet the people you'd work with.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3 class="display">Get trained and hit the doors</h3>
+              <p>Learn the system, then go put it to work.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── 8. FINAL BAND ──────────────────────────────────────────────────── -->
+    <div class="band final" style="--img: url('/alex/band-3.jpg')">
+      <div class="wrap">
+        <h2 class="display">It all<br />starts here.</h2>
+        <p>See you on the call.</p>
+        <div class="btn-row" data-apply-wrap hidden>
+          <a class="btn btn--white" data-apply href="#" target="_blank" rel="noopener">Apply now</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── 9. FOOTER ────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="foot__row">
+        <span class="foot__name">Alex Garber | Orlando</span>
+        <a class="ig" href="https://www.instagram.com/knockwithalexg/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2ZM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4Zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9Z"/></svg>
+          @knockwithalexg
+        </a>
+      </div>
+      <p class="disclaimer">Earnings shown are examples only. They are not typical and are not a guarantee of what you will earn. Results depend on individual effort, skill and market conditions. Sales roles are commission-based. Vivint is a registered trademark of its owner.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // Booked banner
+      if (window.__BOOKED__) document.getElementById("booked").hidden = false;
+
+      // Apply buttons: only shown once APPLY_URL is set
+      if (APPLY_URL) {
+        document.querySelectorAll("[data-apply]").forEach(function (a) { a.href = APPLY_URL; });
+        document.querySelectorAll("[data-apply-wrap]").forEach(function (el) { el.hidden = false; });
+      }
+
+      // Hero video: replace the placeholder once VIDEO_URL is set
+      if (VIDEO_URL) {
+        const box = document.getElementById("video");
+        const v = document.createElement("video");
+        v.src = VIDEO_URL;
+        v.controls = true;
+        v.playsInline = true;
+        v.preload = "metadata";
+        v.addEventListener("loadedmetadata", function () {
+          if (v.videoWidth && v.videoHeight) box.style.aspectRatio = v.videoWidth + " / " + v.videoHeight;
+        });
+        box.innerHTML = "";
+        box.appendChild(v);
+      }
+    })();
+  </script>
+</body>
+</html>
