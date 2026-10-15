@@ -11,7 +11,8 @@ a.pill { color: inherit; }
 a.pill--green, a.pill--maroon { color: #fff; }
 a.pill--sand { color: var(--maroon); }
 
-/* ── HERO: one column while VIDEO_URL is empty ────────────────────────────── */
+/* ── HERO: one column, the video under the subline (as on /apply) ────────── */
+.hero__copy .vsl { width: 100%; margin: 1.5rem 0 0.2rem; border-radius: 8px; }
 @media (min-width: 900px) {
   .hero__card--solo { grid-template-columns: 1fr; max-width: 860px; }
   .hero__card--solo .hero__sub { max-width: none; }
