@@ -42,7 +42,7 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
-  <link rel="stylesheet" href="/campaigns/alex/style.css?v=1" />
+  <link rel="stylesheet" href="/campaigns/alex/style.css?v=2" />
 </head>
 <body>
 
@@ -163,30 +163,12 @@
       <a href="#book" class="pill pill--green">Book my interview</a>
     </section>
 
-    <!-- ── BOOKING STEP: age question, then the calendar ────────────────────── -->
+    <!-- ── BOOKING STEP: the calendar, embedded straight on the page ────────── -->
     <section class="book" id="book">
       <div class="book__card">
         <h2 class="modal__title">Book Your Interview</h2>
-        <p class="modal__sub">One quick question, then pick a time for a free 15-minute FaceTime with me.</p>
-
-        <form class="quiz" id="quiz" novalidate>
-          <fieldset class="q" data-q="age">
-            <legend>How old are you?</legend>
-            <label><input type="radio" name="age" value="under-18" />Under 18</label>
-            <label><input type="radio" name="age" value="18-21" />18&ndash;21</label>
-            <label><input type="radio" name="age" value="22-27" />22&ndash;27</label>
-            <label><input type="radio" name="age" value="28-35" />28&ndash;35</label>
-            <label><input type="radio" name="age" value="36+" />36 or older</label>
-          </fieldset>
-        </form>
-
-        <p class="book__stop" id="too-young" hidden>Thanks for your interest! I can only interview people 18 and older. Come back once you&rsquo;re 18.</p>
-
-        <div class="result" id="yes" hidden>
-          <h2 class="modal__title">Pick your interview time.</h2>
-          <p class="modal__sub">15 minutes on FaceTime, one-on-one. Keep your phone on you and I&rsquo;ll call you.</p>
-          <div class="cal" id="cal"></div>
-        </div>
+        <p class="modal__sub">Pick a time for a free 15-minute FaceTime with me. Keep your phone on you and I&rsquo;ll call you.</p>
+        <div class="cal" id="cal"></div>
       </div>
     </section>
 
@@ -218,7 +200,7 @@
     var PHOTO_URL = '/campaigns/alex/alex.jpg';
     // GHL booking widget. Set its post-booking redirect to
     // https://www.iotacompany.com/join/alex/booked so bookings are tracked.
-    var CALENDAR_URL = 'https://system.iotacompany.com/widget/bookings/alex-interview';
+    var CALENDAR_URL = 'https://system.iotacompany.com/widget/booking/V5dqYLmKluKLqOvt3ujt';
 
     var IOTA_PIXEL = '1298384508340315';
     var SLUG = 'alex';
@@ -263,21 +245,11 @@
       $('hero-card').classList.add('hero__card--solo');
     }
 
-    // ── Booking step: age question first, then the calendar ─────────────────
-    $('quiz').addEventListener('change', function (e) {
-      if (e.target.name !== 'age') return;
-      var tooYoung = e.target.value === 'under-18';
-      gtag('event', 'client_age_answer', { client: SLUG, age: e.target.value });
-      $('too-young').hidden = !tooYoung;
-      $('yes').hidden = tooYoung;
-      if (!tooYoung) mountCalendar();
-    });
-
     // ── Calendar (GHL widget, same embed as /join/jaden) ────────────────────
     // UTMs on this page ride through to the booking; utm_source defaults to dm-lp.
+    mountCalendar();
     function mountCalendar() {
       var cal = $('cal');
-      if (cal.firstChild) return;
       var u = new URL(CALENDAR_URL);
       u.searchParams.set('utm_source', params.get('utm_source') || 'dm-lp');
       ['utm_medium', 'utm_campaign'].forEach(function (k) {
