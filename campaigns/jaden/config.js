@@ -18,8 +18,8 @@ window.JADEN = {
 
   // ── Video ──────────────────────────────────────────────────────────────────
   // YouTube ID or URL, Drive file URL, or direct .mp4. null = placeholder box.
-  vsl: null,
-  vertical: true,
+  vsl: "https://youtu.be/eZVm2RkGepU",   // "Jaden Ponto VSL", unlisted on IOTA MEDIA
+  vertical: false,       // 2560x1440 landscape
 
   // Photo for the "Hi, I'm Jaden" section (path or URL). null = placeholder.
   // Cover frame of his pinned Instagram post (@rev.ponto), cropped square.
