@@ -108,6 +108,28 @@ a { color: var(--maroon); }
 .vsl--empty { display: grid; place-items: center; color: #6B6B6B; font-size: 1.05rem; }
 .vsl--vertical.vsl--empty { max-height: 520px; width: 100%; }
 
+/* Floating mini-player: once the hero video scrolls out of view, its frame
+   pins to the bottom-right corner. Only the wrapper moves (never the iframe
+   itself), so playback carries on without reloading. */
+.vsl__frame { position: absolute; inset: 0; }
+.vsl__close { display: none; }
+.vsl.is-floating .vsl__frame {
+  position: fixed; inset: auto 16px 16px auto; z-index: 40;
+  width: min(360px, 62vw); aspect-ratio: 16 / 9;
+  background: #000; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: vsl-pop 0.2s ease-out;
+}
+.vsl--vertical.is-floating .vsl__frame { width: min(170px, 38vw); aspect-ratio: 9 / 16; }
+.vsl.is-floating iframe, .vsl.is-floating video { border-radius: 10px; }
+.vsl.is-floating .vsl__close {
+  display: grid; place-items: center; position: absolute; top: -12px; right: -12px;
+  width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--ink); color: var(--white); font-size: 18px; line-height: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+@keyframes vsl-pop { from { opacity: 0; transform: translateY(12px); } }
+@media (prefers-reduced-motion: reduce) { .vsl.is-floating .vsl__frame { animation: none; } }
+
 /* ── WHAT A BLITZ IS ──────────────────────────────────────────────────────── */
 .learn { max-width: 760px; margin: 0 auto; padding: 4.5rem 16px 3rem; text-align: center; }
 .learn__list { display: grid; gap: 2.75rem; margin-top: 2.5rem; }

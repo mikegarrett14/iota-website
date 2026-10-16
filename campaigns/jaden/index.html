@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,600&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/campaigns/jaden/style.css?v=4" />
+  <link rel="stylesheet" href="/campaigns/jaden/style.css?v=5" />
   <script src="/campaigns/jaden/config.js?v=8"></script>
 </head>
 <body>
@@ -328,8 +328,35 @@
     var vsl = $('vsl');
     if (C.vertical) vsl.classList.add('vsl--vertical');
     var video = embedVideo(C.vsl);
-    if (video) vsl.appendChild(video);
+    if (video) floatVideo(vsl, video);
     else { vsl.classList.add('vsl--empty'); vsl.innerHTML = '<span>Jaden&rsquo;s video goes here</span>'; }
+
+    // Pin the video to the corner once the hero scrolls past it; × puts it
+    // back (and pauses it) for the rest of the visit.
+    function floatVideo(box, el) {
+      var wrap = document.createElement('div');
+      wrap.className = 'vsl__frame';
+      wrap.appendChild(el);
+      var x = document.createElement('button');
+      x.type = 'button'; x.className = 'vsl__close'; x.setAttribute('aria-label', 'Close video');
+      x.innerHTML = '&times;';
+      wrap.appendChild(x);
+      box.appendChild(wrap);
+      if (!('IntersectionObserver' in window)) return;
+      var dismissed = false;
+      var io = new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        box.classList.toggle('is-floating', !dismissed && !e.isIntersecting && e.boundingClientRect.top < 0);
+      });
+      io.observe(box);
+      x.addEventListener('click', function () {
+        dismissed = true;
+        io.disconnect();
+        box.classList.remove('is-floating');
+        if (el.tagName === 'VIDEO') el.pause();
+        else if (el.contentWindow) el.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      });
+    }
 
     // ── Modal ───────────────────────────────────────────────────────────────
     var modal = $('modal');
@@ -472,7 +499,7 @@
       if (!v) return null;
       var yt = v.match(/^[\w-]{11}$/) ? v :
         (v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/)([\w-]{11})/) || [])[1];
-      if (yt) return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1');
+      if (yt) return frame('https://www.youtube.com/embed/' + yt + '?playsinline=1&rel=0&modestbranding=1&enablejsapi=1');
       var drive = (v.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || [])[1];
       if (drive) return frame('https://drive.google.com/file/d/' + drive + '/preview');
       if (/\.(mp4|mov|webm)(\?|$)/i.test(v)) {
