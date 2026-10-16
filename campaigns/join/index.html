@@ -184,6 +184,30 @@
       fitGhl(mountFrame(calUrl, 'cal__frame cal__frame--ghl'));
     }
 
+    // ── Calendar click ──────────────────────────────────────────────────────
+    // The calendar is a cross-origin iframe, so clicks inside it can't be seen
+    // directly. When the window loses focus to an iframe inside #cal, the
+    // visitor clicked into the calendar. Fired once per session per client so
+    // ads can optimise on "started booking" when there are too few bookings.
+    (function () {
+      var key = 'join:calclick:' + slug;
+      var fired = false;
+      function fire() {
+        if (fired) return;
+        try { if (sessionStorage.getItem(key)) { fired = true; return; } sessionStorage.setItem(key, '1'); } catch (e) {}
+        fired = true;
+        fbq('trackCustom', 'ClientCalendarClick', { client: slug });
+        if (window.gtag) gtag('event', 'client_calendar_click', { client: slug });
+      }
+      window.addEventListener('blur', function () {
+        setTimeout(function () {
+          var el = document.activeElement;
+          if (el && el.tagName === 'IFRAME' && cal.contains(el)) fire();
+        }, 0);
+      });
+      cal.addEventListener('pointerdown', fire);
+    })();
+
     // ── Testimonials ────────────────────────────────────────────────────────
     // Lazy iframes: nothing loads until the visitor scrolls down to them.
     (client.testimonials || []).forEach(function (v, n) {
