@@ -38,6 +38,7 @@ window.JOIN_CLIENTS = {
   brenton: {
     name: "Brenton Clark",
     firstName: "Brenton",
+    pixelId: '1640699110792174', // Brenton Clark Join Page dataset (Ray Zhang Ad Account)
     title: "Interview for Brenton's Sales Team",
     subtitle: "Watch the video, then grab a time below to see if you're a fit.",
     vsl: "0UUcjgbFc44",   // "Brenton Clark VSL v2" on the IOTA Media YouTube (old cut: 8XbqGyPs3yU)
