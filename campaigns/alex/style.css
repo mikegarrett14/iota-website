@@ -35,3 +35,8 @@ a.pill--sand { color: var(--maroon); }
   padding: 2.25rem 1.25rem 1.75rem;
 }
 @media (min-width: 900px) { .book__card { padding: 3rem; } }
+
+/* ── MORE: the Vivint film under the calendar ─────────────────────────────── */
+.more { max-width: 860px; margin: 0 auto; padding: 0 16px 4rem; text-align: center; }
+.more .display { margin-bottom: 1.75rem; }
+.more__video { aspect-ratio: 426 / 198; border-radius: 8px; }
