@@ -57,6 +57,16 @@ window.JOIN_CLIENTS = {
     ]
   },
 
+  levi: {
+    name: "Levi Bodily",
+    firstName: "Levi",
+    title: "Interview for Levi's Sales Team",
+    subtitle: "Watch the video, then grab a time below to see if you're a fit.",
+    vsl: null,            // TODO: Levi's VSL, filmed at the Oct 26 shoot (script is in his October batch on script.iotacompany.com)
+    vertical: false,      // videographer films it 16:9, like Brenton's
+    calendar: ""          // TODO: Levi's booking link (he uses Calendly today)
+  },
+
   summer: {
     name: "Summer Newman",
     firstName: "Summer",
