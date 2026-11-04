@@ -10,8 +10,10 @@
   <!-- ── SETTINGS: everything you'll swap lives here ────────────────────────── -->
   <script>
     // Video in the hero. Paste the embed URL (YouTube /embed/ link, Vimeo
-    // player link, Wistia, etc.). Empty = grey placeholder box.
-    var VSL_EMBED_URL = '';
+    // player link, Wistia, etc.), or a path to a video file hosted on the site
+    // (.mp4/.webm/.mov plays in a native player). Empty = grey placeholder box.
+    // Placeholder video for now (from Drive, "Video 2026-10-30 at 3.30.43 PM").
+    var VSL_EMBED_URL = '/campaigns/apply/apply-vsl.mp4';
 
     // The application form is built into the page (apply-form.js). It posts to
     // /api/apply, which forwards to GHL; the webhook URL is the Netlify env var
@@ -370,7 +372,13 @@
     // ── Video ───────────────────────────────────────────────────────────────
     var vsl = $('vsl');
     var vslUrl = (VSL_EMBED_URL || '').trim();
-    if (vslUrl) {
+    if (/\.(mp4|webm|mov)(\?|$)/i.test(vslUrl)) {
+      var f = document.createElement('video');
+      // #t=0.1 makes iOS Safari paint the first frame instead of a black box.
+      f.src = vslUrl + (vslUrl.indexOf('#') < 0 ? '#t=0.1' : ''); f.controls = true; f.playsInline = true; f.preload = 'metadata';
+      f.setAttribute('playsinline', '');
+      vsl.appendChild(f);
+    } else if (vslUrl) {
       var v = document.createElement('iframe');
       v.src = vslUrl; v.title = 'Zack Wood';
       v.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
