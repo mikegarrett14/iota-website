@@ -93,6 +93,26 @@ body {
   border-color: transparent transparent transparent rgba(0,0,0,0.45);
 }
 
+/* Speaker cards (square-ish flyers) under the body copy. */
+.speakers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.speakers img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 600px) {
+  .speakers { grid-template-columns: 1fr 1fr; }
+}
+
 /* ── BODY COPY ────────────────────────────────────────────────────────────── */
 /* Sizes are the measured Stan values at a 375px viewport, written in vw so the
    proportions hold, with a ceiling so they stay sane in the 660px column. */
