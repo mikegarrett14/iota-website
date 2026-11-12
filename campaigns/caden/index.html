@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How I Hit Golden Door | Free Webinar with Caden Musselman</title>
+  <meta name="description" content="Free live training for door-to-door reps at any company: how Caden Musselman went from $250K to $850K and hit Golden Door. No pitch. Registration required." />
+
+  <meta property="og:title" content="How I Hit Golden Door | Free Webinar" />
+  <meta property="og:description" content="$250K to $850K in one year. Caden Musselman breaks down exactly what changed. Free for reps at any company." />
+  <meta property="og:type" content="website" />
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────────────────
+    // Everything that changes per webinar lives here. Dates are PLACEHOLDERS
+    // until Caden confirms them.
+    window.CADEN = {
+      start: "2026-12-03T20:00:00-07:00",   // Webinar start, with its UTC offset (Mountain = -07:00 in winter)
+      minutes: 60,                          // Length, for the calendar invite
+      tz: "America/Denver",                 // Time zone the date is shown in
+      tzLabel: "MT",
+      platform: "Zoom",                     // Shown on the page. The join link itself goes out by text, not here.
+      cadenPhone: "",                       // Number Caden texts from, e.g. "(801) 555-0123". Empty = the "save my number" line is hidden.
+      videoUrl: "",                         // Optional CTA video: YouTube ID/URL or an .mp4 path. Empty = no video block.
+      pixelId: "",                          // Caden's Meta pixel ID. Empty = no pixel. Fires PageView + CompleteRegistration.
+      instagram: ""                         // Caden's IG handle without the @. Empty = hidden.
+    };
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wm33vflvsh");
+  </script>
+
+  <!-- Meta Pixel: only loads once CADEN.pixelId is set. The registration is
+       sent from the browser on a successful submit (there is no GHL here to
+       send it server-side, so nothing is double-counted). -->
+  <script>
+    if (window.CADEN.pixelId) {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', window.CADEN.pixelId);
+      fbq('track', 'PageView');
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/campaigns/caden/style.css" />
+</head>
+<body>
+
+  <!-- ── HERO ───────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Free live webinar &middot; Any company &middot; No pitch</p>
+      <h1 class="display hero__title"><span>How I hit</span><span class="outline">Golden Door</span></h1>
+      <p class="hero__sub">$250K to $850K in revenue. I&rsquo;m breaking down exactly what changed, free, for any rep who wants to hit Golden Door next summer.</p>
+
+      <div class="when">
+        <div><b data-date>Thursday, Dec 3</b><span>Date</span></div>
+        <div><b data-time>8:00 PM MT</b><span>Time</span></div>
+        <div><b data-platform>Live on Zoom</b><span>Link sent by text</span></div>
+      </div>
+
+      <a class="btn btn--white" href="#register">Save my spot</a>
+
+      <div class="video" id="video" hidden></div>
+    </div>
+  </section>
+
+  <!-- ── REGISTER ───────────────────────────────────────────────────────── -->
+  <section class="light" id="register">
+    <div class="wrap wrap--narrow">
+
+      <div id="form-view">
+        <p class="eyebrow">Registration required</p>
+        <h2 class="display h2">Save my spot</h2>
+
+        <form class="form" id="reg" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="first_name">First name</label>
+              <input type="text" id="first_name" name="first_name" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="last_name">Last name</label>
+              <input type="text" id="last_name" name="last_name" autocomplete="family-name" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="phone">Cell phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" placeholder="(555) 555-5555" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <fieldset>
+              <legend>Summers you&rsquo;ve knocked</legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="summers" value="0" /><span>0</span></label>
+                <label class="choice"><input type="radio" name="summers" value="1" /><span>1</span></label>
+                <label class="choice"><input type="radio" name="summers" value="2" /><span>2</span></label>
+                <label class="choice"><input type="radio" name="summers" value="3+" /><span>3+</span></label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="field">
+            <label for="company">Company you knock for <span class="opt">(optional)</span></label>
+            <input type="text" id="company" name="company" autocomplete="organization" />
+          </div>
+
+          <p class="err" id="err" role="alert" hidden></p>
+          <button class="btn btn--black btn--block" type="submit" id="submit">Save my spot</button>
+          <p class="consent">By registering, you agree to get texts from Caden about this webinar, including the join link and reminders. Reply STOP anytime. Msg &amp; data rates may apply.</p>
+        </form>
+      </div>
+
+      <div class="done" id="done-view" hidden>
+        <p class="eyebrow">You&rsquo;re in</p>
+        <h2 class="display h2">Your spot is saved</h2>
+        <p class="done__when" data-full></p>
+        <p class="lede">Caden will text you the Zoom link before it starts. Put it on your calendar so it doesn&rsquo;t sneak up on you.</p>
+        <div class="done__cal">
+          <a class="btn btn--black" id="gcal" target="_blank" rel="noopener">Google Calendar</a>
+          <a class="btn btn--black" id="ics" download="golden-door-webinar.ics">Apple / Outlook</a>
+        </div>
+        <p class="done__note" id="save-number" hidden>Save <b data-phone></b> in your phone as <b>Caden Musselman</b>. That&rsquo;s where the link comes from.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── WHAT YOU'LL LEARN ──────────────────────────────────────────────── -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What changed between my $250K summer and my $850K summer</p>
+      <h2 class="display h2">What you&rsquo;ll learn</h2>
+      <div class="cards">
+        <div class="card">
+          <span class="card__n">01</span>
+          <h3 class="display h3">Training with a path</h3>
+          <p>How I trained before the summer: a clear pathway to get better at both the sales skills and the mental resilience.</p>
+        </div>
+        <div class="card">
+          <span class="card__n">02</span>
+          <h3 class="display h3">The right mentors</h3>
+          <p>I couldn&rsquo;t have done it without the people in my corner. How to find yours and actually use them.</p>
+        </div>
+        <div class="card">
+          <span class="card__n">03</span>
+          <h3 class="display h3">A why that holds</h3>
+          <p>If your why doesn&rsquo;t hit you in the core, it won&rsquo;t carry you through August. How to find one that does.</p>
+        </div>
+        <div class="card">
+          <span class="card__n">04</span>
+          <h3 class="display h3">Humble confidence</h3>
+          <p>The calm, humble kind of confidence that closes more doors than hype ever will.</p>
+        </div>
+        <div class="card">
+          <span class="card__n">05</span>
+          <h3 class="display h3">Faith first</h3>
+          <p>The thing over everything else. Why trusting the Lord came first, and how it shaped every other part of my summer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ──────────────────────────────────────────────────────────── -->
+  <section class="paper about">
+    <div class="wrap">
+      <p class="eyebrow">Your host</p>
+      <h2 class="display h2">Caden Musselman</h2>
+      <p>A year before Golden Door, I was locked in on building a business, and it fell apart. I got back up, went back to the doors, and changed how I trained, who I learned from, and why I was out there.</p>
+      <p>This webinar is everything I learned. It&rsquo;s free, it&rsquo;s for reps at any company, and I&rsquo;m not here to pitch you on switching. I just want more guys in this industry hitting their goals.</p>
+      <div class="stats">
+        <div class="stat"><b>$250K</b><span>Revenue, the summer before</span></div>
+        <div class="stat"><b>$850K</b><span>Revenue, this summer</span></div>
+        <div class="stat stat--wide"><b>2026 Golden Door</b><span>Winner</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL ──────────────────────────────────────────────────────────── -->
+  <section class="final">
+    <div class="wrap">
+      <h2 class="display">Next summer<br />starts now</h2>
+      <p>Free. Live. One hour. Bring your questions.</p>
+      <a class="btn btn--white" href="#register">Save my spot</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span class="foot__name">Caden Musselman</span>
+      <p class="disclaimer" id="ig" hidden></p>
+      <p class="disclaimer">Results shown are Caden&rsquo;s own and are not typical or a guarantee of what you will earn. Results depend on individual effort, skill and market conditions. Golden Door is a recognition program of its owner and is not affiliated with this event.</p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    var C = window.CADEN;
+    var start = new Date(C.start);
+    var end = new Date(start.getTime() + C.minutes * 60000);
+    var fmt = function (o) { return new Intl.DateTimeFormat('en-US', Object.assign({ timeZone: C.tz }, o)).format(start); };
+    var dateStr = fmt({ weekday: 'long', month: 'short', day: 'numeric' });
+    var timeStr = fmt({ hour: 'numeric', minute: '2-digit' }) + ' ' + C.tzLabel;
+
+    document.querySelector('[data-date]').textContent = dateStr;
+    document.querySelector('[data-time]').textContent = timeStr;
+    document.querySelector('[data-platform]').textContent = 'Live on ' + C.platform;
+    document.querySelector('[data-full]').textContent = dateStr + ' · ' + timeStr;
+
+    // Optional CTA video
+    if (C.videoUrl) {
+      var box = document.getElementById('video');
+      var yt = C.videoUrl.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/) || (/^[\w-]{11}$/.test(C.videoUrl) && [0, C.videoUrl]);
+      if (yt) {
+        box.classList.add('video--landscape');
+        box.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '?playsinline=1&rel=0&modestbranding=1" title="Caden Musselman" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+      } else {
+        box.innerHTML = '<video src="' + C.videoUrl + '" controls playsinline preload="metadata"></video>';
+      }
+      box.hidden = false;
+    }
+
+    if (C.instagram) {
+      var ig = document.getElementById('ig');
+      ig.innerHTML = '<a href="https://www.instagram.com/' + C.instagram + '/" target="_blank" rel="noopener">@' + C.instagram + '</a>';
+      ig.hidden = false;
+    }
+
+    // Calendar links
+    var stamp = function (d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
+    var title = 'How I Hit Golden Door — Free Webinar with Caden Musselman';
+    var details = 'Caden will text you the ' + C.platform + ' link before it starts.';
+    document.getElementById('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent(title) + '&dates=' + stamp(start) + '/' + stamp(end) +
+      '&details=' + encodeURIComponent(details) + '&location=' + encodeURIComponent(C.platform);
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//IOTA//Caden Webinar//EN', 'BEGIN:VEVENT',
+      'UID:caden-golden-door-' + stamp(start) + '@iotacompany.com', 'DTSTAMP:' + stamp(new Date()),
+      'DTSTART:' + stamp(start), 'DTEND:' + stamp(end), 'SUMMARY:' + title, 'DESCRIPTION:' + details,
+      'LOCATION:' + C.platform, 'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY', 'DESCRIPTION:' + title,
+      'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    document.getElementById('ics').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+
+    if (C.cadenPhone) {
+      document.querySelector('[data-phone]').textContent = C.cadenPhone;
+      document.getElementById('save-number').hidden = false;
+    }
+
+    // Where the visitor came from, kept with the registration
+    var q = new URLSearchParams(location.search);
+    var source = ['utm_source', 'utm_campaign', 'utm_content'].map(function (k) { return q.get(k); })
+      .filter(Boolean).join(' / ') || (q.get('fbclid') ? 'meta ad' : (document.referrer ? 'referral' : 'direct'));
+
+    // Form
+    var form = document.getElementById('reg');
+    var err = document.getElementById('err');
+    var btn = document.getElementById('submit');
+    var digits = function (v) { var d = v.replace(/\D/g, ''); return d.length === 11 && d[0] === '1' ? d.slice(1) : d; };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = form.elements;
+      var phone = digits(f.phone.value);
+      var summers = (form.querySelector('input[name=summers]:checked') || {}).value;
+      var problem =
+        !f.first_name.value.trim() || !f.last_name.value.trim() ? 'Add your first and last name.' :
+        !/^[2-9]\d{2}[2-9]\d{6}$/.test(phone) ? 'Add a valid 10-digit US cell number.' :
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim()) ? 'Add a valid email.' :
+        !summers ? 'Pick how many summers you’ve knocked.' : '';
+      if (problem) { err.textContent = problem; err.hidden = false; return; }
+      err.hidden = true;
+      btn.disabled = true; btn.textContent = 'Saving…';
+
+      var payload = {
+        type: 'registration',
+        first_name: f.first_name.value.trim(), last_name: f.last_name.value.trim(),
+        phone: '+1' + phone, email: f.email.value.trim(), summers: summers,
+        company: f.company.value.trim(), source: source, webinar: C.start
+      };
+      var finish = function () {
+        if (window.fbq) fbq('track', 'CompleteRegistration');
+        if (window.gtag) gtag('event', 'sign_up', { method: 'caden_webinar' });
+        document.getElementById('form-view').hidden = true;
+        document.getElementById('done-view').hidden = false;
+        document.getElementById('register').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      // The registrant always lands on "You're in": the server logs anything
+      // that fails to reach the sheet so it can be re-entered by hand.
+      fetch('/api/caden', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload) }).then(finish, finish);
+    });
+  })();
+  </script>
+</body>
+</html>

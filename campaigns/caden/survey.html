@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Webinar Feedback | Caden Musselman</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- The QR code Caden shows halfway through the webinar points here.
+       It reads as a feedback survey; the last question is the meeting opt-in. -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBWQE62B2V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WBWQE62B2V');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/campaigns/caden/style.css" />
+</head>
+<body>
+
+  <section class="hero">
+    <div class="wrap wrap--narrow">
+      <p class="eyebrow">How I Hit Golden Door</p>
+      <h1 class="display h2">Quick feedback</h1>
+      <p class="hero__sub">I want to run these more often and make them better. Takes 30 seconds. Thank you!</p>
+    </div>
+  </section>
+
+  <section class="light">
+    <div class="wrap wrap--narrow">
+
+      <form class="form" id="survey" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label for="first_name">First name</label>
+            <input type="text" id="first_name" name="first_name" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="last_name">Last name</label>
+            <input type="text" id="last_name" name="last_name" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="phone">Cell phone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel-national" inputmode="tel" placeholder="(555) 555-5555" required />
+        </div>
+
+        <div class="field">
+          <fieldset>
+            <legend>How valuable was this so far? (1&ndash;10)</legend>
+            <div class="choices choices--10" id="rating"></div>
+          </fieldset>
+        </div>
+        <div class="field">
+          <label for="best">What&rsquo;s been most useful? <span class="opt">(optional)</span></label>
+          <textarea id="best" name="best"></textarea>
+        </div>
+        <div class="field">
+          <label for="next">What should the next one cover? <span class="opt">(optional)</span></label>
+          <textarea id="next" name="next"></textarea>
+        </div>
+
+        <div class="field">
+          <fieldset>
+            <legend>Want to meet 1-on-1 with Caden? <span class="opt">(optional, pick any)</span></legend>
+            <div class="choices choices--2">
+              <label class="choice"><input type="checkbox" name="meet" value="Coaching" /><span>Yes, about coaching for next summer</span></label>
+              <label class="choice"><input type="checkbox" name="meet" value="Opportunity" /><span>Yes, about how my company helped me hit Golden Door</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <p class="err" id="err" role="alert" hidden></p>
+        <button class="btn btn--black btn--block" type="submit" id="submit">Send feedback</button>
+      </form>
+
+      <div class="done" id="done-view" hidden>
+        <p class="eyebrow">Thank you</p>
+        <h2 class="display h2">Got it</h2>
+        <p class="lede" id="done-msg">Appreciate you. Head back to the webinar, there&rsquo;s more coming.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  (function () {
+    var rating = document.getElementById('rating');
+    for (var i = 1; i <= 10; i++) {
+      rating.insertAdjacentHTML('beforeend',
+        '<label class="choice"><input type="radio" name="rating" value="' + i + '" /><span>' + i + '</span></label>');
+    }
+    var form = document.getElementById('survey');
+    var err = document.getElementById('err');
+    var btn = document.getElementById('submit');
+    var digits = function (v) { var d = v.replace(/\D/g, ''); return d.length === 11 && d[0] === '1' ? d.slice(1) : d; };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = form.elements;
+      var phone = digits(f.phone.value);
+      var r = (form.querySelector('input[name=rating]:checked') || {}).value;
+      var meet = Array.prototype.map.call(form.querySelectorAll('input[name=meet]:checked'), function (x) { return x.value; });
+      var problem =
+        !f.first_name.value.trim() || !f.last_name.value.trim() ? 'Add your first and last name.' :
+        !/^[2-9]\d{2}[2-9]\d{6}$/.test(phone) ? 'Add a valid 10-digit US cell number.' :
+        !r ? 'Pick a rating from 1 to 10.' : '';
+      if (problem) { err.textContent = problem; err.hidden = false; return; }
+      err.hidden = true;
+      btn.disabled = true; btn.textContent = 'Sending…';
+
+      var payload = {
+        type: 'survey',
+        first_name: f.first_name.value.trim(), last_name: f.last_name.value.trim(), phone: '+1' + phone,
+        rating: r, best: f.best.value.trim(), next: f.next.value.trim(), meet: meet.join(', ')
+      };
+      var finish = function () {
+        if (meet.length) document.getElementById('done-msg').textContent =
+          'Appreciate you. I’ll text you after the webinar to set up a time. Head back in, there’s more coming.';
+        form.hidden = true;
+        document.getElementById('done-view').hidden = false;
+      };
+      fetch('/api/caden', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload) }).then(finish, finish);
+    });
+  })();
+  </script>
+</body>
+</html>

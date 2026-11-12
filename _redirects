@@ -27,3 +27,7 @@
 /join/alex/booked  /campaigns/alex/index.html  200
 /apply  /campaigns/apply/index.html  200
 /client-reports  https://claude.ai/artifact/UtfU7VJvo1ezFpanB3rjTz  302
+/caden  /campaigns/caden/index.html  200
+/golden-door  /campaigns/caden/index.html  200
+/caden/survey  /campaigns/caden/survey.html  200
+/golden-door/survey  /campaigns/caden/survey.html  200
